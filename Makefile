@@ -1,4 +1,4 @@
-EXE = lem_in
+EXE = lem-in
 CC = gcc
 CFLAG = -Wall -Werror -Wextra
 LIB = libft/libft.a
