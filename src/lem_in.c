@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:35:19 by pauljull          #+#    #+#             */
-/*   Updated: 2019/11/22 15:08:16 by pauljull         ###   ########.fr       */
+/*   Updated: 2019/11/26 15:10:36 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,11 @@
 int	main(void)
 {
 	t_list	*data;
-	t_lem	colony;
+	t_map	colony;
 
-	data = NULL;
-	colony.nb = IGNORE;
 	data = ft_recover_data();
 	if (ft_parsing(data, &colony) == FALSE)
-		ft_putendl_fd(2, "Error");
+		perror("Error in input");
 //	ft_lst_free(&data);
 	return (0);
 }

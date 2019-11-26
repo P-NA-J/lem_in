@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:33:58 by pauljull          #+#    #+#             */
-/*   Updated: 2019/11/19 15:57:43 by pauljull         ###   ########.fr       */
+/*   Updated: 2019/11/26 15:09:09 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,9 @@ t_list			*ft_recover_data(void)
 	int			ret;
 	char		buff[BUFF_SIZE + 1];
 	char		*tmp;
-	t_bool		ward;
 
 	tmp = NULL;
 	data = NULL;
-	ward = 0;
 	while ((ret = read(0, buff, BUFF_SIZE)) >= 0)
 	{
 		if (ret == 0)
