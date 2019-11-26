@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 09:00:10 by pauljull          #+#    #+#             */
-/*   Updated: 2019/11/15 21:37:44 by pauljull         ###   ########.fr       */
+/*   Updated: 2019/11/26 21:32:34 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # define TRUE 1
 # define FALSE 0
 # define NULL_VALUE -2147483649
+# define BS_GNL 4096
+
 
 typedef long	(*t_func_tab)(long, long);
 
@@ -40,6 +42,13 @@ typedef struct		s_list
 	size_t			content_size;
 	struct s_list	*next;
 }					t_list;
+
+typedef struct		s_gnl
+{
+	char			*str;
+	int				fd;
+	struct 	s_gnl	*next;
+}					t_gnl;
 
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);

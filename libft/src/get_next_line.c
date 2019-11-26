@@ -3,106 +3,82 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/07 17:28:04 by pauljull          #+#    #+#             */
-/*   Updated: 2019/11/13 11:06:34 by pauljull         ###   ########.fr       */
+/*   Created: 2019/10/15 11:41:26 by aboitier          #+#    #+#             */
+/*   Updated: 2019/10/15 11:41:30 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h"
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/uio.h>
+#include "libft.h"
 #include <stdlib.h>
+#include <unistd.h>
 
-t_list	*fd_management(t_list *lst, int fd)
+static t_gnl	*choose_fd(t_gnl **begin_list, int fd)
 {
-	t_list	*head;
-	t_list	*node;
+	t_gnl *list;
+	t_gnl *new;
 
-	head = lst;
-	while (lst)
+	list = *begin_list;
+	while (list)
 	{
-		if (lst->content_size == (size_t)fd)
-			return (lst);
-		lst = lst->next;
+		if (list->fd == fd)
+			return (list);
+		list = list->next;
 	}
-	ft_lst_push_back(&head, NULL, 0);
-	node = ft_lst_last(head);
-	node->content_size = fd;
-	return (node);
+	if (!(new = (t_gnl*)malloc(sizeof(t_gnl))))
+		return (NULL);
+	if (!(new->str = ft_strnew(1)))
+	{
+		free(new);
+		return (NULL);
+	}
+	new->fd = fd;
+	new->next = *begin_list;
+	*begin_list = new;
+	return (new);
 }
 
-void	fill_line(t_list *lst, char **line)
+static int		check_line(t_gnl *actual, int ret, char **line)
 {
-	char	*tmp;
-	int		index;
+	char *tmp;
 
-	index = 0;
-	while (((char *)lst->content)[index] != '\n' &&
-	((char *)lst->content)[index] != '\0')
-		index += 1;
-	if (((char *)lst->content)[0] != '\0')
-	{
-		if (!(*line = ft_strnew(index)))
-			return ;
-		ft_strncpy(*line, lst->content, index);
-		tmp = lst->content;
-		if (((char *)lst->content)[0] == '\0')
-			return ;
-		if (ft_strlen(*line) == ft_strlen(lst->content))
-			lst->content = ft_strsub(lst->content, ft_strlen(lst->content), 1);
-		else
-			lst->content = ft_strsub(lst->content, ft_strlen(*line) + 1,
-			ft_strlen(lst->content) - ft_strlen(*line) - 1);
-		if (!(lst->content))
-			return ;
-		free(tmp);
-	}
-}
-
-int		ft_read(t_list *lst, char **line, int fd)
-{
-	char			buff[BUFF_SIZE + 1];
-	int				ret;
-
-	ft_bzero(buff, BUFF_SIZE + 1);
-	while (!ft_strchr(buff, '\n'))
-	{
-		if ((ret = read(fd, buff, BUFF_SIZE)) <= 0)
-			return (-1);
-		buff[ret] = 0;
-		if (!(lst->content = ft_strjoinf((char *)lst->content, buff, 1)))
-			return (-1);
-		if (ret == 0)
-			break ;
-	}
-	if (((char *)lst->content)[0] == '\0' && ret == 0)
+	if (ret == 0 && !ft_strlen(actual->str))
 		return (0);
-	fill_line(lst, line);
+	if (!(*line = ft_strcdup(actual->str, '\n')))
+		return (-1);
+	if (ft_strclen(actual->str, '\n') < ft_strlen(actual->str))
+	{
+		if (!(tmp = ft_strdup((ft_strchr(actual->str, '\n') + 1))))
+			return (-1);
+		free(actual->str);
+		actual->str = tmp;
+	}
+	else
+		ft_strclr(actual->str);
 	return (1);
 }
 
-int		get_next_line(const int fd, char **line)
+int				get_next_line(const int fd, char **line)
 {
-	static t_list	*lst;
-	t_list			*buff_lst;
+	int				ret;
+	char			buf[BS_GNL + 1];
+	static t_gnl	*list;
+	t_gnl			*actual;
+	char			*tmp;
 
-	if (!line || fd < 0 || BUFF_SIZE <= 0)
+	if (fd < 0 || !line || read(fd, buf, 0) < 0 || BS_GNL <= 0)
 		return (-1);
-	if (!lst)
+	if (!(actual = choose_fd(&list, fd)))
+		return (-1);
+	ret = 0;
+	while (!ft_strchr(actual->str, '\n') && (ret = read(fd, buf, BS_GNL)) > 0)
 	{
-		if (!(lst = ft_lstnew(NULL, fd)))
+		buf[ret] = '\0';
+		tmp = actual->str;
+		if (!(actual->str = ft_strjoin(actual->str, buf)))
 			return (-1);
-		lst->content_size = fd;
+		free(tmp);
 	}
-	if (!(buff_lst = fd_management(lst, fd)))
-		return (-1);
-	if (ft_strchr(buff_lst->content, '\n'))
-	{
-		fill_line(buff_lst, line);
-		return (1);
-	}
-	return (ft_read(buff_lst, line, fd));
+	return (check_line(actual, ret, line));
 }
