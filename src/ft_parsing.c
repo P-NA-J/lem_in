@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 11:33:16 by pauljull          #+#    #+#             */
-/*   Updated: 2019/11/20 15:02:02 by pauljull         ###   ########.fr       */
+/*   Updated: 2019/11/25 19:22:16 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static t_bool	ft_tube_check(t_list **data)
 	return (TRUE);
 }
 
-static t_bool	ft_room_definition_check(t_list **data, t_lem *colony)
+static t_bool	ft_room_definition_check(t_list **data, t_map *galery)
 {
 	size_t	start;
 	size_t	end;
@@ -46,8 +46,8 @@ static t_bool	ft_room_definition_check(t_list **data, t_lem *colony)
 			start += 1;
 		else if (ft_strcmp(tmp->content, "##end") == 0)
 			end += 1;
-		else if (ft_is_room(tmp->content) == TRUE)
-			colony->room += 1;
+//		else if (ft_is_room(tmp->content) == TRUE)
+//			colony->room += 1;
 		tmp = tmp->next;
 	}
 	*data = tmp;
@@ -56,18 +56,18 @@ static t_bool	ft_room_definition_check(t_list **data, t_lem *colony)
 	return (FALSE);
 }
 
-t_bool	ft_parsing(t_list *data, t_lem *colony)
+t_bool	ft_parsing(t_list *data, t_map *galery)
 {	
 	while (data != NULL && ft_is_comment(data->content, FALSE) == TRUE)
 		data = data->next;
 	if (ft_is_numb_str(&(data->content)) == TRUE)
 	{
-		colony->nb = ft_atoi(data->content);
+		galery->nb_ants = ft_atoi(data->content);
 		data = data->next;
 	}
 	else
 		return (FALSE);
-	if (ft_room_definition_check(&data, colony) == FALSE)
+	if (ft_room_definition_check(&data, galery) == FALSE)
 		return (FALSE);
 	if (ft_tube_check(&data) == FALSE)
 		return (FALSE);
