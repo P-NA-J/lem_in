@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:36:48 by pauljull          #+#    #+#             */
-/*   Updated: 2019/11/26 15:11:44 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/02 21:37:45 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 #include <sys/types.h>
 #include <sys/uio.h>
 #include <unistd.h>
+#include <limits.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <errno.h>
 
 #include "../libft/includes/libft.h"

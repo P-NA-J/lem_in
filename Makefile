@@ -4,10 +4,11 @@ CFLAG = -Wall -Werror -Wextra
 LIB = libft/libft.a
 PATH_LIB = /Users/pauljull/
 
-SRC =	ft_recover_data.c \
-		lem_in.c \
-		ft_parsing.c \
-		ft_parser_utils.c \
+SRC =	ft_recover_data.c 		\
+		lem_in.c 				\
+		ft_parsing.c 			\
+		preparser.c				\
+		ft_parser_utils.c 		\
 
 OBJ = $(SRC:.c=.o)
 PATH_SRC = $(addprefix src/, $(SRC))

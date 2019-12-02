@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 11:23:49 by pauljull          #+#    #+#             */
-/*   Updated: 2019/11/26 16:45:21 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/02 21:39:17 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,19 @@
 
 # define STRUCT_H
 
+# define BASE_MALLOC 8192
+
 struct 					s_pipe;
+struct					s_room;
+
+typedef struct			s_preparse
+{
+	char				*buffer;
+	long				size;					
+	int					reload;
+	long				curr_index;
+	struct s_room		*hashed_rooms[UINT_MAX];
+}						t_preparse;
 
 typedef struct			s_room
 {
@@ -47,6 +59,8 @@ typedef struct			s_map
 {
 	t_room				*start;
 	t_room				*end;
+	t_room				**rooms;
+	t_preparse			*preparse;
 	int					nb_ants;
 	int					nb_rooms;
 }						t_map;
