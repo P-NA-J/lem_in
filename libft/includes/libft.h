@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 09:00:10 by pauljull          #+#    #+#             */
-/*   Updated: 2019/11/26 21:32:34 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/02 23:36:17 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 
 # define ERROR_PARSE_LONG (long)-9223372036854775806
 # define VALID_PARSE_LONG (long)9223372036854775806
-# define INT_MAX 2147483647
-# define INT_MIN -2147483648
 # define TRUE 1
 # define FALSE 0
 # define NULL_VALUE -2147483649
@@ -57,7 +55,7 @@ void				*ft_memccpy(void *dst, const void *src, int c, size_t n);
 void				*ft_memmove(void *dst, const void *src, size_t len);
 void				*ft_memchr(const void *s, int c, size_t n);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
-int					ft_strlen(const char *s);
+size_t				ft_strlen(const char *s);
 char				*ft_strdup(const char *s1);
 char				*ft_strcpy(char *dst, const char *src);
 char				*ft_strncpy(char *dst, const char *src, size_t len);
@@ -151,4 +149,5 @@ int					ft_digit(long nb);
 void				ft_print_char(char c, int len);
 char				*ft_strpdupf(char *src, char c, char **rest);
 void				ft_lst_free(t_list **head);
+int					get_next_line(const int fd, char **line);
 #endif
