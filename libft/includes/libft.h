@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 09:00:10 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/02 23:36:17 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/04 01:39:17 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 # define LIBFT_H
 # include <string.h>
+# include <limits.h>
 
 # define ERROR_PARSE_LONG (long)-9223372036854775806
 # define VALID_PARSE_LONG (long)9223372036854775806

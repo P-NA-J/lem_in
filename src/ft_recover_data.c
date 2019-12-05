@@ -6,43 +6,12 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:33:58 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/02 20:19:35 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/05 18:51:29 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
 #include <stdlib.h>
-
-//static void		ft_add_line(t_list **data, char **tmp)
-//{
-//	char		*line;
-//
-//	line = ft_strpdupf(*tmp, '\n', tmp);
-//	ft_lst_push_back(data, line, ft_strlen(line));
-//	free(line);
-//}
-
-char			*ft_strcsub(char *s, char c)
-{
-	char	*new;
-	int		i;
-	int		j;
-
-	new = NULL;
-	i = 0;
-	j = 0;
-	while (s[i] && s[i] != c)
-		i++;
-	if (!(new = (char *)malloc(sizeof(char) * i + 1)))
-		return (NULL);
-	while (s[j] && j < i)
-	{
-		new[j] = s[j];
-		j++;
-	}
-	new[j] = '\0';	
-	return (new);
-}
 
 int				get_nb_ants(t_map *data, char *buffer)
 {
@@ -66,32 +35,30 @@ int				get_nb_ants(t_map *data, char *buffer)
 	return (ft_atoi(nb_ants));
 }
 
-int				get_nb_rooms(char *buffer)
+t_room			*parse_comment(t_preparse *prep, t_map *data)
 {
-	int		nb_rooms;
-	int		i;
-	
-	nb_rooms = 0;
-	i = 0;
-	while (buffer[i] && buffer[i] != '-')
+	int 	size;
+	char	*tmp;
+
+	tmp = NULL;
+	if (prep->buffer[1] && prep->buffer[1] == '#')
 	{
-		if (buffer[i] == '\n')
-			nb_rooms++;
-		i++;
-	}	
-	return (nb_rooms);
+		if (!(tmp = ft_strcsub(prep->buffer, '\n')))
+			return (NULL);
+		size = ft_strlen(tmp);
+		prep->buffer = prep->buffer + size + 1;	
+		if (ft_strncmp((const char *)tmp, "##start", size) == 0)
+			return (get_next_room(prep, data, 1));
+		else if (ft_strncmp((const char *)tmp, "##end", size) == 0)
+			return (get_next_room(prep, data, 2));
+		else
+			return (get_next_room(prep, data, 0));
+		free(tmp);
+	}
+	return (NULL);	
 }
 
-t_room			**get_rooms(t_map *data, char *buffer)
-{
-	t_room	**rooms;
 
-	rooms = NULL;
-	if ((data->nb_rooms = get_nb_rooms(buffer)) == 0)
-		return (FALSE);
-	printf("%d\n", data->nb_rooms);
-	return (rooms);
-}
 
 t_map			*parser(void)
 {
@@ -103,19 +70,21 @@ t_map			*parser(void)
 		return (NULL);
 	if ((data->nb_ants = get_nb_ants(data, data->preparse->buffer)) == FALSE) 
 		return (NULL);
-	if ((data->rooms = get_rooms(data, data->preparse->buffer)) == NULL)
+	if ((data->rooms = get_rooms(data, data->preparse)) == NULL)
 		return (NULL);
+//	if ((
 //	printf("%d\n", data->nb_ants);
-	
-	printf("%s\n", data->preparse->buffer);
+//	printf("%s\n", data->preparse->buffer);
+//	printf("line = %s\n", data->buffer);
+//	
+	int i = 0;
+	printf("NB_ROOMS = %d\n", data->nb_rooms);
+	while (i < data->nb_rooms)
+	{
+		printf("[%d]\t%s\t%d\n", i, (data->rooms[i])->name, (data->rooms[i])->hash);
+		i++;
+	}
+	i = 0;
 
-	//printf("line = %s\n", data->buffer);
-
-	free(data->preparse->buffer);
-	free(data->preparse);
-
-//		tmp = ft_strjoinf(tmp, line, 1);
-//		while (ft_strchr(tmp, '\n') != NULL || tmp != NULL)
-//			ft_add_line(&data, &tmp);
 	return (data);
 }

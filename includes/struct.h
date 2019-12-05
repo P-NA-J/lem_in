@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 11:23:49 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/02 21:39:17 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/04 23:45:16 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,29 @@
 struct 					s_pipe;
 struct					s_room;
 
+
+typedef struct			s_room
+{
+	char				*name;
+	struct s_pipe		*pipes;
+	uint32_t			hash;
+	int					features;
+	// occupied
+	// connected to End
+	// marked
+	// Init_success
+	int					coord_x;
+	int					coord_y;
+}						t_room;
+
 typedef struct			s_preparse
 {
 	char				*buffer;
 	long				size;					
 	int					reload;
 	long				curr_index;
-	struct s_room		*hashed_rooms[UINT_MAX];
+	struct s_room		hashed_rooms[PRIME];
 }						t_preparse;
-
-typedef struct			s_room
-{
-	char				*name;
-	struct s_pipe		*pipes;
-	int					features;
-	// occupied
-	// connected to End
-	// marked
-	int					coord_x;
-	int					coord_y;
-}						t_room;
 
 typedef	struct			s_pipe
 {

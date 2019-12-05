@@ -6,12 +6,11 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 20:19:49 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/02 21:36:06 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/04 19:34:25 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "../includes/lem_in.h"
 
 uint32_t	jenkins_hash(char *name)
 {
@@ -20,7 +19,7 @@ uint32_t	jenkins_hash(char *name)
 
 	i = 0;
 	hash = 0;
-	while (name[i])
+	while (name[i] != '\0')
 	{
 		hash += name[i];
 		hash += (hash << 10);
@@ -30,17 +29,6 @@ uint32_t	jenkins_hash(char *name)
 	hash += (hash << 3);
 	hash ^= (hash >> 11);
 	hash += (hash << 15);
+	hash = hash % PRIME;
 	return (hash);
-}
-
-int		main()
-{
-	char	str[100] = "itsme";
-	char	str2[100] = "1";
-
-	//str = "its me";
-	//str2 = "its ma";
-	printf("%s = %u\n", str, jenkins_hash(str));
-	printf("%s = %u\n", str2, jenkins_hash(str2));
-	return (0);
 }

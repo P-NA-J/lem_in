@@ -1,13 +1,16 @@
 EXE = lem-in
-CC = gcc
+CC = gcc 
 CFLAG = -Wall -Werror -Wextra
 LIB = libft/libft.a
 PATH_LIB = /Users/pauljull/
 
 SRC =	ft_recover_data.c 		\
-		lem_in.c 				\
+		main.c 					\
 		ft_parsing.c 			\
+		jenkins_hash.c			\
 		preparser.c				\
+		preparser_utils.c		\
+		get_rooms.c				\
 		ft_parser_utils.c 		\
 
 OBJ = $(SRC:.c=.o)
