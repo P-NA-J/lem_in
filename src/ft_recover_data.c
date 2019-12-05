@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:33:58 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/05 18:51:29 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/05 19:09:57 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,21 +58,26 @@ t_room			*parse_comment(t_preparse *prep, t_map *data)
 	return (NULL);	
 }
 
-
-
 t_map			*parser(void)
 {
 	t_map		*data;
+	char		*tmp;
 
 	if (!(data = (t_map *)malloc(sizeof(t_map))))
 		return (NULL);
 	if ((data->preparse = pre_parser()) == NULL)
 		return (NULL);
+	//printf("%s\n", data->preparse->buffer);
+	tmp = data->preparse->buffer;
+	//printf("%s\n", tmp);
 	if ((data->nb_ants = get_nb_ants(data, data->preparse->buffer)) == FALSE) 
 		return (NULL);
 	if ((data->rooms = get_rooms(data, data->preparse)) == NULL)
 		return (NULL);
 //	if ((
+	printf("%s\n", tmp);
+//
+	free(tmp);
 //	printf("%d\n", data->nb_ants);
 //	printf("%s\n", data->preparse->buffer);
 //	printf("line = %s\n", data->buffer);

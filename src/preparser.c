@@ -6,7 +6,7 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 22:02:40 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/04 01:45:42 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/05 19:06:09 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ t_preparse		*pre_parser(void)
 	data->reload = 1;
 	if (!(data->buffer = (char *)malloc(sizeof(char) * BASE_MALLOC)))
 		return (NULL);
-	COUCOU;
 	while ((ret = read(0, buff, BUFF_SIZE)) > 0)
 	{
 		buff[ret] = '\0';
@@ -90,6 +89,5 @@ t_preparse		*pre_parser(void)
 			if (check_first_lines(data->buffer) == FALSE)	
 				return (NULL);
 	}
-	COUCOU;
 	return (data);
 }
