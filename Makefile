@@ -10,6 +10,7 @@ SRC =	ft_recover_data.c 		\
 		jenkins_hash.c			\
 		preparser.c				\
 		preparser_utils.c		\
+		adjacency_matrix.c		\
 		get_rooms.c				\
 		ft_parser_utils.c 		\
 

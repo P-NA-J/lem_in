@@ -6,13 +6,12 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 18:40:24 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/05 18:44:16 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/06 20:09:00 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
 #include <stdlib.h>
-
 
 int				get_nb_rooms(char *buffer)
 {
@@ -33,6 +32,7 @@ int				get_nb_rooms(char *buffer)
 	return (nb_rooms);
 }
 
+// add checks if start|end is already filled
 t_room			*get_next_room(t_preparse *prep, t_map *data, int opt)
 {
 	t_room 	*new;
@@ -60,22 +60,30 @@ t_room			*get_next_room(t_preparse *prep, t_map *data, int opt)
 	return (new);
 }
 
+// add check fo similar names
 int			parse_rooms(t_map **data, t_preparse *prep, t_room **rooms)
 {
 	int 		curr_room;
+	int			max_rooms;
 	uint32_t	hashed_name;
 
 	curr_room = 0;
+	max_rooms = 0;
 	hashed_name = 0;
 	while (*(prep->buffer) && curr_room < (*data)->nb_rooms)
 	{
 		if (!(rooms[curr_room] = get_next_room(prep, *data, 0)))
 			return (FALSE);
 		hashed_name = jenkins_hash(rooms[curr_room]->name);	
-		while (prep->hashed_rooms[hashed_name].name)
+		while (prep->hashed_rooms[hashed_name].name && ++max_rooms)
+		{
 			hashed_name = (hashed_name < PRIME) ? hashed_name += 1 : 0;
-		(*data)->preparse->hashed_rooms[hashed_name] = *rooms[curr_room];
+			if (max_rooms > PRIME)
+				return (FALSE);
+		}
 		rooms[curr_room]->hash = hashed_name;
+		rooms[curr_room]->index = curr_room;
+		(*data)->preparse->hashed_rooms[hashed_name] = *rooms[curr_room];
 		curr_room++;
 		prep->buffer += ft_strclen(prep->buffer, '\n') + 1;
 	}
@@ -85,9 +93,7 @@ int			parse_rooms(t_map **data, t_preparse *prep, t_room **rooms)
 t_room			**get_rooms(t_map *data, t_preparse *prep)
 {
 	t_room	**rooms;
-	char	**tmp;
 
-	tmp = &prep->buffer;
 	rooms = NULL;
 	if ((data->nb_rooms = get_nb_rooms(prep->buffer)) == 0)
 		return (NULL);
@@ -96,7 +102,6 @@ t_room			**get_rooms(t_map *data, t_preparse *prep)
 	if ((parse_rooms(&data, prep, rooms)) == FALSE)
 		return (NULL);
 
-	free(tmp);
 	return (rooms);
 }
 

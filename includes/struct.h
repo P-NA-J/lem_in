@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 11:23:49 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/04 23:45:16 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/06 23:10:45 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef struct			s_room
 	char				*name;
 	struct s_pipe		*pipes;
 	uint32_t			hash;
+	int					index;
+	struct s_room		*next;
 	int					features;
 	// occupied
 	// connected to End
@@ -41,6 +43,10 @@ typedef struct			s_preparse
 	int					reload;
 	long				curr_index;
 	struct s_room		hashed_rooms[PRIME];
+	char				*r1;
+	char				*r2;
+	uint32_t			h_r1;
+	uint32_t			h_r2;
 }						t_preparse;
 
 typedef	struct			s_pipe
@@ -64,9 +70,12 @@ typedef struct			s_map
 	t_room				*end;
 	t_room				**rooms;
 	t_preparse			*preparse;
+	int					**adj_mat;
 	int					nb_ants;
 	int					nb_rooms;
+	//int				error;
 }						t_map;
 
+// faire une structure pour gere les types d'erreurs
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:51:52 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/05 18:45:06 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/06 23:40:08 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ uint32_t	jenkins_hash(char *name);
 t_room		*get_next_room(t_preparse *prep, t_map *data, int opt);
 t_room		**get_rooms(t_map *data, t_preparse *prep);
 t_room		*parse_comment(t_preparse *prep, t_map *data);
+int			get_pipes(t_map **data, t_preparse *prep);
 
 char		*ft_passing_name(char *str);
 t_bool		ft_is_comment(char *str, t_bool condition);

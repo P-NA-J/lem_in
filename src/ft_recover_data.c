@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:33:58 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/05 19:09:57 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/06 23:42:01 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ t_room			*parse_comment(t_preparse *prep, t_map *data)
 	return (NULL);	
 }
 
+// put start at the beginning of the rooms table
+// put end at the end of the rooms table
 t_map			*parser(void)
 {
 	t_map		*data;
@@ -67,16 +69,15 @@ t_map			*parser(void)
 		return (NULL);
 	if ((data->preparse = pre_parser()) == NULL)
 		return (NULL);
-	//printf("%s\n", data->preparse->buffer);
 	tmp = data->preparse->buffer;
-	//printf("%s\n", tmp);
 	if ((data->nb_ants = get_nb_ants(data, data->preparse->buffer)) == FALSE) 
 		return (NULL);
 	if ((data->rooms = get_rooms(data, data->preparse)) == NULL)
 		return (NULL);
-//	if ((
-	printf("%s\n", tmp);
-//
+	if (get_pipes(&data, data->preparse) == FALSE)
+		return (NULL);
+//	printf("%s\n", tmp);
+
 	free(tmp);
 //	printf("%d\n", data->nb_ants);
 //	printf("%s\n", data->preparse->buffer);
@@ -89,7 +90,18 @@ t_map			*parser(void)
 		printf("[%d]\t%s\t%d\n", i, (data->rooms[i])->name, (data->rooms[i])->hash);
 		i++;
 	}
-	i = 0;
-
+	int x = 0;
+	int y = 0;
+	while (y < data->nb_rooms)
+	{
+		x = 0;
+		while (x < data->nb_rooms)
+		{
+			printf("[%d]", data->adj_mat[y][x]);
+			x++;
+		}
+		printf("\n");
+		y++;
+	}
 	return (data);
 }
