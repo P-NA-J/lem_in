@@ -6,7 +6,7 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 18:40:24 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/06 20:09:00 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/07 19:53:01 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_room			*get_next_room(t_preparse *prep, t_map *data, int opt)
 		{
 			if (!(new = (t_room *)malloc(sizeof(t_room))))
 				return (NULL);
+			ft_bzero(new, sizeof(t_room));
 			if (!(new->name = ft_strcsub(prep->buffer, ' ')))
 				return (NULL);
 			if (opt == 1)

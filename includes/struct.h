@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 11:23:49 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/06 23:10:45 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/07 19:38:14 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct			s_room
 	// connected to End
 	// marked
 	// Init_success
+	// added to neighbors
 	int					coord_x;
 	int					coord_y;
 }						t_room;
@@ -69,6 +70,7 @@ typedef struct			s_map
 	t_room				*start;
 	t_room				*end;
 	t_room				**rooms;
+	t_room				**neighbors;
 	t_preparse			*preparse;
 	int					**adj_mat;
 	int					nb_ants;
