@@ -6,7 +6,7 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 23:34:49 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/06 23:45:21 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/07 17:39:53 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int				get_adjacency_matrix(t_map *data)
 
 // add check for comments
 // add check for wrong input 
+// add hash_check protection
 // add malloc protections
 int				parse_pipes(t_map **data, t_preparse *prep)
 {
@@ -52,8 +53,8 @@ int				parse_pipes(t_map **data, t_preparse *prep)
 		prep->buffer += ft_strlen(prep->r2) + 1;
 		prep->h_r1 = jenkins_hash(prep->r1);
 		prep->h_r2 = jenkins_hash(prep->r2);
-		curr_room1 = (*data)->preparse->hashed_rooms[prep->h_r1].index;
-		curr_room2 = (*data)->preparse->hashed_rooms[prep->h_r2].index;
+		curr_room1 = prep->hashed_rooms[prep->h_r1].index;
+		curr_room2 = prep->hashed_rooms[prep->h_r2].index;
 		(*data)->adj_mat[curr_room1][curr_room2] = 1;
 		(*data)->adj_mat[curr_room2][curr_room1] = 1;
 		free(prep->r1);

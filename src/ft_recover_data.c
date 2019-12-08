@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:33:58 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/06 23:42:01 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/09 00:14:27 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,88 @@ t_room			*parse_comment(t_preparse *prep, t_map *data)
 	return (NULL);	
 }
 
+t_room			**malloc_neighbors(t_map *data)
+{
+	t_room		**neighbors;
+
+	neighbors = NULL;
+	if (!(neighbors = (t_room **)ft_memalloc(sizeof(t_room *) * data->nb_rooms)))
+		return (NULL);
+	return (neighbors);
+}
+
+int				add_neighbor(t_room *father, t_room *child)
+{
+	t_room	*tmp_father;	
+	t_room	*tmp_child;	
+
+	tmp_father = father;
+	tmp_child = child;
+
+	tmp_child->next = NULL;
+
+
+	while (tmp_father->next != NULL)
+		tmp_father = tmp_father->next;
+	tmp_father->next = child;
+	return (TRUE);
+}
+
+t_room			**get_neighbors(t_map *data)
+{
+	int 	x;
+	int		empty;
+	t_room	**neighbors;
+
+	if (!(neighbors = malloc_neighbors(data)))
+		return (NULL);
+	empty = 0;
+	x = 0;
+	data->rooms[0]->features |= ADDED_NEIGHBORS;
+	neighbors[0] = data->rooms[0];
+	while (x < data->nb_rooms)
+	{
+		if (data->adj_mat[0][x] == 1)
+		{	
+			while (neighbors[empty] != NULL)
+				empty++;	
+			data->rooms[x]->features |= ADDED_NEIGHBORS;
+			neighbors[empty] = data->rooms[x];
+	//		add_neighbor(neighbors[0], data->rooms[x]);
+		}
+		x++;
+	}
+	int curr_room = 1;
+	int index;
+	while (curr_room < data->nb_rooms)
+	{	 
+		index = neighbors[curr_room]->index;	
+		x = 0;
+		while (x < data->nb_rooms)
+		{
+			if (data->adj_mat[index][x] == 1) 
+			{
+				if ((data->rooms[x]->features & ADDED_NEIGHBORS) == FALSE)
+				{
+					while (neighbors[empty] != NULL)
+						empty++;
+					data->rooms[x]->features |= ADDED_NEIGHBORS;
+					neighbors[empty] = data->rooms[x];
+				}
+
+//				add_neighbor(neighbors[index], data->rooms[x]);
+
+			}
+			x++;
+		}
+		curr_room++;
+	}
+
+	return (neighbors);
+
+}
+
+
 // put start at the beginning of the rooms table
 // put end at the end of the rooms table
 t_map			*parser(void)
@@ -76,6 +158,8 @@ t_map			*parser(void)
 		return (NULL);
 	if (get_pipes(&data, data->preparse) == FALSE)
 		return (NULL);
+	if ((data->neighbors = get_neighbors(data)) == NULL)
+		return (NULL);
 //	printf("%s\n", tmp);
 
 	free(tmp);
@@ -83,25 +167,5 @@ t_map			*parser(void)
 //	printf("%s\n", data->preparse->buffer);
 //	printf("line = %s\n", data->buffer);
 //	
-	int i = 0;
-	printf("NB_ROOMS = %d\n", data->nb_rooms);
-	while (i < data->nb_rooms)
-	{
-		printf("[%d]\t%s\t%d\n", i, (data->rooms[i])->name, (data->rooms[i])->hash);
-		i++;
-	}
-	int x = 0;
-	int y = 0;
-	while (y < data->nb_rooms)
-	{
-		x = 0;
-		while (x < data->nb_rooms)
-		{
-			printf("[%d]", data->adj_mat[y][x]);
-			x++;
-		}
-		printf("\n");
-		y++;
-	}
 	return (data);
 }
