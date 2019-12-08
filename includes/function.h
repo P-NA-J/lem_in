@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:51:52 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/06 23:40:08 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/09 00:07:48 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,7 @@ t_bool		ft_is_numb_str(char **str);
 
 char		*ft_strcsub(char *s, char c);
 int			count_char_until(char *str, char c, char u);
+
+int			print_info(t_map *data);
 
 #endif

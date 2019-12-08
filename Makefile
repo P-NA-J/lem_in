@@ -1,6 +1,6 @@
 EXE = lem-in
 CC = gcc 
-CFLAG = -Wall -Werror -Wextra
+CFLAG = -Wall -Werror -Wextra -g3 -fsanitize=address,undefined
 LIB = libft/libft.a
 PATH_LIB = /Users/pauljull/
 
@@ -13,6 +13,7 @@ SRC =	ft_recover_data.c 		\
 		adjacency_matrix.c		\
 		get_rooms.c				\
 		ft_parser_utils.c 		\
+		print_info.c			\
 
 OBJ = $(SRC:.c=.o)
 PATH_SRC = $(addprefix src/, $(SRC))
@@ -42,5 +43,9 @@ fclean: lib_fclean clean
 	rm -f $(EXE)
 
 re: fclean all
+
+GREEN   = '\x1b[32m'
+RED     = '\x1b[31m'
+END     = '\x1b[0m'
 
 .PHONY : libft clean fclean re comp lib_clean lib_fclean
