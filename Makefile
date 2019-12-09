@@ -44,6 +44,9 @@ fclean: lib_fclean clean
 
 re: fclean all
 
+visu:
+	pip install --user networkx
+
 GREEN   = '\x1b[32m'
 RED     = '\x1b[31m'
 END     = '\x1b[0m'

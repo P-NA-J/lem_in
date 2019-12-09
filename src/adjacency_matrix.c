@@ -6,7 +6,7 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 23:34:49 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/07 17:39:53 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/09 16:59:52 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@ int				get_adjacency_matrix(t_map *data)
 		return (FALSE);
 	while (curr_room < data->nb_rooms)
 	{
-		if (!(adj_mat[curr_room] = (int *)malloc(sizeof(int) * data->nb_rooms)))
+		if (!(adj_mat[curr_room] = (int *)ft_memalloc(sizeof(int) * data->nb_rooms)))
 			return (FALSE);
-		ft_bzero(adj_mat[curr_room], sizeof(adj_mat) * data->nb_rooms);
 		curr_room++;
 	}
 	data->adj_mat = adj_mat;

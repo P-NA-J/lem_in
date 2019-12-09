@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:39:42 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/09 00:08:02 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/09 18:41:05 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 # define BUFF_SIZE 		4096
 # define IGNORE 		-1
-# define PRIME 			20543
+# define PRIME 			36131
 
 /*
 ** Errors

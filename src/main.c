@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:35:19 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/09 00:07:07 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/09 18:14:41 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ int	main(void)
 //	t_map	colony;
 
 	data = parser();
-	print_info(data);
+	if (data != NULL)
+		print_info(data);
+	printf("1\n");
 //	if (ft_parsing(data, &colony) == FALSE)
 //		perror("Error in input");
 //	ft_lst_free(&data);

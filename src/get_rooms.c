@@ -6,7 +6,7 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 18:40:24 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/07 19:53:01 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/09 18:48:27 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,13 @@ int			parse_rooms(t_map **data, t_preparse *prep, t_room **rooms)
 		hashed_name = jenkins_hash(rooms[curr_room]->name);	
 		while (prep->hashed_rooms[hashed_name].name && ++max_rooms)
 		{
-			hashed_name = (hashed_name < PRIME) ? hashed_name += 1 : 0;
+			hashed_name = (hashed_name < PRIME - 1) ? hashed_name += 1 : 0;
 			if (max_rooms > PRIME)
 				return (FALSE);
 		}
 		rooms[curr_room]->hash = hashed_name;
 		rooms[curr_room]->index = curr_room;
-		(*data)->preparse->hashed_rooms[hashed_name] = *rooms[curr_room];
+		prep->hashed_rooms[hashed_name] = *rooms[curr_room];
 		curr_room++;
 		prep->buffer += ft_strclen(prep->buffer, '\n') + 1;
 	}
@@ -102,7 +102,6 @@ t_room			**get_rooms(t_map *data, t_preparse *prep)
 		return (NULL);
 	if ((parse_rooms(&data, prep, rooms)) == FALSE)
 		return (NULL);
-
 	return (rooms);
 }
 

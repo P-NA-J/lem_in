@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:33:58 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/09 00:14:27 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/09 17:01:42 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,8 +158,8 @@ t_map			*parser(void)
 		return (NULL);
 	if (get_pipes(&data, data->preparse) == FALSE)
 		return (NULL);
-	if ((data->neighbors = get_neighbors(data)) == NULL)
-		return (NULL);
+//	if ((data->neighbors = get_neighbors(data)) == NULL)
+//		return (NULL);
 //	printf("%s\n", tmp);
 
 	free(tmp);
