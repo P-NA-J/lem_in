@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 11:23:49 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/07 19:38:14 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/10 09:00:55 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct			s_room
 	// added to neighbors
 	int					coord_x;
 	int					coord_y;
+	struct s_room		*prev;
 }						t_room;
 
 typedef struct			s_preparse

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dijkstra.c                                      :+:      :+:    :+:   */
+/*   ft_bfs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/28 11:22:23 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/03 21:31:41 by pauljull         ###   ########.fr       */
+/*   Created: 2019/12/07 10:18:23 by pauljull          #+#    #+#             */
+/*   Updated: 2019/12/10 09:19:48 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,57 @@
 # define VISITED -1
 # define QUEUE 1
 # define UNCHANGED 0
+# define EMPTY -2
 
-t_path	*ft_bfs(t_map *galery)
+t_path	*ft_bfs(t_map *galery, int **adj_mat)
 {
 	t_room	*bfs_queue;
 	t_room	*current;
-	int i;
-	t_room	*tmp;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
-	bfs_queue = malloc(galery->nb_rooms);
+	if (!(bfs_queue = (t_room *)malloc(galery->nb_rooms * sizeof(t_room))))
+		return (NULL);
 	ft_add_queue(&bfs_queue, galery->start);
-	while (bfs_queue[0] != EMPTY)
+	while (bfs_queue != EMPTY)
 	{
 		current = ft_remove_queue(&bfs_queue);
 		current->features = VISITED;
 		if (current == galery->end)
 			return (ft_path_builder(current));
-		while ((tmp = galery->neighbors[i]) != NULL)
+		while (j < galery->nb_rooms)
+		{
+			if (adj_mat[i][j] == UNCHANGED)
+			{
+				galery->rooms[j]->prev = current;
+				ft_add_queue(&bfs_queue, galery->rooms[j]);
+			}
+			galery->rooms[j]->features = QUEUE;
+			j += 1;
+		}
+		i += 1;
+	}
+}
+/*
+t_path	*ft_bfs(t_map *galery)
+{
+	t_room	*bfs_queue;
+	t_room	*current;
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	if (!(bfs_queue = (t_room *)malloc(galery->nb_rooms * sizeof(t_room))))
+		return (NULL);
+	ft_add_queue(&bfs_queue, galery->start);
+	while (bfs_queue != EMPTY)
+	{
+		current = ft_remove_queue(&bfs_queue);
+		current->features = VISITED;
+		if (current == galery->end)
+			return (ft_path_builder(current));
+		while (j < galery->nb_rooms)
 		{
 			if (tmp->features == UNCHANGED)
 			{
@@ -45,3 +78,4 @@ t_path	*ft_bfs(t_map *galery)
 		i += 1;
 	}
 }
+*/
