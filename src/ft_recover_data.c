@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:33:58 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/09 17:01:42 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/10 18:20:06 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_room			*parse_comment(t_preparse *prep, t_map *data)
 	}
 	return (NULL);	
 }
-
+/*
 t_room			**malloc_neighbors(t_map *data)
 {
 	t_room		**neighbors;
@@ -138,7 +138,7 @@ t_room			**get_neighbors(t_map *data)
 	return (neighbors);
 
 }
-
+*/
 
 // put start at the beginning of the rooms table
 // put end at the end of the rooms table

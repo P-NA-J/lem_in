@@ -2,7 +2,6 @@ EXE = lem-in
 CC = gcc 
 CFLAG = -Wall -Werror -Wextra -g3 -fsanitize=address,undefined
 LIB = libft/libft.a
-PATH_LIB = /Users/pauljull/
 
 SRC =	ft_recover_data.c 		\
 		main.c 					\
@@ -14,6 +13,9 @@ SRC =	ft_recover_data.c 		\
 		get_rooms.c				\
 		ft_parser_utils.c 		\
 		print_info.c			\
+		ft_debug.c				\
+		ft_bfs.c				\
+		ft_mult_bfs.c			\
 
 OBJ = $(SRC:.c=.o)
 PATH_SRC = $(addprefix src/, $(SRC))
@@ -25,7 +27,7 @@ libft_comp:
 	make -C libft
 
 $(EXE) : $(PATH_OBJ)
-	$(CC) $(CFLAG) -I $(PATH_LIB) -o $(EXE) $(PATH_OBJ) $(LIB)
+	$(CC) $(CFLAG)  -o $(EXE) $(PATH_OBJ) $(LIB)
 
 $(addprefix obj/, %.o): $(addprefix src/, %.c)
 	$(CC) $(CFLAG) -c $< -o $@

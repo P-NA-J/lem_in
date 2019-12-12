@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.h                                           :+:      :+:    :+:   */
+/*   ft_mult_bfs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/18 14:36:48 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/10 15:33:48 by pauljull         ###   ########.fr       */
+/*   Created: 2019/12/12 09:13:18 by pauljull          #+#    #+#             */
+/*   Updated: 2019/12/12 13:02:43 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef LEM_IN_H
+#include "../includes/lem_in.h"
 
-# define LEM_IN_H
+void	ft_debug_single_path(int *path, size_t len);
 
-#include <sys/types.h>
-#include <sys/uio.h>
-#include <unistd.h>
-#include <limits.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <errno.h>
+void	ft_mult_bfs(t_map *galery, int **adj_mat)
+{
+	int	*path;
 
-#include "../libft/includes/libft.h"
-#include "../includes/macro.h"
-#include "../includes/struct.h"
-#include "../includes/function.h"
-
-# endif
+	while ((path = ft_bfs(galery, adj_mat)) != NULL)
+	{
+		ft_debug_single_path(path, path[0]);
+	}
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_info.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 22:26:53 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/09 00:43:48 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/12 18:13:53 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		print_info(t_map *data)
     	x = 0;
     	while (x < data->nb_rooms)
     	{
-			if (data->adj_mat[y][x] == 1)
+			if (data->adj_mat[y][x] >= 1)
         		printf("["_RED"%d"_RESET"]", data->adj_mat[y][x]);
 			else if (x == y)
 				printf("["_GREEN"\\"_RESET"]");

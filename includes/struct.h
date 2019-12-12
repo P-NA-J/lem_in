@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 11:23:49 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/10 09:00:55 by pauljull         ###   ########.fr       */
+/*   Updated: 2019/12/10 18:46:49 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,11 @@ struct					s_room;
 typedef struct			s_room
 {
 	char				*name;
-	struct s_pipe		*pipes;
 	uint32_t			hash;
 	int					index;
-	struct s_room		*next;
 	int					features;
 	// occupied
-	// connected to End
-	// marked
-	// Init_success
-	// added to neighbors
+	// visited
 	int					coord_x;
 	int					coord_y;
 	struct s_room		*prev;
@@ -51,27 +46,11 @@ typedef struct			s_preparse
 	uint32_t			h_r2;
 }						t_preparse;
 
-typedef	struct			s_pipe
-{
-	t_room				connected[2];
-	int					features;
-	// cut or not
-	// BFS return values
-}						t_pipe;
-
-typedef struct			s_path
-{
-	t_room				*from;
-	t_room				*to;
-	t_pipe				*connection;
-}						t_path;
-
 typedef struct			s_map
 {
 	t_room				*start;
 	t_room				*end;
 	t_room				**rooms;
-	t_room				**neighbors;
 	t_preparse			*preparse;
 	int					**adj_mat;
 	int					nb_ants;
@@ -79,6 +58,11 @@ typedef struct			s_map
 	//int				error;
 }						t_map;
 
-// faire une structure pour gere les types d'erreurs
+typedef struct			s_queue
+{
+	t_room				**queue;
+	size_t				index;
+}						t_queue;
 
+// faire une structure pour gere les types d'erreurs
 #endif

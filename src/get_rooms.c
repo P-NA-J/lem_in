@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_rooms.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 18:40:24 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/09 18:48:27 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/11 14:18:16 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int			parse_rooms(t_map **data, t_preparse *prep, t_room **rooms)
 		}
 		rooms[curr_room]->hash = hashed_name;
 		rooms[curr_room]->index = curr_room;
+		rooms[curr_room]->features = UNQUEUE;
 		prep->hashed_rooms[hashed_name] = *rooms[curr_room];
 		curr_room++;
 		prep->buffer += ft_strclen(prep->buffer, '\n') + 1;
