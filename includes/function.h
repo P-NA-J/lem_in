@@ -37,6 +37,6 @@ char		*ft_strcsub(char *s, char c);
 int			count_char_until(char *str, char c, char u);
 
 int			print_info(t_map *data);
-int			*ft_bfs(t_map *galery, int **adj_mat);
+int *ft_bfs(t_map *galery, int **adj_mat, t_room *start);
 
 #endif

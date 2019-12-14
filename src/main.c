@@ -29,7 +29,7 @@ int	main(void)
 //	if (data != NULL)
 //		print_info(data);
 	data->start->features = IS_START;
-	ft_bfs(data, data->adj_mat);
+	ft_mult_bfs(data, data->adj_mat);
 //	ft_mult_bfs(data, data->adj_mat);
 	print_info(data);
 //	if (ft_parsing(data, &colony) == FALSE)
