@@ -6,7 +6,7 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 22:02:40 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/14 00:49:39 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/14 20:41:26 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ t_preparse		*pre_parser(void)
 		buff[ret] = '\0';
 		data->size += ret;
 		if (data->size >= (long)BASE_MALLOC * data->reload)
-			data->buffer = increase_buffer(data, ++data->reload);
+			if (!(data->buffer = increase_buffer(data, ++data->reload)))
+				return (FALSE);
 		data->curr_index = copy_fr_index(data, buff, data->curr_index);
 		if (data->reload == 10)
 			if (check_first_lines(data->buffer) == FALSE)	

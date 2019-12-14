@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 11:23:49 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/14 01:42:57 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/14 20:47:01 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct			s_room
 typedef struct			s_preparse
 {
 	char				*buffer;
+	char				*tmp_buff;
 	long				size;					
 	int					reload;
 	long				curr_index;

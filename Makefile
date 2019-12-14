@@ -3,7 +3,7 @@ CC = gcc
 CFLAG = -Wall -Werror -Wextra -g3 -fsanitize=address,undefined
 LIB = libft/libft.a
 
-SRC =	parser.c 		\
+SRC =	parser.c 				\
 		main.c 					\
 		ft_parsing.c 			\
 		jenkins_hash.c			\
@@ -16,6 +16,7 @@ SRC =	parser.c 		\
 		ft_debug.c				\
 		ft_bfs.c				\
 		ft_mult_bfs.c			\
+		return_error.c			\
 
 OBJ = $(SRC:.c=.o)
 PATH_SRC = $(addprefix src/, $(SRC))

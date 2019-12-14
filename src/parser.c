@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:33:58 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/14 03:03:02 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/14 20:47:19 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int				get_nb_ants(t_map *data, char *buffer)
 {
 	char	*nb_ants;
 	int		i;
+	int		ants_nb;
 
 	nb_ants = NULL;
 	i = 0;
@@ -31,8 +32,9 @@ int				get_nb_ants(t_map *data, char *buffer)
 	if ((nb_ants = ft_strcsub(data->preparse->buffer, '\n')) == NULL)
 		return (FALSE);
 	data->preparse->buffer = data->preparse->buffer + i + 1;
-	// add ft_atol
-	return (ft_atoi(nb_ants));
+	ants_nb = ft_atoi(nb_ants);
+	free(nb_ants);
+	return (ants_nb);
 }
 
 t_room			*parse_comment(t_preparse *prep, t_map *data)
@@ -57,32 +59,23 @@ t_room			*parse_comment(t_preparse *prep, t_map *data)
 	return (NULL);	
 }
 
-// put start at the beginning of the rooms table
-// put end at the end of the rooms table
 t_map			*parser(void)
 {
 	t_map		*data;
-	char		*tmp;
 
 	if (!(data = (t_map *)malloc(sizeof(t_map))))
 		return (NULL);
+	ft_bzero(data, sizeof(t_map));
 	if ((data->preparse = pre_parser()) == NULL)
-		return (NULL);
-	tmp = data->preparse->buffer;
-	if ((data->nb_ants = get_nb_ants(data, data->preparse->buffer)) == FALSE) 
+		return (which_error(data, 2));
+	data->preparse->tmp_buff = data->preparse->buffer;
+	if ((data->nb_ants = get_nb_ants(data, data->preparse->buffer)) == FALSE)
 		return (NULL);
 	if ((data->rooms = get_rooms(data, data->preparse)) == NULL)
 		return (NULL);
-	if (get_pipes(&data, data->preparse) == FALSE)
+	if (data->start == NULL || data->end == NULL)
 		return (NULL);
-//	if ((data->neighbors = get_neighbors(data)) == NULL)
-//		return (NULL);
-//	printf("%s\n", tmp);
-
-	free(tmp);
-//	printf("%d\n", data->nb_ants);
-//	printf("%s\n", data->preparse->buffer);
-//	printf("line = %s\n", data->buffer);
-//	
+	if (get_pipes(&data, data->preparse) == FALSE)
+		return (which_error(data, 1));
 	return (data);
 }

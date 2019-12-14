@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:35:19 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/14 00:45:15 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/14 19:44:02 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	main(void)
 
 	if ((data = parser()) == NULL)
 		return (FALSE);
+	COUCOU;
 //	if (data != NULL)
 //		print_info(data);
 	data->start->features = IS_START;
@@ -35,5 +36,6 @@ int	main(void)
 //		perror("Error in input");
 //	ft_lst_free(&data);
 //	print_info();
+	free_all(data);
 	return (0);
 }

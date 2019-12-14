@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:51:52 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/14 03:02:29 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/14 18:26:36 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ t_room		*get_next_room(t_preparse *prep, t_map *data);
 t_room		**get_rooms(t_map *data, t_preparse *prep);
 t_room		*parse_comment(t_preparse *prep, t_map *data);
 int			get_pipes(t_map **data, t_preparse *prep);
+t_map		*which_error(t_map *data, int type);
+void		free_all(t_map *data);
 
 char		*ft_passing_name(char *str);
 t_bool		ft_is_comment(char *str, t_bool condition);
