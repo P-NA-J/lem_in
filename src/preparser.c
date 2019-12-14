@@ -6,7 +6,7 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 22:02:40 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/05 19:06:09 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/14 00:49:39 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ t_preparse		*pre_parser(void)
 		return (NULL);
 	while ((ret = read(0, buff, BUFF_SIZE)) > 0)
 	{
+		if (buff[0] == '\0')
+			return (FALSE);
 		buff[ret] = '\0';
 		data->size += ret;
 		if (data->size >= (long)BASE_MALLOC * data->reload)

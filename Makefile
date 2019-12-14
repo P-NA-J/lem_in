@@ -1,6 +1,6 @@
 EXE = lem-in
 CC = gcc 
-CFLAG = -Wall -Werror -Wextra -g3 -fsanitize=address,undefined
+CFLAG = -Wall -Werror -Wextra #-g3 -fsanitize=address,undefined
 LIB = libft/libft.a
 
 SRC =	ft_recover_data.c 		\
@@ -47,7 +47,12 @@ fclean: lib_fclean clean
 re: fclean all
 
 visu:
-	pip install --user networkx
+	 @#pip install --user networkx
+	 @#pip install --user plotly==4.3.0
+	 @#pip install --user chart-studio
+	 @$(CC) $(LIB) visu/test.c -o grapher
+	 @./grapher < visu/medium_res.txt | python visu/visualizer.py
+	 @./grapher < visu/small.anthills | python visu/visualizer.py
 
 GREEN   = '\x1b[32m'
 RED     = '\x1b[31m'
