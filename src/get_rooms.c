@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 18:40:24 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/11 14:18:16 by pauljull         ###   ########.fr       */
+/*   Updated: 2019/12/14 03:03:14 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,18 @@ int				get_nb_rooms(char *buffer)
 	return (nb_rooms);
 }
 
+int			end_or_start(t_preparse *prep, t_room *stend, t_map *data)
+{
+	if (prep->s_or_e == 1)
+		data->start = stend;
+	else if (prep->s_or_e == 2)
+		data->end = stend;
+	prep->s_or_e = 0;
+	return (TRUE);	
+}
+
 // add checks if start|end is already filled
-t_room			*get_next_room(t_preparse *prep, t_map *data, int opt)
+t_room			*get_next_room(t_preparse *prep, t_map *data)
 {
 	t_room 	*new;
 
@@ -51,10 +61,8 @@ t_room			*get_next_room(t_preparse *prep, t_map *data, int opt)
 			ft_bzero(new, sizeof(t_room));
 			if (!(new->name = ft_strcsub(prep->buffer, ' ')))
 				return (NULL);
-			if (opt == 1)
-				data->start = new;
-			else if (opt == 2)
-				data->end = new;
+			if (prep->s_or_e)
+				end_or_start(prep, new, data);
 		}
 		prep->buffer += ft_strclen(prep->buffer, '\n');
 	}
@@ -73,7 +81,7 @@ int			parse_rooms(t_map **data, t_preparse *prep, t_room **rooms)
 	hashed_name = 0;
 	while (*(prep->buffer) && curr_room < (*data)->nb_rooms)
 	{
-		if (!(rooms[curr_room] = get_next_room(prep, *data, 0)))
+		if (!(rooms[curr_room] = get_next_room(prep, *data)))
 			return (FALSE);
 		hashed_name = jenkins_hash(rooms[curr_room]->name);	
 		while (prep->hashed_rooms[hashed_name].name && ++max_rooms)
