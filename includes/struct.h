@@ -57,6 +57,7 @@ typedef struct			s_map
 	int					**adj_mat;
 	int					nb_ants;
 	int					nb_rooms;
+	int					is_augmented;
 	//int				error;
 }						t_map;
 
