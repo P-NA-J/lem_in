@@ -1,9 +1,9 @@
 EXE = lem-in
 CC = gcc 
-CFLAG = -Wall -Werror -Wextra #-g3 -fsanitize=address,undefined
+CFLAG = -Wall -Werror -Wextra -g3 -fsanitize=address,undefined
 LIB = libft/libft.a
 
-SRC =	ft_recover_data.c 		\
+SRC =	parser.c 		\
 		main.c 					\
 		ft_parsing.c 			\
 		jenkins_hash.c			\
