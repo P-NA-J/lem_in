@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:39:42 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/12 16:54:18 by pauljull         ###   ########.fr       */
+/*   Updated: 2019/12/14 19:18:37 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define AUGMENTED					3
 # define INF						4
 # define BLOCKED					5
-# define QUEUE						10000000
+# define QUEUE						9
 # define CUT 			00000001
 
 # define COUCOU printf("coucou\n")

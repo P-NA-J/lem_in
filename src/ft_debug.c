@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:53:52 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/12 10:36:55 by pauljull         ###   ########.fr       */
+/*   Updated: 2019/12/14 15:49:03 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,9 +150,9 @@ void	ft_debug_galery(t_map *galery)
 	ft_debug_adj_mat(galery->adj_mat, galery->nb_rooms);
 }
 
-void	ft_debug_single_path(int *path, size_t len)
+void	ft_debug_single_path(int *path, int len)
 {
-	size_t	i;
+	int	i;
 
 	i = 1;
 	printf("[%d] ", path[0]);
