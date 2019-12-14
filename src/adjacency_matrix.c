@@ -6,7 +6,7 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 23:34:49 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/14 20:32:36 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/14 21:47:48 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int				parse_pipes(t_map **data, t_preparse *prep)
 
 	curr_room1 = 0;
 	curr_room2 = 0;
-	while (*prep->buffer && *prep->buffer + 1)
+	while (*prep->buffer)
 	{
 		if (count_char_until(prep->buffer, '-', '\n') != 1)
 			return (FALSE);

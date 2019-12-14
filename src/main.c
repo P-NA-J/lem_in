@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:35:19 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/14 19:44:02 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/14 21:43:13 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	main(void)
 //		print_info(data);
 	data->start->features = IS_START;
 	ft_mult_bfs(data, data->adj_mat);
-//	ft_mult_bfs(data, data->adj_mat);
 	print_info(data);
 //	if (ft_parsing(data, &colony) == FALSE)
 //		perror("Error in input");

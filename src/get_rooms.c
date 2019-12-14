@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 18:40:24 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/14 03:03:14 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/14 23:15:26 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,27 +69,35 @@ t_room			*get_next_room(t_preparse *prep, t_map *data)
 	return (new);
 }
 
+uint32_t	get_hashed_name(t_preparse *prep, char *name)
+{
+	int			max_rooms;
+	uint32_t	hashed_name;
+
+	max_rooms = 0;
+	hashed_name = jenkins_hash(name);	
+	while (prep->hashed_rooms[hashed_name].name && ++max_rooms)
+	{
+		hashed_name = (hashed_name < PRIME - 1) ? hashed_name += 1 : 0;
+		if (max_rooms > PRIME)
+			return (FALSE);
+	}
+	return (hashed_name);
+}
+
 // add check fo similar names
 int			parse_rooms(t_map **data, t_preparse *prep, t_room **rooms)
 {
 	int 		curr_room;
-	int			max_rooms;
 	uint32_t	hashed_name;
 
 	curr_room = 0;
-	max_rooms = 0;
 	hashed_name = 0;
 	while (*(prep->buffer) && curr_room < (*data)->nb_rooms)
 	{
 		if (!(rooms[curr_room] = get_next_room(prep, *data)))
 			return (FALSE);
-		hashed_name = jenkins_hash(rooms[curr_room]->name);	
-		while (prep->hashed_rooms[hashed_name].name && ++max_rooms)
-		{
-			hashed_name = (hashed_name < PRIME - 1) ? hashed_name += 1 : 0;
-			if (max_rooms > PRIME)
-				return (FALSE);
-		}
+		hashed_name = get_hashed_name(prep, rooms[curr_room]->name);
 		rooms[curr_room]->hash = hashed_name;
 		rooms[curr_room]->index = curr_room;
 		rooms[curr_room]->features = UNQUEUE;
