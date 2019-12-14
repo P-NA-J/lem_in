@@ -58,4 +58,4 @@ GREEN   = '\x1b[32m'
 RED     = '\x1b[31m'
 END     = '\x1b[0m'
 
-.PHONY : libft clean fclean re comp lib_clean lib_fclean
+.PHONY : libft clean fclean re comp lib_clean lib_fclean visu
