@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 18:40:24 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/14 23:15:26 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/14 23:18:38 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ uint32_t	get_hashed_name(t_preparse *prep, char *name)
 	return (hashed_name);
 }
 
-// add check fo similar names
+// add check for similar names
 int			parse_rooms(t_map **data, t_preparse *prep, t_room **rooms)
 {
 	int 		curr_room;
