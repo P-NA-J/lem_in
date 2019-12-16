@@ -1,0 +1,11 @@
+-- clean code
+-- check error : print "ERROR"
+	-- check if a room is connected to itself
+	-- check if no ants
+	-- check if no way is possible
+	-- check if no start/end
+	-- check if no rooms at all
+-- protect mallocs
+-- function error
+-- check names starting/ending with -
+-- swap start & end at their good positions
