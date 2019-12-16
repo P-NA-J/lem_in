@@ -18,6 +18,7 @@ SRC =	parser.c 				\
 		ft_mult_bfs.c			\
 		return_error.c			\
 
+
 OBJ = $(SRC:.c=.o)
 PATH_SRC = $(addprefix src/, $(SRC))
 PATH_OBJ = $(addprefix obj/, $(OBJ))

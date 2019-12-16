@@ -25,12 +25,11 @@ int	main(void)
 
 	if ((data = parser()) == NULL)
 		return (FALSE);
-	COUCOU;
 //	if (data != NULL)
 //		print_info(data);
 	data->start->features = IS_START;
 	ft_mult_bfs(data, data->adj_mat);
-	print_info(data);
+//	print_info(data);
 //	if (ft_parsing(data, &colony) == FALSE)
 //		perror("Error in input");
 //	ft_lst_free(&data);
