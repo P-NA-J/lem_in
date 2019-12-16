@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:39:42 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/14 19:18:37 by pauljull         ###   ########.fr       */
+/*   Updated: 2019/12/16 03:40:34 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@
 # define BLOCKED					5
 # define QUEUE						9
 # define CUT 			00000001
-
+# define AUG_VISITED                11
+# define AUG_START                  12
 # define COUCOU printf("coucou\n")
 
 /*
@@ -58,6 +59,7 @@
 #  define _MAGENTA  "\x1b[35m"
 #  define _CYAN     "\x1b[36m"
 #  define _RESET    "\x1b[0m"
+
 
 
 

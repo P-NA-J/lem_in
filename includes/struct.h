@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 11:23:49 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/14 20:47:01 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/16 08:33:26 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ typedef struct			s_room
 	uint32_t			hash;
 	int					index;
 	int					features;
-	// occupied
-	// visited
+	int					path_occurence;
 	int					coord_x;
 	int					coord_y;
 	struct s_room		*prev;

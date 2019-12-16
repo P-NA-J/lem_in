@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 18:40:24 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/14 23:18:38 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/16 18:43:20 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int			parse_rooms(t_map **data, t_preparse *prep, t_room **rooms)
 		rooms[curr_room]->hash = hashed_name;
 		rooms[curr_room]->index = curr_room;
 		rooms[curr_room]->features = UNQUEUE;
+		rooms[curr_room]->path_occurence = 0;
 		prep->hashed_rooms[hashed_name] = *rooms[curr_room];
 		curr_room++;
 		prep->buffer += ft_strclen(prep->buffer, '\n') + 1;

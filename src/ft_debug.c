@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:53:52 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/14 15:49:03 by pauljull         ###   ########.fr       */
+/*   Updated: 2019/12/16 08:24:59 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,18 @@ void	ft_print_features(int features)
 		ret = printf("[[ FEATURES ]] ==> [[ " _GREEN " VISITED " _RESET "]]\n");
 	else if (features == UNQUEUE)
 		ret = printf("[[ FEATURES ]] ==> [[ " _GREEN " UNQUEUE " _RESET "]]\n");
-	else if (features == OCCUPIED)
-		ret = printf("[[ FEATURES ]] ==> [[ " _GREEN " OCCUPIED " _RESET "]]\n");
+	else if (features == IS_END)
+		ret = printf("[[ FEATURES ]] ==> [[ " _GREEN " IS_END " _RESET "]]\n");
+	else if (features == AUG_START)
+		ret = printf("[[ FEATURES ]] ==> [[ " _GREEN " AUG_START " _RESET "]]\n");
+	else if (features == AUG_VISITED)
+		ret = printf("[[ FEATURES ]] ==> [[ " _GREEN " AUG_VISITED " _RESET "]]\n");
+	else if (features == INF)
+		ret = printf("[[ FEATURES ]] ==> [[ " _GREEN " INF " _RESET "]]\n");
+	else if (features == BLOCKED)
+		ret = printf("[[ FEATURES ]] ==> [[ " _GREEN " BLOCKED " _RESET "]]\n");
+	else if (features == QUEUE)
+		printf("[[ FEATURES ]] ==> [[ " _GREEN " QUEUE " _RESET "]]\n");
 }
 
 void	ft_debug_room(t_room *room, int mode)
@@ -150,7 +160,7 @@ void	ft_debug_galery(t_map *galery)
 	ft_debug_adj_mat(galery->adj_mat, galery->nb_rooms);
 }
 
-void	ft_debug_single_path(int *path, int len)
+void	ft_debug_single_path(int *path, int len, t_map *galery)
 {
 	int	i;
 
@@ -159,7 +169,7 @@ void	ft_debug_single_path(int *path, int len)
 	fflush(stdout);
 	while (i <= len)
 	{
-		printf("[%d]", path[i++]);
+		printf("[%s]", galery->rooms[path[i++]]->name);
 		fflush(stdout);
 	}
 	printf("\n");
