@@ -6,14 +6,14 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 09:13:18 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/14 20:55:50 by pauljull         ###   ########.fr       */
+/*   Updated: 2019/12/16 18:39:09 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
 
 void	ft_debug_single_path(int *path, size_t len);
-int			print_info(t_map *data);
+void		print_info(t_map *data);
 void	ft_reset_matrix(t_map *galery);
 
 void	ft_mult_bfs(t_map *galery, int **adj_mat)

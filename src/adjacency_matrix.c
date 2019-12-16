@@ -6,7 +6,7 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 23:34:49 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/15 00:59:38 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/16 00:26:18 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int				get_adjacency_matrix(t_map *data)
 
 	adj_mat = NULL;
 	curr_room = 0;
-	if (!(adj_mat = (int **)malloc(sizeof(int *) * data->nb_rooms)))
+	if (!(adj_mat = (int **)ft_memalloc(sizeof(int *) * data->nb_rooms)))
 		return (FALSE);
 	while (curr_room < data->nb_rooms)
 	{
@@ -30,10 +30,6 @@ int				get_adjacency_matrix(t_map *data)
 	data->adj_mat = adj_mat;
 	return (TRUE);
 }
-
-// add check for comments
-// add check for wrong input 
-// add hash_check protection
 
 int				get_hashes_rs(t_preparse *prep)
 {
@@ -50,6 +46,7 @@ int				get_hashes_rs(t_preparse *prep)
 	return (TRUE);
 }
 
+// add check for wrong input 
 int				parse_pipes(t_map **data, t_preparse *prep)
 {
 	int curr_room1;
@@ -57,12 +54,16 @@ int				parse_pipes(t_map **data, t_preparse *prep)
 
 	curr_room1 = 0;
 	curr_room2 = 0;
+	// add check for comments
 	while (*prep->buffer)
 	{
+		while (*prep->buffer == '#')
+			prep->buffer += ft_strclen(prep->buffer, '\n') + 1;
 		if (count_char_until(prep->buffer, '-', '\n') != 1)
 			return (FALSE);
 		if ((get_hashes_rs(prep)) == FALSE)
 			return (FALSE);
+		// add hash_check protection
 		curr_room1 = prep->hashed_rooms[prep->h_r1].index;
 		curr_room2 = prep->hashed_rooms[prep->h_r2].index;
 		(*data)->adj_mat[curr_room1][curr_room2] = 1;

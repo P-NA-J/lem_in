@@ -6,7 +6,7 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 17:16:41 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/14 21:00:09 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/15 23:03:58 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	free_all(t_map *data)
 	free(data);
 }
 
-
 t_map	*which_error(t_map *data, int type)
 {
 	t_map	*error;
@@ -78,7 +77,7 @@ t_map	*which_error(t_map *data, int type)
 	else if (type == 2)
 	{	
 		free_all(data);
-		ft_putstr("ERROR");
+		ft_putstr("ERROR\n");
 	}
 	return (NULL);
 }

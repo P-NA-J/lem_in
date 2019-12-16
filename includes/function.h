@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:51:52 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/14 18:26:36 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/16 03:44:57 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_bool		ft_is_numb_str(char **str);
 char		*ft_strcsub(char *s, char c);
 int			count_char_until(char *str, char c, char u);
 
-int			print_info(t_map *data);
+void			print_info(t_map *data);
 int *ft_bfs(t_map *galery, int **adj_mat, t_room *start);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:33:58 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/14 20:47:19 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/16 00:09:52 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int				get_nb_ants(t_map *data, char *buffer)
 
 	nb_ants = NULL;
 	i = 0;
+	while (buffer[i] == '#')
+		i = ft_strclen(buffer, '\n') + 1;
 	while (buffer[i] && buffer[i] != '\n')
 	{
 		if (ft_isdigit((int)buffer[i]) == 0)
@@ -70,11 +72,11 @@ t_map			*parser(void)
 		return (which_error(data, 2));
 	data->preparse->tmp_buff = data->preparse->buffer;
 	if ((data->nb_ants = get_nb_ants(data, data->preparse->buffer)) == FALSE)
-		return (NULL);
+		return (which_error(data, 2));
 	if ((data->rooms = get_rooms(data, data->preparse)) == NULL)
-		return (NULL);
+		return (which_error(data, 2));
 	if (data->start == NULL || data->end == NULL)
-		return (NULL);
+		return (which_error(data, 2));
 	if (get_pipes(&data, data->preparse) == FALSE)
 		return (which_error(data, 1));
 	return (data);
