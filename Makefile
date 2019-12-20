@@ -17,6 +17,11 @@ SRC =	parser.c 				\
 		ft_bfs.c				\
 		ft_mult_bfs.c			\
 		return_error.c			\
+		ft_distribution.c		\
+		ft_matrix.c				\
+		ft_queue.c				\
+		ft_features.c			\
+		ft_path.c				\
 
 
 OBJ = $(SRC:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 11:23:49 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/16 08:33:26 by pauljull         ###   ########.fr       */
+/*   Updated: 2019/12/20 09:38:35 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct			s_map
 	int					**adj_mat;
 	int					nb_ants;
 	int					nb_rooms;
+	int					nb_path;
 	int					is_augmented;
 	//int				error;
 }						t_map;
