@@ -1,24 +1,14 @@
-Salut Paul,
+map qui fonctionne :
+tiny1
+tiny3
+custom_easy_2_path
+custom_easy_3_path
+custom_1
+custom_2
+custom_3
+custom_5
+custom_7
 
-J'espere que ton we s'est bien passe.
-Pour ma part j'ai:
-- fait le gros read qui stocke tout dans une chaine de caracteres
-- parse le nb de fourmis et de rooms
-- lu pas mal sur les BFS et Edmonds Karps
-- trouve la data structure qui nous interesse pour stocker les rooms (tableau de t_rooms)
-- quasiment fini d'implementer le hasheur pour parser plus rapidement les pipes
-- le retour du parsing des pipes nous fera une adjacency matrix pour feed le BFS 
-
-Demain je vais faire quelque chose du genre:
-get nb_rooms
-malloc table rooms
-nb_room = 0;
-while (parse_room_names)
-{
-	malloc data->rooms[nb_room] = new_room
-	hashed_name = jenkins(new room name)
-	hashed_room[hashed_name] = data->rooms[nb_room]
-	nb_rooms++;
-}
-
-Je t'explique davantage demain. Stv tu peux en lire davantage sur les algos. Faut que je me grouille sur le parsing.
+ft_mult_bfs renvoie un (int **)
+la premiere case renseigne la longueur du chemin, la seconde renseigne le nombre de fourmi a faire passer sur le chemin en question
+et toutes les cases suivantes renseignent les index des room composant le chemin.
