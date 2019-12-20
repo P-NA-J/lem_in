@@ -6,15 +6,18 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 09:13:18 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/16 18:44:54 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/20 16:04:49 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
 
-void	ft_debug_single_path(int *path, size_t len);
+void	ft_debug_single_path(int *path, int len, t_map *galery);
 void		print_info(t_map *data);
 void	ft_reset_matrix(t_map *galery);
+void	ft_debug_tab_path(t_room **rooms, int **tab_path, int n);
+void    ft_distribution(int **tab_path, int nb_path, int nb_ants);
+int	ft_path_length(t_room *current);
 
 int		ft_get_number_pipe(int *line, int len)
 {
@@ -32,111 +35,6 @@ int		ft_get_number_pipe(int *line, int len)
 	return (count);
 }
 
-void    ft_get_path(int **adj_mat, int i, int j, int len, t_map *galery)
-{
-    int tmp;
-    printf("[%s]", galery->rooms[j]->name);
-    fflush(stdout);
-	if (j == 1)
-		return ;
-    tmp = i;
-    i = j;
-    j = 0;
-    while (j < len)
-    {
-        if (adj_mat[i][j] == 1 && j != tmp)
-            ft_get_path(adj_mat, i, j, len, galery);
-		if (i == galery->end->index)
-			return ;
-		j += 1;
-    }
-}
-
-int		ft_check_no_path(int **adj_mat, t_map *galery)
-{
-	if (ft_get_number_pipe(adj_mat[galery->start->index], galery->nb_rooms) == 0)
-		return (FALSE);
-	if (ft_get_number_pipe(adj_mat[galery->end->index], galery->nb_rooms) == 0)
-		return (FALSE);
-	return (TRUE);
-}
-
-void	ft_print_error(void)
-{
-	ft_putendl_fd("ERROR", 2);
-}
-
-void	ft_trivial_print(t_map *galery)
-{
-	int i;
-	int	nb_ants;
-
-	nb_ants = galery->nb_ants;
-	i = 1;
-	while (i < nb_ants)
-	{
-		ft_putstr("L");
-		ft_putnbr(i);
-		ft_putchar('-');
-		ft_putstr(galery->end->name);
-		ft_putchar(' ');
-		i += 1;
-	}
-	ft_putstr("L");
-	ft_putnbr(i);
-	ft_putchar('-');
-	ft_putstr(galery->end->name);
-	ft_putchar('\n');
-}
-
-int		ft_check_trivial_path(int **adj_mat, t_map *galery)
-{
-	if (adj_mat[galery->start->index][galery->end->index] == 1)
-		return (TRUE);
-	return (FALSE);
-}
-
-void    ft_print_path(int **adj_mat, int len, t_map *galery)
-{
-    int i;
-
-    i = 0;
-	if (ft_check_no_path(adj_mat, galery) == FALSE)
-		return (ft_print_error());
-	if (ft_check_trivial_path(adj_mat, galery) == TRUE)
-		return (ft_trivial_print(galery));
-    while (i < len)
-    {
-        if (adj_mat[galery->start->index][i] == 1)
-		{
-			printf("[%s]", galery->start->name);
-			fflush(stdout);
-			ft_get_path(adj_mat, galery->start->index, i, len, galery);
-			printf("\n");
-		}
-		i += 1;
-   }
-}
-
-void	ft_res_matrix(t_map *galery)
-{
-	int i;
-	int	nb_rooms;
-	int	j;
-
-	i = 0;
-	nb_rooms = galery->nb_rooms;
-	while (i < nb_rooms)
-	{	
-		j = 0;
-		while (j < nb_rooms)
-		{
-			if (galery->adj_mat[i][j] == 1)
-				galery->adj_mat[i][j] = 0;
-		}
-	}
-}
-
 int		ft_get_min_pipe(t_map *galery)
 {
 	int	min_start;
@@ -144,31 +42,41 @@ int		ft_get_min_pipe(t_map *galery)
 
 	min_start = ft_get_number_pipe(galery->adj_mat[galery->start->index], galery->nb_rooms);
 	min_end = ft_get_number_pipe(galery->adj_mat[galery->end->index], galery->nb_rooms);
-//	printf("min_start = %d\n", min_start);
-//	printf("min_end = %d\n", min_end);
 	return (min_start < min_end ? min_start : min_end);
 }
 
-void	ft_mult_bfs(t_map *galery, int **adj_mat)
+int	**ft_mult_bfs(t_map *galery, int **adj_mat)
 {
 	int	**tab_path;
 	int i;
-	int	j;
 	int	min;
-	int	*collision;
-	
+
+	print_info(galery);
 	min = ft_get_min_pipe(galery);
 	if (!(tab_path = (int **)malloc(sizeof(int *) * min)))
-		return ;
+		return (NULL);
 	i = 0;
-	while ((tab_path[i] = ft_bfs(galery, adj_mat, galery->start)) != NULL && i < min)
+	while (i < min && (tab_path[i] = ft_bfs(galery, adj_mat, galery->start)) != NULL)
+	{
+		i += 1;
+	}
+	ft_reset_matrix(galery);
+	min = ft_get_min_pipe(galery);
+	i = 0;
+	while (i < min && (tab_path[i] = ft_bfs(galery, adj_mat, galery->start)) != NULL)
 	{
 		ft_debug_single_path(tab_path[i], tab_path[i][0], galery);
+		i += 1;
 	}
-	if (i == min)
-		ft_res_matrix(galery);
-	else
-		ft_reset_matrix(galery);
-//	print_info(galery);
-//	ft_print_path(adj_mat, galery->nb_rooms, galery);
+	ft_reset_matrix(galery);
+	print_info(galery);
+	galery->nb_path = min;
+	ft_distribution(tab_path, i, galery->nb_ants);
+	i = 0;
+	while (i < min)
+	{
+		ft_debug_single_path(tab_path[i], tab_path[i][0], galery);
+		i += 1;
+	}
+	return (tab_path);
 }
