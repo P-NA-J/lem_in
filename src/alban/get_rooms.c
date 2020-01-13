@@ -6,11 +6,11 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 18:40:24 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/16 18:43:20 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/21 09:00:13 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem_in.h"
+#include "../../includes/lem_in.h"
 #include <stdlib.h>
 
 int				get_nb_rooms(char *buffer)

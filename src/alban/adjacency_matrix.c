@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   adjacency_matrix.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 23:34:49 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/16 00:26:18 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/21 09:00:11 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem_in.h"
+#include "../../includes/lem_in.h"
 
 int				get_adjacency_matrix(t_map *data)
 {

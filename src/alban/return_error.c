@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   return_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 17:16:41 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/15 23:03:58 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/21 09:00:09 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 //data->adj_mat[*][*]
 //data->adj_mat[*]
 
-#include "../includes/lem_in.h"
+#include "../../includes/lem_in.h"
 void	free_rooms(t_map *data)
 {
 	int i;

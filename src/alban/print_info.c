@@ -6,11 +6,11 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 22:26:53 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/16 18:38:21 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/21 09:00:16 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem_in.h"
+#include "../../includes/lem_in.h"
 
 //char	colors[10][15] = {
 //		colors[0] = "_RED",

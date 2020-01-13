@@ -6,11 +6,11 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 15:14:59 by pauljull          #+#    #+#             */
-/*   Updated: 2019/11/26 17:03:22 by aboitier         ###   ########.fr       */
+/*   Updated: 2019/12/21 09:05:45 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem_in.h"
+#include "../../includes/lem_in.h"
 
 t_bool		ft_is_numb_str(char **str)
 {
