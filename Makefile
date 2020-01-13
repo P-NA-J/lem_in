@@ -3,26 +3,28 @@ CC = gcc
 CFLAG = -Wall -Werror -Wextra -g3 -fsanitize=address,undefined
 LIB = libft/libft.a
 
-SRC =	parser.c 				\
-		main.c 					\
-		ft_parsing.c 			\
-		jenkins_hash.c			\
-		preparser.c				\
-		preparser_utils.c		\
-		adjacency_matrix.c		\
-		get_rooms.c				\
-		ft_parser_utils.c 		\
-		print_info.c			\
-		ft_debug.c				\
-		ft_bfs.c				\
-		ft_mult_bfs.c			\
-		return_error.c			\
-		ft_distribution.c		\
-		ft_matrix.c				\
-		ft_queue.c				\
-		ft_features.c			\
-		ft_path.c				\
-
+SRC =	main.c 						\
+		alban/parser.c 				\
+		alban/ft_parsing.c 			\
+		alban/jenkins_hash.c		\
+		alban/preparser.c			\
+		alban/preparser_utils.c		\
+		alban/adjacency_matrix.c	\
+		alban/get_rooms.c			\
+		alban/ft_parser_utils.c 	\
+		alban/print_info.c			\
+		alban/return_error.c		\
+		paul/ft_debug.c				\
+		paul/ft_bfs.c				\
+		paul/ft_mult_bfs.c			\
+		paul/ft_distribution.c		\
+		paul/ft_matrix.c			\
+		paul/ft_queue.c				\
+		paul/ft_features.c			\
+		paul/ft_path.c				\
+		paul/ft_free.c				\
+		paul/ft_print.c				\
+		paul/ft_buffer.c			\
 
 OBJ = $(SRC:.c=.o)
 PATH_SRC = $(addprefix src/, $(SRC))
