@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 12:58:56 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/15 17:29:01 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/15 17:48:07 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,8 +146,10 @@ int		**ft_print(int **tab, t_map *data)
 
 	if (!(ants = ft_ants_tab_init(ft_tmp_tab(tab, data->nb_path), data)))
 		return (NULL);
-	ants_count = 0;
 	ft_bzero(&(data->buff), sizeof(data->buff));
+	ft_putstr_buffer(&(data->buff), data->preparse->tmp_buff, ft_strlen(data->preparse->tmp_buff));
+	ft_write_in_buffer(&(data->buff), '\n', 1);
+	ants_count = 0;
 	while (ants_count != data->nb_ants)
 		ft_line_edit(ants, data, tab, &ants_count);
 	ft_flush_buffer(&(data->buff));
