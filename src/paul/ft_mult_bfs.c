@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 09:13:18 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/08 16:39:37 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/15 16:48:45 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,5 @@ int		**ft_mult_bfs(t_map *galery, int **adj_mat)
 	if (min == 0)
 		return (NULL);
 	ft_distribution(tab_path, i, galery->nb_ants);
-	
-	i = 0;
-	while (i < galery->nb_path)
-	{
-		ft_debug_single_path(tab_path[i], tab_path[i][0] ,galery);
-		i += 1;
-	}
-	
 	return (tab_path);
 }

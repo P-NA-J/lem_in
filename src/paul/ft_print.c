@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 12:58:56 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/15 16:29:11 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/15 17:29:01 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,29 @@ void	ft_set_correct_path(int *ants, t_map *data, int *tab, int *j)
 	ants[2] = data->start->index;
 }
 
+int		*ft_tmp_tab(int **tab, int nb_line)
+{
+	int	*tmp_tab;
+	int	i;
+
+	if (!(tmp_tab = (int *)malloc(sizeof(int) * nb_line)))
+		return (NULL);
+	i = 0;
+	while (i < nb_line)
+	{
+		tmp_tab[i] = tab[i][1];
+		i += 1;
+	}
+	return (tmp_tab);
+}
+
 int		**ft_ants_tab_init(int *tab, t_map *data)
 {
 	int	**ants;
 	int	i;
 	int	j;
 
+	(void)tab;
 	if (!(ants = (int **)malloc(sizeof(int *) * data->nb_ants)))
 		return (NULL);
 	i = 0;
@@ -69,31 +86,12 @@ void	ft_move_on(int *ants, int *tab, t_map *data, t_buff *buff)
 	ants[2] = tmp;
 	if (ants[2] != data->end->index)
 		data->rooms[ants[2]]->features = OCCUPIED;
-	if (ants[2] != data->end->index)
-	{
-		ft_write_in_buffer(buff, 'L', 1);
-		ft_putstr_buffer(buff, ft_itoa(ants[0]), ft_nb_digit(10, "u", ants[0]));
-		ft_write_in_buffer(buff, '-', 1);
-		ft_putstr_buffer(buff, data->rooms[ants[2]]->name,
-		ft_strlen(data->rooms[ants[2]]->name));
-		ft_write_in_buffer(buff, ' ', 1);
-	}
-}
-
-int		*ft_tmp_tab(int **tab, int nb_line)
-{
-	int	*tmp_tab;
-	int	i;
-
-	if (!(tmp_tab = (int *)malloc(sizeof(int) * nb_line)))
-		return (NULL);
-	i = 0;
-	while (i < nb_line)
-	{
-		tmp_tab[i] = tab[i][1];
-		i += 1;
-	}
-	return (tmp_tab);
+	ft_write_in_buffer(buff, 'L', 1);
+	ft_putstr_buffer(buff, ft_itoa(ants[0]), ft_nb_digit(10, "u", ants[0]));
+	ft_write_in_buffer(buff, '-', 1);
+	ft_putstr_buffer(buff, data->rooms[ants[2]]->name,
+	ft_strlen(data->rooms[ants[2]]->name));
+	ft_write_in_buffer(buff, ' ', 1);
 }
 
 t_bool	ft_next_room(t_map *data, int curr_room, int *path)
@@ -121,7 +119,6 @@ void	ft_line_edit(int **ants, t_map *data, int **tab, int *ants_count)
 	i = 0;
 	while (i < data->nb_ants)
 	{
-
 		if (ants[i][2] == data->start->index && tab[ants[i][1]][1] != 0 && ft_next_room(data, ants[i][2], tab[ants[i][1]]) == TRUE)
 		{
 			tab[ants[i][1]][1] -= 1;
@@ -139,6 +136,7 @@ void	ft_line_edit(int **ants, t_map *data, int **tab, int *ants_count)
 		}
 		i += 1;
 	}
+	ft_write_in_buffer(&(data->buff), '\n', 1);
 }
 
 int		**ft_print(int **tab, t_map *data)
@@ -151,11 +149,7 @@ int		**ft_print(int **tab, t_map *data)
 	ants_count = 0;
 	ft_bzero(&(data->buff), sizeof(data->buff));
 	while (ants_count != data->nb_ants)
-	{
 		ft_line_edit(ants, data, tab, &ants_count);
-		if (ants_count != data->nb_ants)
-			ft_write_in_buffer(&(data->buff), '\n', 1);
-	}
 	ft_flush_buffer(&(data->buff));
 	return (ants);
 }

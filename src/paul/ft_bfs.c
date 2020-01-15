@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 10:18:23 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/08 16:20:32 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/15 17:28:01 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int			*ft_bfs(t_map *galery, int **adj_mat, t_room *start)
 		current = ft_remove_queue(&bfs_queue);
 		if (current == galery->end)
 		{
-			ft_free_queue(bfs_queue, galery->nb_rooms);
+			ft_free_queue(bfs_queue, sizeof(t_queue));
 			return (ft_path_builder(current, adj_mat));
 		}
 		if (current->features != IS_START)
@@ -114,10 +114,10 @@ int			*ft_bfs(t_map *galery, int **adj_mat, t_room *start)
 		if (ft_adj_mat_line_process(galery, adj_mat, &bfs_queue, current)
 		!= NULL)
 		{
-			ft_free_queue(bfs_queue, galery->nb_rooms);
+			ft_free_queue(bfs_queue, sizeof(t_queue));
 			return (ft_path_builder(galery->end, adj_mat));
 		}
 	}
-	ft_free_queue(bfs_queue, galery->nb_rooms);
+	ft_free_queue(bfs_queue, sizeof(t_queue));
 	return (NULL);
 }
