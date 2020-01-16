@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 11:23:49 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/13 16:32:56 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/16 15:07:14 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ typedef struct			s_preparse
 	uint32_t			h_r2;
 }						t_preparse;
 
-typedef struct		s_buff
+typedef struct			s_buff
 {
-	int				i;
-	char			buff[BUFF_SIZE + 1];
-}					t_buff;
+	int					i;
+	char				buff[BUFF_SIZE + 1];
+}						t_buff;
 
 typedef struct			s_map
 {

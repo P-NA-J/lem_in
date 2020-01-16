@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:51:52 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/08 18:22:52 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/15 16:28:18 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,5 @@ void		ft_free_queue(t_queue queue, int len);
 void		ft_write_in_buffer(t_buff *buff, char c, int len);
 void		ft_putstr_buffer(t_buff *buff, char *str, int len);
 void		ft_flush_buffer(t_buff *buff);
+void		ft_debug_print(int **ants, t_map *data, int **tab);
 #endif

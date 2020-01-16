@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 10:18:23 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/15 17:28:01 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/16 15:06:27 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,18 +89,25 @@ int			*ft_augmented_bfs(t_map *galery, int **adj_mat, t_room *start)
 	return (NULL);
 }
 
+t_room		**ft_init_bfs(t_queue *bfs_queue, t_map *galery, t_room *start)
+{
+	if (!(bfs_queue->queue = (t_room **)malloc(galery->nb_rooms
+	* sizeof(t_room *))))
+		return (NULL);
+	bfs_queue->index = 0;
+	if (start == galery->start)
+		ft_set_bfs(galery);
+	ft_add_queue(bfs_queue, start, NULL);
+	return (bfs_queue->queue);
+}
+
 int			*ft_bfs(t_map *galery, int **adj_mat, t_room *start)
 {
 	t_queue	bfs_queue;
 	t_room	*current;
 
-	if (!(bfs_queue.queue = (t_room **)malloc(galery->nb_rooms
-	* sizeof(t_room *))))
+	if (!(bfs_queue.queue = ft_init_bfs(&bfs_queue, galery, start)))
 		return (NULL);
-	bfs_queue.index = 0;
-	if (start == galery->start)
-		ft_set_bfs(galery);
-	ft_add_queue(&bfs_queue, start, NULL);
 	while (bfs_queue.index != 0)
 	{
 		current = ft_remove_queue(&bfs_queue);

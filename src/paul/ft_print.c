@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 12:58:56 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/15 17:48:07 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/16 14:57:13 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,16 +119,16 @@ void	ft_line_edit(int **ants, t_map *data, int **tab, int *ants_count)
 	i = 0;
 	while (i < data->nb_ants)
 	{
-		if (ants[i][2] == data->start->index && tab[ants[i][1]][1] != 0 && ft_next_room(data, ants[i][2], tab[ants[i][1]]) == TRUE)
+		if (ants[i][2] == data->start->index && tab[ants[i][1]][1] != 0
+		&& ft_next_room(data, ants[i][2], tab[ants[i][1]]) == TRUE)
 		{
 			tab[ants[i][1]][1] -= 1;
 			ft_move_on(ants[i], tab[ants[i][1]], data, &(data->buff));
 		}
 		else if (ants[i][2] != data->start->index
-		&& ants[i][2] != data->end->index && ants[i][2] != -1 && ft_next_room(data, ants[i][2], tab[ants[i][1]]) == TRUE)
-		{
+		&& ants[i][2] != data->end->index && ants[i][2] != -1
+		&& ft_next_room(data, ants[i][2], tab[ants[i][1]]) == TRUE)
 			ft_move_on(ants[i], tab[ants[i][1]], data, &(data->buff));
-		}
 		if (ants[i][2] == data->end->index)
 		{
 			*ants_count += 1;
@@ -147,7 +147,8 @@ int		**ft_print(int **tab, t_map *data)
 	if (!(ants = ft_ants_tab_init(ft_tmp_tab(tab, data->nb_path), data)))
 		return (NULL);
 	ft_bzero(&(data->buff), sizeof(data->buff));
-	ft_putstr_buffer(&(data->buff), data->preparse->tmp_buff, ft_strlen(data->preparse->tmp_buff));
+	ft_putstr_buffer(&(data->buff), data->preparse->tmp_buff,
+	ft_strlen(data->preparse->tmp_buff));
 	ft_write_in_buffer(&(data->buff), '\n', 1);
 	ants_count = 0;
 	while (ants_count != data->nb_ants)
