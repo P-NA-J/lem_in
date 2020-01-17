@@ -47,6 +47,8 @@ int		**ft_mult_bfs(t_map *galery, int **adj_mat)
 	int	min;
 
 	min = ft_get_min_pipe(galery);
+	if (min == 0)
+		return (0);
 	if (!(tab_path = (int **)malloc(sizeof(int *) * min)))
 		return (NULL);
 	i = 0;

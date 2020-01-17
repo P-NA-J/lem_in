@@ -22,7 +22,8 @@ int	main(void)
 	if ((data = parser()) == NULL)
 		return (FALSE);
 	data->start->features = IS_START;
-	tab_path = ft_mult_bfs(data, data->adj_mat);
+	if ((tab_path = ft_mult_bfs(data, data->adj_mat)) == NULL)
+		return (0);
 	while (i < data->nb_rooms)
 		data->rooms[i++]->features = EMPTY;
 	ft_print(tab_path, data);
