@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:33:58 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/21 09:00:14 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/20 14:26:19 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_room			*parse_comment(t_preparse *prep, t_map *data)
 	char	*tmp;
 
 	tmp = NULL;
+
 	if (prep->buffer[1] && prep->buffer[1] == '#')
 	{
 		if (!(tmp = ft_strcsub(prep->buffer, '\n')))
@@ -56,9 +57,10 @@ t_room			*parse_comment(t_preparse *prep, t_map *data)
 		else if (ft_strncmp((const char *)tmp, "##end", size) == 0)
 			prep->s_or_e = 2;
 		free(tmp);
-		return (get_next_room(prep, data));
 	}
-	return (NULL);	
+	else
+		prep->buffer += ft_strclen(prep->buffer, '\n') + 1;
+	return (get_next_room(prep, data));	
 }
 
 t_map			*parser(void)

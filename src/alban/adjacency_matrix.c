@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 23:34:49 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/21 09:00:11 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/20 12:58:02 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,48 @@ int				get_hashes_rs(t_preparse *prep)
 		return (FALSE);
 	prep->buffer += ft_strlen(prep->r1) + 1;
 	if (!(prep->r2 = ft_strcsub(prep->buffer, '\n')))
+	{	
+		free(prep->r1);
 		return (FALSE);
+	}
 	prep->buffer += ft_strlen(prep->r2) + 1;
 	prep->h_r1 = jenkins_hash(prep->r1);
 	prep->h_r2 = jenkins_hash(prep->r2);
+//	free(prep->r1);
+//	free(prep->r2);
+	return (TRUE);
+}
+
+int				compare_names(char *to_connect, uint32_t *h_rx, t_preparse *prep)
+{
+	int diff;
+	
+	diff = 0;
+	while (ft_strcmp(prep->hashed_rooms[*h_rx].name, to_connect) != 0 && diff++ < 10)
+	{
+		*h_rx = (*h_rx < PRIME - 1) ? *h_rx += 1 : 0;
+		if (diff == 9)
+			return (FALSE);
+	}
+	return (TRUE);
+}
+
+int				connect_rooms(t_map *data, t_preparse *prep)
+{
+	int curr_room1;
+	int curr_room2;
+
+	if (!(compare_names(prep->r1, &(prep->h_r1), prep))
+	|| (!(compare_names(prep->r2, &(prep->h_r2), prep))))
+	{
+		free(prep->r1);
+		free(prep->r2);
+		return (FALSE);
+	}
+	curr_room1 = prep->hashed_rooms[prep->h_r1].index;
+	curr_room2 = prep->hashed_rooms[prep->h_r2].index;
+	data->adj_mat[curr_room1][curr_room2] = 1;
+	data->adj_mat[curr_room2][curr_room1] = 1;
 	free(prep->r1);
 	free(prep->r2);
 	return (TRUE);
@@ -49,12 +87,6 @@ int				get_hashes_rs(t_preparse *prep)
 // add check for wrong input 
 int				parse_pipes(t_map **data, t_preparse *prep)
 {
-	int curr_room1;
-	int curr_room2;
-
-	curr_room1 = 0;
-	curr_room2 = 0;
-	// add check for comments
 	while (*prep->buffer)
 	{
 		while (*prep->buffer == '#')
@@ -64,10 +96,8 @@ int				parse_pipes(t_map **data, t_preparse *prep)
 		if ((get_hashes_rs(prep)) == FALSE)
 			return (FALSE);
 		// add hash_check protection
-		curr_room1 = prep->hashed_rooms[prep->h_r1].index;
-		curr_room2 = prep->hashed_rooms[prep->h_r2].index;
-		(*data)->adj_mat[curr_room1][curr_room2] = 1;
-		(*data)->adj_mat[curr_room2][curr_room1] = 1;
+		if (connect_rooms(*data, prep) == FALSE)
+			return (FALSE);
 	}
 	return (TRUE);
 }

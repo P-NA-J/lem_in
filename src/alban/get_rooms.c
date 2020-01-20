@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 18:40:24 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/21 09:00:13 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/20 14:26:06 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_room			*get_next_room(t_preparse *prep, t_map *data)
 	t_room 	*new;
 
 	new = NULL;
+
 	while (*(prep->buffer) && *(prep->buffer) != '\n')
 	{
 		if (prep->buffer[0] == '\n' || prep->buffer[0] == 'L' || prep->buffer[0] == ' ')
@@ -93,10 +94,12 @@ int			parse_rooms(t_map **data, t_preparse *prep, t_room **rooms)
 
 	curr_room = 0;
 	hashed_name = 0;
+	COUCOU;
 	while (*(prep->buffer) && curr_room < (*data)->nb_rooms)
 	{
 		if (!(rooms[curr_room] = get_next_room(prep, *data)))
 			return (FALSE);
+		COUCOU;
 		hashed_name = get_hashed_name(prep, rooms[curr_room]->name);
 		rooms[curr_room]->hash = hashed_name;
 		rooms[curr_room]->index = curr_room;

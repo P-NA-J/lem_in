@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:39:42 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/08 09:12:39 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/20 12:19:05 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,5 @@
 # define _MAGENTA			"\x1b[35m"
 # define _CYAN				"\x1b[36m"
 # define _RESET			"\x1b[0m"
+# define COUCOU			printf("COUCOU\n")
 #endif
