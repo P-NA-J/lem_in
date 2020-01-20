@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 09:13:18 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/20 08:44:26 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/20 12:40:43 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,31 +40,33 @@ int		ft_get_min_pipe(t_map *galery)
 	return (min_start < min_end ? min_start : min_end);
 }
 
-int		**ft_mult_bfs(t_map *galery, int **adj_mat)
+void	ft_bfs_loop(int min, int **tab_path, t_map *galery, int **adj_mat)
 {
-	int	**tab_path;
 	int	i;
-	int	min;
-
-	min = ft_get_min_pipe(galery);
-	if (min == 0)
-		return (0);
-	if (!(tab_path = (int **)malloc(sizeof(int *) * min)))
-		return (NULL);
-	i = 0;
-	while (i < min && (tab_path[i] = ft_bfs(galery, adj_mat, galery->start))
-	!= NULL)
-		i += 1;
-	ft_reset_matrix(galery);
-	min = ft_get_min_pipe(galery);
+	
 	i = 0;
 	while (i < min && (tab_path[i] = ft_bfs(galery, adj_mat, galery->start))
 	!= NULL)
 		i += 1;
 	ft_reset_matrix(galery);
 	galery->nb_path = i;
+}
+
+int		**ft_mult_bfs(t_map *galery, int **adj_mat)
+{
+	int	**tab_path;
+	int	min;
+
+	min = ft_get_min_pipe(galery);
 	if (min == 0)
 		return (NULL);
-	ft_distribution(tab_path, i, galery->nb_ants);
+	if (!(tab_path = (int **)malloc(sizeof(int *) * min)))
+		return (NULL);
+	ft_bfs_loop(min, tab_path, galery, adj_mat);
+	min = ft_get_min_pipe(galery);
+	if (min == 0)
+		return (NULL);
+	ft_bfs_loop(min, tab_path, galery, adj_mat);
+	ft_distribution(tab_path, galery->nb_path, galery->nb_ants);
 	return (tab_path);
 }
