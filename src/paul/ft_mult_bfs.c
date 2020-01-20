@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 09:13:18 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/20 12:40:43 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/20 17:59:52 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int		**ft_mult_bfs(t_map *galery, int **adj_mat)
 	if (!(tab_path = (int **)malloc(sizeof(int *) * min)))
 		return (NULL);
 	ft_bfs_loop(min, tab_path, galery, adj_mat);
+	if (tab_path[0] == NULL)
+		return (NULL);
 	min = ft_get_min_pipe(galery);
 	if (min == 0)
 		return (NULL);

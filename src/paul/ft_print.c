@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 12:58:56 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/20 11:18:38 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/20 14:41:18 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ int		**ft_print(int **tab, t_map *data)
 
 	if (!(ants = ft_ants_tab_init(ft_tmp_tab(tab, data->nb_path), data)))
 		return (NULL);
-	ft_print_file(data);
+//	ft_print_file(data);
 	ants_count = 0;
 	while (ants_count != data->nb_ants)
 		ft_line_edit(ants, data, tab, &ants_count);

@@ -6,12 +6,12 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 10:18:23 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/16 15:06:27 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/20 17:56:33 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
-
+int			*ft_add_front_queue(t_queue *bfs_queue, t_room *to_add, t_room *current);
 void		ft_aug_adj_mat_line_process(t_map *galery, int **adj_mat,
 									t_queue *aug_queue, t_room *current)
 {
@@ -56,6 +56,8 @@ int			*ft_adj_mat_line_process(t_map *galery, int **adj_mat,
 		j = 0;
 		while (j < galery->nb_rooms)
 		{
+			if (adj_mat[i][j] == UNCHANGED && galery->rooms[j]->features == IS_END)
+				return (ft_add_front_queue(bfs_q_ref, galery->rooms[j], current));
 			if (adj_mat[i][j] == UNCHANGED && (galery->rooms[j]->features
 			== UNQUEUE || galery->rooms[j]->features == IS_END))
 				ft_add_queue(bfs_q_ref, galery->rooms[j], current);
