@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 12:58:56 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/16 14:57:13 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/20 11:18:38 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,32 +38,54 @@ int		*ft_tmp_tab(int **tab, int nb_line)
 	return (tmp_tab);
 }
 
+int		*ft_ants_cell_init(t_map *data, int *tab, int i)
+{
+	int	j;
+	int	*ants;
+
+	j = 0;
+	if (!(ants = (int *)malloc(sizeof(int) * 3)))
+		return (NULL);
+	ants[0] = i + 1;
+	ants[2] = data->start->index;
+	while (j < data->nb_path)
+	{
+		if (tab[j] > 0)
+		{
+			ants[1] = j;
+			tab[j] -= 1;
+			break ;
+		}
+		else
+			j += 1;
+	}
+	return (ants);
+}
+
 int		**ft_ants_tab_init(int *tab, t_map *data)
 {
 	int	**ants;
 	int	i;
-	int	j;
 
-	(void)tab;
+	i = 0;
 	if (!(ants = (int **)malloc(sizeof(int *) * data->nb_ants)))
 		return (NULL);
-	i = 0;
-	j = 0;
 	while (i < data->nb_ants)
 	{
-		if (!(ants[i] = (int *)malloc(sizeof(int) * 3)))
-			return (NULL);
-		ants[i][0] = i + 1;
-		ants[i][1] = j;
-		if (tab[j] > 0)
-		{
-			ft_set_correct_path(ants[i], data, tab, &j);
-			i += 1;
-		}
-		else
-			j = 0;
+		ants[i] = ft_ants_cell_init(data, tab, i);
+		i += 1;
 	}
 	return (ants);
+}
+
+void	ft_print_move(t_buff *buff, t_map *data, int *ants)
+{
+	ft_write_in_buffer(buff, 'L', 1);
+	ft_putstr_buffer(buff, ft_itoa(ants[0]), ft_nb_digit(10, "u", ants[0]));
+	ft_write_in_buffer(buff, '-', 1);
+	ft_putstr_buffer(buff, data->rooms[ants[2]]->name,
+	ft_strlen(data->rooms[ants[2]]->name));
+	ft_write_in_buffer(buff, ' ', 1);
 }
 
 void	ft_move_on(int *ants, int *tab, t_map *data, t_buff *buff)
@@ -86,12 +108,7 @@ void	ft_move_on(int *ants, int *tab, t_map *data, t_buff *buff)
 	ants[2] = tmp;
 	if (ants[2] != data->end->index)
 		data->rooms[ants[2]]->features = OCCUPIED;
-	ft_write_in_buffer(buff, 'L', 1);
-	ft_putstr_buffer(buff, ft_itoa(ants[0]), ft_nb_digit(10, "u", ants[0]));
-	ft_write_in_buffer(buff, '-', 1);
-	ft_putstr_buffer(buff, data->rooms[ants[2]]->name,
-	ft_strlen(data->rooms[ants[2]]->name));
-	ft_write_in_buffer(buff, ' ', 1);
+	ft_print_move(buff, data, ants);
 }
 
 t_bool	ft_next_room(t_map *data, int curr_room, int *path)
@@ -102,13 +119,9 @@ t_bool	ft_next_room(t_map *data, int curr_room, int *path)
 	i = 2;
 	tmp_room = path[2];
 	while (tmp_room != curr_room)
-	{
 		tmp_room = path[++i];
-	}
 	if (data->rooms[path[i + 1]]->features == OCCUPIED)
-	{
 		return (FALSE);
-	}
 	return (TRUE);
 }
 
@@ -139,6 +152,17 @@ void	ft_line_edit(int **ants, t_map *data, int **tab, int *ants_count)
 	ft_write_in_buffer(&(data->buff), '\n', 1);
 }
 
+void	ft_print_file(t_map *data)
+{
+	ft_bzero(&(data->buff), sizeof(data->buff));
+	ft_putstr_buffer(&(data->buff), data->preparse->tmp_buff,
+	ft_strlen(data->preparse->tmp_buff));
+	if (data->preparse->tmp_buff[ft_strlen(data->preparse->tmp_buff) - 1] != '\n')
+		ft_write_in_buffer(&(data->buff), '\n', 2);
+	else
+		ft_write_in_buffer(&(data->buff), '\n', 1);
+}
+
 int		**ft_print(int **tab, t_map *data)
 {
 	int		**ants;
@@ -146,10 +170,7 @@ int		**ft_print(int **tab, t_map *data)
 
 	if (!(ants = ft_ants_tab_init(ft_tmp_tab(tab, data->nb_path), data)))
 		return (NULL);
-	ft_bzero(&(data->buff), sizeof(data->buff));
-	ft_putstr_buffer(&(data->buff), data->preparse->tmp_buff,
-	ft_strlen(data->preparse->tmp_buff));
-	ft_write_in_buffer(&(data->buff), '\n', 1);
+	ft_print_file(data);
 	ants_count = 0;
 	while (ants_count != data->nb_ants)
 		ft_line_edit(ants, data, tab, &ants_count);
