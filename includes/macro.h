@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:39:42 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/20 12:19:05 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/01/21 16:02:22 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define AUGMENTED			3
 # define INF				4
 # define BLOCKED			5
+# define TO_CUT				6
 # define QUEUE				9
 # define CUT				00000001
 # define AUG_VISITED		11

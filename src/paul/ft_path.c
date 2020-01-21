@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 15:13:37 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/08 12:23:29 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/21 16:20:01 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,15 @@ void	ft_mat_adjustment(int **adj_mat, t_room *end_point)
 	{
 		if (adj_mat[end_point->index][end_point->prev->index]
 		== AUGMENTED)
-			adj_mat[end_point->index][end_point->prev->index] = 6;
+			adj_mat[end_point->index][end_point->prev->index] = TO_CUT;
 		else if (adj_mat[end_point->index][end_point->prev->index]
 		== UNCHANGED)
-			adj_mat[end_point->index][end_point->prev->index] = 3;
+			adj_mat[end_point->index][end_point->prev->index] = AUGMENTED;
 	}
 	else
 		adj_mat[end_point->index][end_point->prev->index] = INF;
 	if (adj_mat[end_point->prev->index][end_point->index] == BLOCKED)
-		adj_mat[end_point->prev->index][end_point->index] = 6;
+		adj_mat[end_point->prev->index][end_point->index] = TO_CUT;
 	else if (adj_mat[end_point->prev->index][end_point->index]
 	== UNCHANGED)
 		adj_mat[end_point->prev->index][end_point->index] = BLOCKED;
