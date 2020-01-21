@@ -1,0 +1,16 @@
+Sur l'algo :
+	- Fix les map qui boucle inf.
+	- Modifier ft_bfs pour qu'elle n'abort plus lorsqu'on la fait tourner pour avoir tout les chemins possibles.
+	- Reecrire / refacto ft_mult_bfs.c
+
+Sur le parser :
+	- Remuscler jusu'au bout si besoin
+
+Sur le projet :
+	- Normer tout
+	- Travailler sur les leaks
+	- Faire un script de test Non crash / Performance
+	- Finir le visu
+	- Faire un script "checker" de la sortie standard
+	- Optimiser l'algo si besoin
+	- Tracker les cas non opti (potentiellement les collisions de salles lorsqu'on a plus de 4 liens sur une salle)
