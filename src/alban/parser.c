@@ -6,34 +6,49 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:33:58 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/20 14:26:19 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/01/21 20:32:16 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
 #include <stdlib.h>
 
-int				get_nb_ants(t_map *data, char *buffer)
+int				escape_comments(t_preparse *prep)
+{
+	int size;
+
+	size = ft_strclen(prep->buffer, '\n');
+	if (ft_strncmp((const char *)prep->buffer, "##start", size) == 0)
+		return (FALSE);
+	else if (ft_strncmp((const char *)prep->buffer, "##end", size) == 0)
+		return (FALSE);
+	prep->buffer += size + 1;
+	return (TRUE);
+}
+
+int				get_nb_ants(t_map *data, t_preparse *prep)
 {
 	char	*nb_ants;
-	int		i;
 	int		ants_nb;
+	int		i;
 
 	nb_ants = NULL;
 	i = 0;
-	while (buffer[i] == '#')
-		i = ft_strclen(buffer, '\n') + 1;
-	while (buffer[i] && buffer[i] != '\n')
-	{
-		if (ft_isdigit((int)buffer[i]) == 0)
-        	return (FALSE);
-		if (i == 300)
+	while (prep->buffer[0] == '#')
+		if (escape_comments(prep) == FALSE)
 			return (FALSE);
+	if (ft_isdigit((int)*prep->buffer) == 0)
+		return (FALSE);
+	while (*prep->buffer && *prep->buffer != '\n')
+	{
+		if (ft_isdigit((int)*prep->buffer) == 0)
+        	return (FALSE);
+		prep->buffer++;
 		i++;
 	}
-	if ((nb_ants = ft_strcsub(data->preparse->buffer, '\n')) == NULL)
+	if ((nb_ants = ft_strcsub(prep->buffer - i, '\n')) == NULL)
 		return (FALSE);
-	data->preparse->buffer = data->preparse->buffer + i + 1;
+	data->preparse->buffer += ft_strclen(prep->buffer, '\n') + 1;
 	ants_nb = ft_atoi(nb_ants);
 	free(nb_ants);
 	return (ants_nb);
@@ -45,7 +60,6 @@ t_room			*parse_comment(t_preparse *prep, t_map *data)
 	char	*tmp;
 
 	tmp = NULL;
-
 	if (prep->buffer[1] && prep->buffer[1] == '#')
 	{
 		if (!(tmp = ft_strcsub(prep->buffer, '\n')))
@@ -72,8 +86,9 @@ t_map			*parser(void)
 	ft_bzero(data, sizeof(t_map));
 	if ((data->preparse = pre_parser()) == NULL)
 		return (which_error(data, 2));
+	data->preparse->hashed_rooms[0].name = "NOPE";
 	data->preparse->tmp_buff = data->preparse->buffer;
-	if ((data->nb_ants = get_nb_ants(data, data->preparse->buffer)) == FALSE)
+	if ((data->nb_ants = get_nb_ants(data, data->preparse)) == FALSE)
 		return (which_error(data, 2));
 	if ((data->rooms = get_rooms(data, data->preparse)) == NULL)
 		return (which_error(data, 2));

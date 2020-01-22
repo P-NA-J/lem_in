@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 22:02:40 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/21 09:00:16 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/20 19:03:43 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int			check_first_lines(char *buffer)
 	spaces = 0;
 	while (buffer[i] && buffer[i] != '\n')
 	{
-		if (ft_isdigit((int)buffer[i]) == 0)
+		if (ft_isdigit((int)buffer[i]) == 0 && buffer[i] != '#')
 			return (FALSE);
-		if (i == 300)
+		if (i == 1500)
 			return (FALSE);
 		i++;
 	}

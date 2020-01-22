@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 23:34:49 by aboitier          #+#    #+#             */
-/*   Updated: 2020/01/20 12:58:02 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/01/21 20:32:05 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ int				get_hashes_rs(t_preparse *prep)
 	prep->buffer += ft_strlen(prep->r2) + 1;
 	prep->h_r1 = jenkins_hash(prep->r1);
 	prep->h_r2 = jenkins_hash(prep->r2);
-//	free(prep->r1);
-//	free(prep->r2);
 	return (TRUE);
 }
 
@@ -56,7 +54,7 @@ int				compare_names(char *to_connect, uint32_t *h_rx, t_preparse *prep)
 	diff = 0;
 	while (ft_strcmp(prep->hashed_rooms[*h_rx].name, to_connect) != 0 && diff++ < 10)
 	{
-		*h_rx = (*h_rx < PRIME - 1) ? *h_rx += 1 : 0;
+		*h_rx = (*h_rx < PRIME - 1) ? *h_rx += 1 : 1;
 		if (diff == 9)
 			return (FALSE);
 	}
@@ -87,6 +85,8 @@ int				connect_rooms(t_map *data, t_preparse *prep)
 // add check for wrong input 
 int				parse_pipes(t_map **data, t_preparse *prep)
 {
+	int i = 0;
+
 	while (*prep->buffer)
 	{
 		while (*prep->buffer == '#')
@@ -98,6 +98,7 @@ int				parse_pipes(t_map **data, t_preparse *prep)
 		// add hash_check protection
 		if (connect_rooms(*data, prep) == FALSE)
 			return (FALSE);
+		i++;
 	}
 	return (TRUE);
 }

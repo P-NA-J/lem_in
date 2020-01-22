@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 18:40:24 by aboitier          #+#    #+#             */
-/*   Updated: 2020/01/20 14:26:06 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/01/21 21:04:58 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,11 @@ int			end_or_start(t_preparse *prep, t_room *stend, t_map *data)
 	return (TRUE);	
 }
 
-// add checks if start|end is already filled
 t_room			*get_next_room(t_preparse *prep, t_map *data)
 {
 	t_room 	*new;
 
 	new = NULL;
-
 	while (*(prep->buffer) && *(prep->buffer) != '\n')
 	{
 		if (prep->buffer[0] == '\n' || prep->buffer[0] == 'L' || prep->buffer[0] == ' ')
@@ -76,17 +74,19 @@ uint32_t	get_hashed_name(t_preparse *prep, char *name)
 	uint32_t	hashed_name;
 
 	max_rooms = 0;
-	hashed_name = jenkins_hash(name);	
+	hashed_name = jenkins_hash(name);
 	while (prep->hashed_rooms[hashed_name].name && ++max_rooms)
 	{
-		hashed_name = (hashed_name < PRIME - 1) ? hashed_name += 1 : 0;
+		if (prep->hashed_rooms[hashed_name].name &&
+					ft_strcmp(prep->hashed_rooms[hashed_name].name, name) == 0)
+			return (FALSE);
+		hashed_name = (hashed_name < PRIME - 1) ? hashed_name += 1 : 1;
 		if (max_rooms > PRIME)
 			return (FALSE);
 	}
 	return (hashed_name);
 }
 
-// add check for similar names
 int			parse_rooms(t_map **data, t_preparse *prep, t_room **rooms)
 {
 	int 		curr_room;
@@ -94,13 +94,12 @@ int			parse_rooms(t_map **data, t_preparse *prep, t_room **rooms)
 
 	curr_room = 0;
 	hashed_name = 0;
-	COUCOU;
 	while (*(prep->buffer) && curr_room < (*data)->nb_rooms)
 	{
 		if (!(rooms[curr_room] = get_next_room(prep, *data)))
 			return (FALSE);
-		COUCOU;
-		hashed_name = get_hashed_name(prep, rooms[curr_room]->name);
+		if (!(hashed_name = get_hashed_name(prep, rooms[curr_room]->name)))
+			return (FALSE);
 		rooms[curr_room]->hash = hashed_name;
 		rooms[curr_room]->index = curr_room;
 		rooms[curr_room]->features = UNQUEUE;
