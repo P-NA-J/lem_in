@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paul <paul@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 11:23:49 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/16 15:07:14 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/23 17:14:29 by paul             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,14 @@ struct s_room;
 typedef struct			s_room
 {
 	char				*name;
+	struct s_room		*prev;
 	uint32_t			hash;
 	int					index;
 	int					features;
 	int					path_occurence;
 	int					coord_x;
 	int					coord_y;
-	struct s_room		*prev;
+	int					pathed;
 }						t_room;
 
 typedef struct			s_preparse
