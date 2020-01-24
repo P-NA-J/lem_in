@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bfs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paul <paul@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 10:18:23 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/23 17:01:47 by paul             ###   ########.fr       */
+/*   Updated: 2020/01/24 13:51:27 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_room		**ft_init_bfs(t_queue *bfs_queue, t_map *galery, t_room *start)
 	ft_add_queue(bfs_queue, start, NULL);
 	return (bfs_queue->queue);
 }
-
+/*
 void		ft_aug_adj_mat_line_process(t_map *galery, int **adj_mat,
 									t_queue *aug_queue, t_room *current)
 {
@@ -133,10 +133,10 @@ int			*ft_bfs(t_map *galery, int **adj_mat, t_room *start)
 	ft_free_queue(bfs_queue, sizeof(t_queue));
 	return (NULL);
 }
+*/
 
+void	ft_print_features(int features);
 
-
-/*
 void	ft_adj_mat_line_process(t_map *galery, int **adj_mat,
 							t_queue *bfs_q_ref, int current)
 {
@@ -150,10 +150,15 @@ void	ft_adj_mat_line_process(t_map *galery, int **adj_mat,
 			galery->rooms[i]->pathed = 1;
 			ft_add_queue(bfs_q_ref, galery->rooms[i], galery->rooms[current]);
 		}
-		else if (galery->rooms[current]->pathed == 1 && (adj_mat[current][i] == 3 || adj_mat[current][i] == 1))
+		else if ((galery->rooms[current]->pathed == 1 && adj_mat[current][i] == 3) || adj_mat[current][i] == 1)
 		{
 			galery->rooms[current]->pathed = 0;
-			if (ft_check_line(adj_mat[i], galery->nb_rooms, 4) == FALSE)
+			if (galery->rooms[i]->features == IS_END)
+			{
+				ft_add_front_queue(bfs_q_ref, galery->rooms[i], galery->rooms[current]);
+				return ;
+			}
+			if (galery->rooms[i]->features == UNQUEUE && ft_check_line(adj_mat[i], galery->nb_rooms, 4) == FALSE)
 				ft_add_queue(bfs_q_ref, galery->rooms[i], galery->rooms[current]);
 		}
 	}
@@ -164,7 +169,6 @@ int			*ft_bfs(t_map *galery, int **adj_mat, t_room *start)
 	t_queue	bfs_queue;
 	t_room	*current;
 
-	printf("COUCOU\n");
 	if (!(bfs_queue.queue = ft_init_bfs(&bfs_queue, galery, start)))
 		return (NULL);
 	while (bfs_queue.index != 0)
@@ -179,4 +183,3 @@ int			*ft_bfs(t_map *galery, int **adj_mat, t_room *start)
 	ft_free_queue(bfs_queue, sizeof(t_queue));
 	return (NULL);
 }
-*/
