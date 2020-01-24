@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 15:15:19 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/08 12:23:20 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/22 18:20:30 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,20 @@ int		**ft_mat_mirror_change(int **adj_mat, int value, int i_1, int i_2)
 	adj_mat[i_1][i_2] = value;
 	adj_mat[i_2][i_1] = value;
 	return (adj_mat);
+}
+
+int		ft_check_line(int *line, int len, int nb)
+{
+	int	i;
+
+	i = 0;
+	while (i < len)
+	{
+		if (line[i] == nb)
+			return (TRUE);
+		i += 1;
+	}
+	return (FALSE);
 }
 
 int		ft_line_check(int *line, int len)
