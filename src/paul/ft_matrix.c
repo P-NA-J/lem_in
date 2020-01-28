@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 15:15:19 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/22 18:20:30 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/28 15:57:36 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		ft_check_line(int *line, int len, int nb)
 	while (i < len)
 	{
 		if (line[i] == nb)
-			return (TRUE);
+			return (i);
 		i += 1;
 	}
 	return (FALSE);
@@ -40,11 +40,11 @@ int		ft_line_check(int *line, int len)
 	i = 0;
 	while (i < len)
 	{
-		if (line[i] == 3 || line[i] == 6)
+		if (line[i] == 3 || line[i] == 4)
 			return (i);
 		i += 1;
 	}
-	return (0);
+	return (-1);
 }
 
 void	ft_reset_matrix(t_map *galery)

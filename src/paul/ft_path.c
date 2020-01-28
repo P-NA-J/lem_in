@@ -6,11 +6,13 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 15:13:37 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/21 16:20:01 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/28 16:38:47 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
+
+void	ft_debug_line_adj_mat(int *line, size_t size);
 
 int		ft_path_length(t_room *current)
 {
@@ -30,8 +32,10 @@ void	ft_mat_adjustment(int **adj_mat, t_room *end_point)
 	if (end_point->prev->features != IS_START)
 	{
 		if (adj_mat[end_point->index][end_point->prev->index]
-		== AUGMENTED)
+		== BLOCKED)
+		{
 			adj_mat[end_point->index][end_point->prev->index] = TO_CUT;
+		}
 		else if (adj_mat[end_point->index][end_point->prev->index]
 		== UNCHANGED)
 			adj_mat[end_point->index][end_point->prev->index] = AUGMENTED;
@@ -50,7 +54,9 @@ int		*ft_path_builder(t_room *end_point, int **adj_mat)
 	int	len;
 	int	*path;
 
+	printf("1\n");
 	len = ft_path_length(end_point);
+	printf("2\n");
 	if (!(path = (int *)malloc(sizeof(int) * (len + 2))))
 		return (NULL);
 	path[0] = len;

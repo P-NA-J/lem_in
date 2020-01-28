@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paul <paul@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:35:19 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/23 17:16:43 by paul             ###   ########.fr       */
+/*   Updated: 2020/01/28 16:34:01 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	main(void)
 		ft_putstr("ERROR\n");
 		return (FALSE);
 	}
+	ft_clean(data, data->adj_mat);
 	data->start->features = IS_START;
 	if ((tab_path = ft_mult_bfs(data, data->adj_mat)) == NULL)
 	{
@@ -32,7 +33,7 @@ int	main(void)
 	}
 	while (i < data->nb_rooms)
 		data->rooms[i++]->features = EMPTY;
-//	ft_print(tab_path, data);
+	ft_print(tab_path, data);
 //	ft_free(data, tab_path);
 	return (0);
 }
