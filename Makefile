@@ -1,11 +1,10 @@
 EXE = lem-in
 CC = gcc 
-CFLAG = -Wall -Werror -Wextra -g3 -fsanitize=address,undefined
+CFLAG = -Wall -Werror -Wextra -g3 -fsanitize=address,undefined -flto -o3
 LIB = libft/libft.a
 
 SRC =	main.c 						\
 		alban/parser.c 				\
-		alban/ft_parsing.c 			\
 		alban/jenkins_hash.c		\
 		alban/preparser.c			\
 		alban/preparser_utils.c		\
@@ -54,6 +53,22 @@ fclean: lib_fclean clean
 	rm -f $(EXE)
 
 re: fclean all
+
+test: $(EXE)
+	bash launch_test.sh
+
+#testinc:
+	#reorganiser le repo
+	#reorganiser le dossier maps
+	#script:
+	#	performance = wc -l
+	#	si les fourmis avancent sur une route valide
+
+	#recompiler normal
+	#lancer tous les tests
+	#erreurs parsers, voir tous les customs, 
+	
+	#recompiler valgrind
 
 visu:
 	 @#pip install --user networkx
