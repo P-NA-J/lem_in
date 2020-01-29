@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:39:42 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/21 16:02:22 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/28 13:21:44 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@
 # define AUG_VISITED		11
 # define AUG_START			12
 # define _RED				"\x1b[31m"
-# define _GREEN			"\x1b[32m"
+# define _GREEN				"\x1b[32m"
 # define _YELLOW			"\x1b[33m"
 # define _BLUE				"\x1b[34m"
 # define _MAGENTA			"\x1b[35m"
 # define _CYAN				"\x1b[36m"
-# define _RESET			"\x1b[0m"
-# define COUCOU			printf("COUCOU\n")
+# define _RESET				"\x1b[0m"
+# define COUCOU				printf("COUCOU\n")
 #endif

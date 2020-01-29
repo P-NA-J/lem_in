@@ -24,6 +24,7 @@ SRC =	main.c 						\
 		paul/ft_free.c				\
 		paul/ft_print.c				\
 		paul/ft_buffer.c			\
+		paul/ft_clean.c				\
 
 OBJ = $(SRC:.c=.o)
 PATH_SRC = $(addprefix src/, $(SRC))

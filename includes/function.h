@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:51:52 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/15 16:28:18 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/28 10:26:56 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void		ft_aug_clean(t_room **rooms, int len);
 void		ft_set_bfs(t_map *galery);
 int			*ft_path_builder(t_room *end_point, int **adj_mat);
 t_room		*ft_remove_queue(t_queue *bfs_queue);
-void		ft_add_queue(t_queue *bfs_queue, t_room *to_add, t_room *current);
+void		ft_add_queue(t_queue *bfs_queue, t_room *to_add, t_room *current, int time);
 int			*ft_augmented_bfs(t_map *galery, int **adj_mat, t_room *start);
 void		ft_debug_room(t_room *room, int mode);
 void		ft_debug_rooms(t_room **rooms, size_t size, int mode);
@@ -59,4 +59,5 @@ void		ft_write_in_buffer(t_buff *buff, char c, int len);
 void		ft_putstr_buffer(t_buff *buff, char *str, int len);
 void		ft_flush_buffer(t_buff *buff);
 void		ft_debug_print(int **ants, t_map *data, int **tab);
+int			*ft_clean(t_map *data, int **adj_mat);
 #endif
