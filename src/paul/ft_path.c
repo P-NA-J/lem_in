@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 15:13:37 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/28 16:38:47 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/29 14:03:16 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,7 @@ int		*ft_path_builder(t_room *end_point, int **adj_mat)
 	int	len;
 	int	*path;
 
-	printf("1\n");
 	len = ft_path_length(end_point);
-	printf("2\n");
 	if (!(path = (int *)malloc(sizeof(int) * (len + 2))))
 		return (NULL);
 	path[0] = len;
