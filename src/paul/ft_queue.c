@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 15:12:38 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/28 16:27:19 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/29 18:11:03 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,103 @@ void		ft_add_queue(t_queue *bfs_queue, t_room *to_add, t_room *current, int time
 	{
 		bfs_queue->queue[bfs_queue->index] = to_add;
 		bfs_queue->index += 1;
-		if (to_add->features != IS_END && to_add->features != IS_START)
+		if (to_add->features != IS_END)
 			to_add->features = QUEUE;
 		ft_reposition(bfs_queue);
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 15:15:19 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/28 15:57:36 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/29 18:19:02 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		ft_check_line(int *line, int len, int nb)
 			return (i);
 		i += 1;
 	}
-	return (FALSE);
+	return (-1);
 }
 
 int		ft_line_check(int *line, int len)

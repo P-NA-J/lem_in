@@ -6,12 +6,85 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:53:52 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/08 12:23:05 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/25 18:25:58 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
 #include <stdio.h>
+
+void	ft_debug_collission(t_map *data, int **tab_path)
+{
+	int i,j ,k, l, count;
+
+	i = data->nb_path - 1;
+	j = 0;
+	k = 0;
+	l = 0;
+	count = 0;
+	while (i > 0)
+	{
+//		printf("i = %d\n", i);
+		j = 3;
+		while (j < tab_path[i][0] + 2)
+		{
+//			printf("j = %d\n", j);
+			k = i - 1;
+			while (k >= 0)
+			{
+//				printf("k = %d\n", k);
+				l = 3;
+				while (l < tab_path[k][0] + 2)
+				{
+//					printf("l = %d\n", l);
+					if (tab_path[i][j] == tab_path[k][l] && tab_path[i][j] != data->end->index)
+					{
+						count += 1;
+						printf("/!\\ ERROR COLLISION /!\\\ntab_path[%d][%d] = %d tab_path[%d][%d] = %d\n", i, j, tab_path[i][j], k, l, tab_path[k][l]);
+					}
+					l += 1;
+				}
+				k -= 1;
+			}
+			j += 1;
+		}
+		i -= 1;
+	}
+	if (count == 0)
+		printf("PAS DE COLLISION TOUT VA BIEN\n");
+}
+
+void	ft_debug_print(int **ants, t_map *data, int **tab)
+{
+	int	i;
+	int j;
+
+	i = 0;
+	while (i < data->nb_ants)
+	{
+		printf("ANTS Num %d | Position = %d\n", i + 1, ants[i][2]);
+		i += 1;
+	}
+	printf("\n");
+	i = 0;
+	while (i < data->nb_path)
+	{
+		printf("PATH NUM %d | NB_FOURMI RESTANTES = %d\n", i + 1, tab[i][1]);
+		j = 2;
+		while (j < tab[i][0] + 2)
+		{
+			printf("ROOM = %s | ", data->rooms[tab[i][j]]->name);
+			if (data->rooms[tab[i][j]]->features == OCCUPIED)
+				printf("OCCUPIED");
+			else
+				printf("EMPTY");
+			printf("\n");
+			j += 1;
+		}
+		printf("\n");
+		i += 1;
+	}
+}
 
 void	ft_print_line(char c, size_t n)
 {
@@ -61,6 +134,10 @@ void	ft_print_features(int features)
 		ret = printf("[[ FEATURES ]] ==> [[ " _GREEN " BLOCKED " _RESET "]]\n");
 	else if (features == QUEUE)
 		printf("[[ FEATURES ]] ==> [[ " _GREEN " QUEUE " _RESET "]]\n");
+	else if (features == EMPTY)
+		printf("[[ FEATURES ]] ==> [[ " _GREEN " EMPTY " _RESET "]]\n");
+	else if (features == OCCUPIED)
+		printf("[[ FEATURES ]] ==> [[ " _GREEN " OCCUPIED " _RESET "]]\n");
 }
 
 void	ft_debug_room(t_room *room, int mode)
@@ -68,6 +145,8 @@ void	ft_debug_room(t_room *room, int mode)
 	size_t ret;
 
 	ret = printf("[[ NAME ]]     ==> [[ " _GREEN " %s " _RESET "]]\n", room->name);
+	ret = printf("[[ TIME ]]     ==> [[ " _GREEN " %d " _RESET "]]\n", room->time);
+	ret = printf("[[ PATHED ]]     ==> [[ " _GREEN " %d " _RESET "]]\n", room->pathed);
 	ret = printf("[[ INDEX ]]    ==> [[ " _GREEN " %d " _RESET "]]\n", room->index);
 	ft_print_features(room->features);
 	ret = printf("[[ ADDR ]]     ==> [[ " _GREEN " %p " _RESET "]]\n", room);
