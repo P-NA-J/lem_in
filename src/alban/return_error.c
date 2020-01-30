@@ -6,26 +6,16 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 17:16:41 by aboitier          #+#    #+#             */
-/*   Updated: 2020/01/30 15:45:05 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/01/30 17:13:32 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//free:
-//data
-//data->preparse
-//data->preparse->parser
-//
-//data->t_rooms[*][*]
-//data->t_rooms[*]
-//
-//data->adj_mat[*][*]
-//data->adj_mat[*]
-
 #include "../../includes/lem_in.h"
+
 void	free_rooms(t_map *data)
 {
 	int i;
-	
+
 	i = 0;
 	while (i < data->nb_rooms && data->rooms[i])
 	{
@@ -71,7 +61,7 @@ t_map	*which_error(t_map *data, int type)
 {
 	t_map	*error;
 	int		err;
-	
+
 	error = data;
 	err = 0;
 	if (type == 1)
@@ -80,7 +70,7 @@ t_map	*which_error(t_map *data, int type)
 			if (*data->preparse->buffer-- == '\n')
 				err++;
 		data->preparse->buffer++;
-		*data->preparse->buffer++ = '\0';	
+		*data->preparse->buffer++ = '\0';
 		return (error);
 	}
 	else if (type == 2)

@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 18:40:24 by aboitier          #+#    #+#             */
-/*   Updated: 2020/01/30 17:02:58 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/01/30 17:23:17 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int				get_nb_rooms(char *buffer)
 {
 	int		nb_rooms;
 	int		i;
-	
+
 	nb_rooms = 0;
 	i = 0;
 	while (buffer[i] && buffer[i] != '-')
@@ -28,54 +28,19 @@ int				get_nb_rooms(char *buffer)
 			while (buffer[i] && buffer[i] != '\n' && buffer[i + 1] != '\0')
 				i++;
 		i++;
-	}	
+	}
 	return (nb_rooms);
-}
-
-int			end_or_start(t_preparse *prep, t_room *stend, t_map *data)
-{
-	if (prep->s_or_e == 1)
-	{
-		if (data->start)
-			return (FALSE);
-		data->start = stend;
-	}
-	else if (prep->s_or_e == 2)
-	{	
-		if (data->end)
-			return (FALSE);
-		data->end = stend;
-	}
-	prep->s_or_e = 0;
-	return (TRUE);	
-}
-
-int				valid_coords(char *buffer)
-{
-	int		i;
-
-	i = 0;
-	while (buffer[i] != ' ')
-		i++;
-	while (buffer[i] != '\n')
-	{
-		if (buffer[i] == '-' && buffer[i - 1] != ' ')
-			return (FALSE);
-		if (ft_isdigit(buffer[i]) == 0 && buffer[i] != ' ')
-			return (FALSE);
-		i++;
-	}
-	return (TRUE);
 }
 
 t_room			*get_next_room(t_preparse *prep, t_map *data)
 {
-	t_room 	*new;
+	t_room	*new;
 
 	new = NULL;
 	while (*(prep->buffer) && *(prep->buffer) != '\n')
 	{
-		if (prep->buffer[0] == '\n' || prep->buffer[0] == 'L' || prep->buffer[0] == ' ')
+		if (prep->buffer[0] == '\n' || prep->buffer[0] == 'L' ||
+						prep->buffer[0] == ' ')
 			return (NULL);
 		else if (prep->buffer[0] == '#')
 			return (parse_comment(prep, data));
@@ -96,7 +61,7 @@ t_room			*get_next_room(t_preparse *prep, t_map *data)
 	return (new);
 }
 
-uint32_t	get_hashed_name(t_preparse *prep, char *name)
+uint32_t		get_hashed_name(t_preparse *prep, char *name)
 {
 	int			max_rooms;
 	uint32_t	hashed_name;
@@ -115,9 +80,9 @@ uint32_t	get_hashed_name(t_preparse *prep, char *name)
 	return (hashed_name);
 }
 
-int			parse_rooms(t_map **data, t_preparse *prep, t_room **rooms)
+int				parse_rooms(t_map **data, t_preparse *prep, t_room **rooms)
 {
-	int 		curr_room;
+	int			curr_room;
 	uint32_t	hashed_name;
 
 	curr_room = 0;
@@ -151,4 +116,3 @@ t_room			**get_rooms(t_map *data, t_preparse *prep)
 		return (NULL);
 	return (rooms);
 }
-

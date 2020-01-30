@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 20:19:49 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/21 09:00:13 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/30 17:10:10 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 uint32_t	jenkins_hash(char *name)
 {
-	size_t	i;
-	uint32_t 	hash;
+	size_t		i;
+	uint32_t	hash;
 
 	i = 0;
 	hash = 0;
