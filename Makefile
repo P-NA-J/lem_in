@@ -5,6 +5,7 @@ LIB = libft/libft.a
 
 SRC =	main.c 						\
 		alban/parser.c 				\
+		alban/parser_utils.c		\
 		alban/jenkins_hash.c		\
 		alban/preparser.c			\
 		alban/preparser_utils.c		\
