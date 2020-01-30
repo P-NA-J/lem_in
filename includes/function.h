@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:51:52 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/30 17:22:20 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/30 19:02:33 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,12 @@ t_room		*get_next_room(t_preparse *prep, t_map *data);
 t_room		**get_rooms(t_map *data, t_preparse *prep);
 t_room		*parse_comment(t_preparse *prep, t_map *data);
 int			get_pipes(t_map **data, t_preparse *prep);
+int			end_or_start(t_preparse *prep, t_room *stend, t_map *data);
+int			valid_coords(char *buffer);
+
 t_map		*which_error(t_map *data, int type);
 void		free_all(t_map *data);
 char		*ft_passing_name(char *str);
-t_bool		ft_is_comment(char *str, t_bool condition);
-t_bool		ft_is_room(char *str);
-t_bool		ft_is_tube(char *str);
-t_bool		ft_is_numb_str(char **str);
 char		*ft_strcsub(char *s, char c);
 int			count_char_until(char *str, char c, char u);
 

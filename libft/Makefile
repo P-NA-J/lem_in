@@ -3,6 +3,7 @@ NAME = libft.a
 CFLAG = -Wall -Werror -Wextra
 
 SRC =	ft_add_array.c \
+		ft_atol.c		\
 		ft_memset.c \
 		ft_bzero.c \
 		ft_memcpy.c \

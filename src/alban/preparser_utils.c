@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 16:35:32 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/21 09:00:15 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/30 17:10:37 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char			*ft_strcsub(char *s, char c)
 		new[j] = s[j];
 		j++;
 	}
-	new[j] = '\0';	
+	new[j] = '\0';
 	return (new);
 }
 

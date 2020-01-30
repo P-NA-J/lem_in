@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 22:26:53 by aboitier          #+#    #+#             */
-/*   Updated: 2019/12/21 09:00:16 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/24 16:32:17 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int		print_mat_old(t_map *data)
 void	print_info(t_map *data)
 {
 	printf("NB_ROOMS = %d\n", data->nb_rooms);
+	printf("NB_ANTS = %d\n", data->nb_ants);
 	//data->colors = get_colors();
  	rooms_list(data);
 //	print_mat_old(data);

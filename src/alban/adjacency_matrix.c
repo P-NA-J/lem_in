@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 23:34:49 by aboitier          #+#    #+#             */
-/*   Updated: 2020/01/21 20:32:05 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/01/30 16:47:42 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int				get_adjacency_matrix(t_map *data)
 		return (FALSE);
 	while (curr_room < data->nb_rooms)
 	{
-		if (!(adj_mat[curr_room] = (int *)ft_memalloc(sizeof(int) * data->nb_rooms)))
+		if (!(adj_mat[curr_room] = (int *)ft_memalloc(sizeof(int)
+										* data->nb_rooms)))
 			return (FALSE);
 		curr_room++;
 	}
@@ -37,7 +38,7 @@ int				get_hashes_rs(t_preparse *prep)
 		return (FALSE);
 	prep->buffer += ft_strlen(prep->r1) + 1;
 	if (!(prep->r2 = ft_strcsub(prep->buffer, '\n')))
-	{	
+	{
 		free(prep->r1);
 		return (FALSE);
 	}
@@ -47,12 +48,14 @@ int				get_hashes_rs(t_preparse *prep)
 	return (TRUE);
 }
 
-int				compare_names(char *to_connect, uint32_t *h_rx, t_preparse *prep)
+int				compare_names(char *to_connect,
+				uint32_t *h_rx, t_preparse *prep)
 {
 	int diff;
-	
+
 	diff = 0;
-	while (ft_strcmp(prep->hashed_rooms[*h_rx].name, to_connect) != 0 && diff++ < 10)
+	while (ft_strcmp(prep->hashed_rooms[*h_rx].name,
+					to_connect) != 0 && diff++ < 10)
 	{
 		*h_rx = (*h_rx < PRIME - 1) ? *h_rx += 1 : 1;
 		if (diff == 9)
@@ -82,11 +85,11 @@ int				connect_rooms(t_map *data, t_preparse *prep)
 	return (TRUE);
 }
 
-// add check for wrong input 
 int				parse_pipes(t_map **data, t_preparse *prep)
 {
-	int i = 0;
+	int i;
 
+	i = 0;
 	while (*prep->buffer)
 	{
 		while (*prep->buffer == '#')
@@ -95,7 +98,6 @@ int				parse_pipes(t_map **data, t_preparse *prep)
 			return (FALSE);
 		if ((get_hashes_rs(prep)) == FALSE)
 			return (FALSE);
-		// add hash_check protection
 		if (connect_rooms(*data, prep) == FALSE)
 			return (FALSE);
 		i++;
@@ -111,4 +113,3 @@ int				get_pipes(t_map **data, t_preparse *prep)
 		return (FALSE);
 	return (TRUE);
 }
-
