@@ -6,11 +6,15 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 15:12:38 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/29 18:11:03 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/30 16:32:21 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
+
+/*
+	Fais remonter d'une case toutes les salles d'une queue.
+*/
 
 static void	ft_slide(t_queue *bfs_queue)
 {
@@ -24,6 +28,10 @@ static void	ft_slide(t_queue *bfs_queue)
 	}
 }
 
+/*
+	Fais descendre d'une case toutes les salles de la queue.
+*/
+
 static void	ft_slide_down(t_queue *bfs_queue)
 {
 	size_t	index;
@@ -36,6 +44,10 @@ static void	ft_slide_down(t_queue *bfs_queue)
 	}
 }
 
+/*
+	Retire la salle sur le dessus de la queue.
+*/
+
 t_room		*ft_remove_queue(t_queue *bfs_queue)
 {
 	t_room	*unqueue;
@@ -46,7 +58,11 @@ t_room		*ft_remove_queue(t_queue *bfs_queue)
 	return (unqueue);
 }
 
-int			*ft_add_front_queue(t_queue *bfs_queue, t_room *to_add, t_room *current)
+/*
+	Ajoute une salle sur le dessus de la queue.
+*/
+
+void	ft_add_front_queue(t_queue *bfs_queue, t_room *to_add, t_room *current)
 {
 	to_add->prev = current;
 	ft_slide_down(bfs_queue);
@@ -54,8 +70,12 @@ int			*ft_add_front_queue(t_queue *bfs_queue, t_room *to_add, t_room *current)
 	bfs_queue->index += 1;
 	if (to_add->features != IS_START && to_add->features != IS_END)
 		to_add->features = QUEUE;
-	return ((int *)1);
+	return ;
 }
+
+/*
+	Echange la position de deux salle dans la queue.
+*/
 
 void		ft_swap(t_queue *bfs_queue, int i_1, int i_2)
 {
@@ -65,6 +85,11 @@ void		ft_swap(t_queue *bfs_queue, int i_1, int i_2)
 	bfs_queue->queue[i_1] = bfs_queue->queue[i_2];
 	bfs_queue->queue[i_2] = tmp;
 }
+
+/*
+	Repositionne la dernière salle de la queue
+	cad a la fin du sous groupe des salles qui partagent sont time.
+*/
 
 void		ft_reposition(t_queue *bfs_queue)
 {
@@ -77,6 +102,10 @@ void		ft_reposition(t_queue *bfs_queue)
 		index -= 1;
 	}
 }
+
+/*
+	Ajoute une salle a la queue ou actualise le couple [ prev / time ] d'une salle.
+*/
 
 void		ft_add_queue(t_queue *bfs_queue, t_room *to_add, t_room *current, int time)
 {

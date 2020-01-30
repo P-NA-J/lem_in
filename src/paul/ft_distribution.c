@@ -6,11 +6,16 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 08:59:33 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/08 12:23:09 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/30 13:10:26 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
+
+/*
+	Fonction qui va redistribuer les fourmis de maniere équitable.
+	entre les différents chemin en prenant en compte la taille des chemin.
+*/
 
 void	ft_distribution(int **tab_path, int nb_path, int nb_ants)
 {

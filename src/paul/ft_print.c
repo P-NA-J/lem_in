@@ -6,11 +6,24 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 12:58:56 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/29 15:04:23 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/30 11:23:58 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
+
+/*
+	Fonction qui met toutes les salles à EMPTY afin de préparer le print
+*/
+
+static void	ft_set_distribution(t_map *data)
+{
+	int i;
+
+	i = 0;
+	while (i < data->nb_rooms)
+		data->rooms[i++]->features = EMPTY;
+}
 
 void	ft_set_correct_path(int *ants, t_map *data, int *tab, int *j)
 {

@@ -6,18 +6,15 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 09:59:33 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/28 16:09:54 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/30 16:47:53 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
-t_room		**ft_init_bfs(t_queue *bfs_queue, t_map *galery, t_room *start);
 
-void	ft_rm_link(int **adj_mat, int i, int j)
-{
-	adj_mat[i][j] = 0;
-	adj_mat[j][i] = 0;
-}
+/*
+	Fonction qui s'assure que la salle est un cul de sac en comptant le nombre de lien de la salle.
+*/
 
 int	ft_dead_end_check(int *tab, int len)
 {
@@ -42,6 +39,10 @@ int	ft_dead_end_check(int *tab, int len)
 	return (FALSE);
 }
 
+/*
+	Pour une salle donnée, on analyse ses liens pour avancer dans le graphe et effacer les liens isolés.
+*/
+
 void	ft_adj_mat_line_clean_process(t_map *data, int **adj_mat,
 										t_queue *c_queue, t_room *current)
 {
@@ -51,7 +52,7 @@ void	ft_adj_mat_line_clean_process(t_map *data, int **adj_mat,
 	if (current->features != IS_START && current->features != IS_END
 	&& (i = ft_dead_end_check(adj_mat[current->index], data->nb_rooms)) != FALSE)
 	{
-		ft_rm_link(adj_mat, current->index, i);
+		adj_mat = ft_mat_mirror_change(adj_mat,  0,  current->index, i);
 		ft_add_queue(c_queue, data->rooms[i], NULL, 0);
 		return ;
 	}
@@ -64,19 +65,20 @@ void	ft_adj_mat_line_clean_process(t_map *data, int **adj_mat,
 	}
 }
 
-int	*ft_clean(t_map *data, int **adj_mat)
+/*
+	Fonction qui efface les culs de sac en la parcourant avec un bfs.
+*/
+
+void	ft_clean(t_map *data, int **adj_mat)
 {
 	t_queue	c_queue;
 	t_room	*current;
 
-	if (!(c_queue.queue = ft_init_bfs(&c_queue, data, data->start)))
-		return (NULL);
+	ft_init_bfs(&c_queue, data);
 	while (c_queue.index != 0)
 	{
 		current = ft_remove_queue(&c_queue);
 		ft_adj_mat_line_clean_process(data, adj_mat, &c_queue, current);
 		current->features = VISITED;
 	}
-	ft_free_queue(c_queue, sizeof(t_queue));
-	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 11:23:49 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/24 14:33:17 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/30 15:08:49 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,9 @@ typedef struct			s_room
 	int					index;
 	int					features;
 	int					path_occurence;
-	int					layer;
 	int					time;
 	int					coord_x;
 	int					coord_y;
-	int					pathed;
 }						t_room;
 
 typedef struct			s_preparse
@@ -71,7 +69,7 @@ typedef struct			s_map
 
 typedef struct			s_queue
 {
-	t_room				**queue;
+	t_room				*queue[PRIME];
 	size_t				index;
 }						t_queue;
 #endif

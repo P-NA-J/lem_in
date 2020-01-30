@@ -1,29 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_features.c                                      :+:      :+:    :+:   */
+/*   ft_initialisation.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 15:16:30 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/28 12:42:30 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/30 15:53:29 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
 
-void	ft_set_bfs(t_map *galery)
+/*
+	Fonction qui initialise la valeur de features et de time pour chacune des salles avant le début du bfs.
+*/
+
+void	ft_set_bfs(t_map *data)
 {
 	int	i;
 
 	i = 0;
-	galery->start->features = IS_START;
-	galery->end->features = IS_END;
-	while (i < galery->nb_rooms)
+	data->start->features = IS_START;
+	data->end->features = IS_END;
+	while (i < data->nb_rooms)
 	{
-		if (galery->rooms[i]->features != IS_START
-		&& galery->rooms[i]->features != IS_END)
-			galery->rooms[i]->features = UNQUEUE;
+		if (data->rooms[i]->features != IS_START
+		&& data->rooms[i]->features != IS_END)
+		{
+			data->rooms[i]->features = UNQUEUE;
+			data->rooms[i]->time = 0;
+		}
 		i += 1;
 	}
+}
+
+void	ft_init_bfs(t_queue *bfs_queue, t_map *data)
+{
+	ft_set_bfs(data);
+	bfs_queue->queue[0] = data->start;
+	bfs_queue->index = 1;
 }

@@ -15,14 +15,11 @@ SRC =	main.c 						\
 		alban/return_error.c		\
 		paul/ft_debug.c				\
 		paul/ft_bfs.c				\
-		paul/ft_mult_bfs.c			\
-		paul/ft_distribution.c		\
+		paul/ft_bhandari.c			\
 		paul/ft_matrix.c			\
 		paul/ft_queue.c				\
-		paul/ft_features.c			\
-		paul/ft_path.c				\
+		paul/ft_initialisation.c	\
 		paul/ft_free.c				\
-		paul/ft_print.c				\
 		paul/ft_buffer.c			\
 		paul/ft_clean.c				\
 

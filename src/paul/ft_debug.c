@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:53:52 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/25 18:25:58 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/30 16:55:33 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,15 @@ void	ft_debug_collission(t_map *data, int **tab_path)
 	count = 0;
 	while (i > 0)
 	{
-//		printf("i = %d\n", i);
 		j = 3;
 		while (j < tab_path[i][0] + 2)
 		{
-//			printf("j = %d\n", j);
 			k = i - 1;
 			while (k >= 0)
 			{
-//				printf("k = %d\n", k);
 				l = 3;
 				while (l < tab_path[k][0] + 2)
 				{
-//					printf("l = %d\n", l);
 					if (tab_path[i][j] == tab_path[k][l] && tab_path[i][j] != data->end->index)
 					{
 						count += 1;
@@ -124,12 +120,8 @@ void	ft_print_features(int features)
 		ret = printf("[[ FEATURES ]] ==> [[ " _GREEN " UNQUEUE " _RESET "]]\n");
 	else if (features == IS_END)
 		ret = printf("[[ FEATURES ]] ==> [[ " _GREEN " IS_END " _RESET "]]\n");
-	else if (features == AUG_START)
-		ret = printf("[[ FEATURES ]] ==> [[ " _GREEN " AUG_START " _RESET "]]\n");
-	else if (features == AUG_VISITED)
-		ret = printf("[[ FEATURES ]] ==> [[ " _GREEN " AUG_VISITED " _RESET "]]\n");
-	else if (features == INF)
-		ret = printf("[[ FEATURES ]] ==> [[ " _GREEN " INF " _RESET "]]\n");
+	else if (features == INFINY)
+		ret = printf("[[ FEATURES ]] ==> [[ " _GREEN " INFINY " _RESET "]]\n");
 	else if (features == BLOCKED)
 		ret = printf("[[ FEATURES ]] ==> [[ " _GREEN " BLOCKED " _RESET "]]\n");
 	else if (features == QUEUE)
@@ -140,22 +132,15 @@ void	ft_print_features(int features)
 		printf("[[ FEATURES ]] ==> [[ " _GREEN " OCCUPIED " _RESET "]]\n");
 }
 
-void	ft_debug_room(t_room *room, int mode)
+void	ft_debug_room(t_room *room)
 {
 	size_t ret;
 
 	ret = printf("[[ NAME ]]     ==> [[ " _GREEN " %s " _RESET "]]\n", room->name);
 	ret = printf("[[ TIME ]]     ==> [[ " _GREEN " %d " _RESET "]]\n", room->time);
-	ret = printf("[[ PATHED ]]     ==> [[ " _GREEN " %d " _RESET "]]\n", room->pathed);
 	ret = printf("[[ INDEX ]]    ==> [[ " _GREEN " %d " _RESET "]]\n", room->index);
 	ft_print_features(room->features);
 	ret = printf("[[ ADDR ]]     ==> [[ " _GREEN " %p " _RESET "]]\n", room);
-	if (mode == FULL)
-	{
-		ret = printf("[[ HASH ]]     ==> [[ " _GREEN " %u " _RESET "]]\n", room->hash);
-		ret = printf("[[ COORD_X ]]  ==> [[ " _GREEN " %d " _RESET "]]\n", room->coord_x);
-		ret = printf("[[ COORD_Y ]]  ==> [[ " _GREEN " %d " _RESET "]]\n", room->coord_y);
-	}
 	if (room->prev != NULL)
 	{
 		ret = printf("\t[[ NAME ]]     ==> [[ " _YELLOW " %s " _RESET "]]\n", room->prev->name);
@@ -186,7 +171,7 @@ size_t	ft_max_len(t_room **rooms, size_t size)
 	return (max);
 }
 
-void	ft_debug_rooms(t_room **rooms, size_t size, int mode)
+void	ft_debug_rooms(t_room **rooms, size_t size)
 {
 	size_t	i;
 	size_t cadre;
@@ -195,13 +180,13 @@ void	ft_debug_rooms(t_room **rooms, size_t size, int mode)
 	cadre = 37 + ft_max_len(rooms, size);
 	ft_print_char_line('_', cadre);
 	while (i < size)
-		ft_debug_room(rooms[i++], mode);
+		ft_debug_room(rooms[i++]);
 	ft_print_char_line('_', cadre);
 }
 
-void	ft_debug_queue(t_queue bfs_queue, int mode)
+void	ft_debug_queue(t_queue bfs_queue)
 {
-	ft_debug_rooms(bfs_queue.queue, bfs_queue.index, mode);
+	ft_debug_rooms(bfs_queue.queue, bfs_queue.index);
 	printf("[[ INDEX ]] ==> %zu\n", bfs_queue.index);
 }
 
@@ -229,17 +214,17 @@ void	ft_debug_adj_mat(int **adj_mat, size_t size)
 		ft_debug_line_adj_mat(adj_mat[i++], size);
 }
 
-void	ft_debug_galery(t_map *galery)
+void	ft_debug_data(t_map *data)
 {
-	printf("[[ START ]]    ==> %s\n", galery->start->name);
-	printf("[[ END ]]      ==> %s\n", galery->end->name);
-	printf("[[ NB_ANTS ]]  ==> %d\n", galery->nb_ants);
-	printf("[[ NB_ROOMS ]] ==> %d\n", galery->nb_rooms);
-	ft_debug_rooms(galery->rooms, galery->nb_rooms, RESTRICT);
-	ft_debug_adj_mat(galery->adj_mat, galery->nb_rooms);
+	printf("[[ START ]]    ==> %s\n", data->start->name);
+	printf("[[ END ]]      ==> %s\n", data->end->name);
+	printf("[[ NB_ANTS ]]  ==> %d\n", data->nb_ants);
+	printf("[[ NB_ROOMS ]] ==> %d\n", data->nb_rooms);
+	ft_debug_rooms(data->rooms, data->nb_rooms);
+	ft_debug_adj_mat(data->adj_mat, data->nb_rooms);
 }
 
-void	ft_debug_single_path(int *path, int len, t_map *galery)
+void	ft_debug_single_path(int path[500], int len, t_map *data)
 {
 	int	i;
 
@@ -250,7 +235,7 @@ void	ft_debug_single_path(int *path, int len, t_map *galery)
 	fflush(stdout);
 	while (i <= len + 1)
 	{
-		printf("[%s]", galery->rooms[path[i++]]->name);
+		printf("[%s]", data->rooms[path[i++]]->name);
 		fflush(stdout);
 	}
 	printf("\n");

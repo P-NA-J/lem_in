@@ -6,11 +6,15 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 13:54:55 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/13 15:34:55 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/30 13:10:03 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
+
+/*
+	Fonction qui affiche puis vide le contenu d'un buffer.
+*/
 
 void	ft_flush_buffer(t_buff *buff)
 {
@@ -18,6 +22,10 @@ void	ft_flush_buffer(t_buff *buff)
 	ft_bzero(buff->buff, BUFF_SIZE + 1);
 	buff->i = 0;
 }
+
+/*
+	Fonction qui écrit une string dans un buffer.
+*/
 
 void	ft_putstr_buffer(t_buff *buff, char *str, int len)
 {
@@ -35,6 +43,10 @@ void	ft_putstr_buffer(t_buff *buff, char *str, int len)
 		buff->i += len;
 	}
 }
+
+/*
+	Fonction qui ecrit n-fois un caractère dans un buffer.
+*/
 
 void	ft_write_in_buffer(t_buff *buff, char c, int len)
 {
