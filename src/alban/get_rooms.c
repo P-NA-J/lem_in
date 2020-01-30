@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 18:40:24 by aboitier          #+#    #+#             */
-/*   Updated: 2020/01/21 21:04:58 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/01/30 17:02:58 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,37 @@ int				get_nb_rooms(char *buffer)
 int			end_or_start(t_preparse *prep, t_room *stend, t_map *data)
 {
 	if (prep->s_or_e == 1)
+	{
+		if (data->start)
+			return (FALSE);
 		data->start = stend;
+	}
 	else if (prep->s_or_e == 2)
+	{	
+		if (data->end)
+			return (FALSE);
 		data->end = stend;
+	}
 	prep->s_or_e = 0;
 	return (TRUE);	
+}
+
+int				valid_coords(char *buffer)
+{
+	int		i;
+
+	i = 0;
+	while (buffer[i] != ' ')
+		i++;
+	while (buffer[i] != '\n')
+	{
+		if (buffer[i] == '-' && buffer[i - 1] != ' ')
+			return (FALSE);
+		if (ft_isdigit(buffer[i]) == 0 && buffer[i] != ' ')
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
 }
 
 t_room			*get_next_room(t_preparse *prep, t_map *data)
@@ -55,13 +81,15 @@ t_room			*get_next_room(t_preparse *prep, t_map *data)
 			return (parse_comment(prep, data));
 		else if (count_char_until(prep->buffer, ' ', '\n') == 2)
 		{
-			if (!(new = (t_room *)malloc(sizeof(t_room))))
+			if (valid_coords(prep->buffer) == FALSE)
 				return (NULL);
-			ft_bzero(new, sizeof(t_room));
+			if (!(new = (t_room *)ft_memalloc(sizeof(t_room))))
+				return (NULL);
 			if (!(new->name = ft_strcsub(prep->buffer, ' ')))
 				return (NULL);
 			if (prep->s_or_e)
-				end_or_start(prep, new, data);
+				if (end_or_start(prep, new, data) == FALSE)
+					return (FALSE);
 		}
 		prep->buffer += ft_strclen(prep->buffer, '\n');
 	}
@@ -103,7 +131,6 @@ int			parse_rooms(t_map **data, t_preparse *prep, t_room **rooms)
 		rooms[curr_room]->hash = hashed_name;
 		rooms[curr_room]->index = curr_room;
 		rooms[curr_room]->features = UNQUEUE;
-		rooms[curr_room]->path_occurence = 0;
 		prep->hashed_rooms[hashed_name] = *rooms[curr_room];
 		curr_room++;
 		prep->buffer += ft_strclen(prep->buffer, '\n') + 1;
