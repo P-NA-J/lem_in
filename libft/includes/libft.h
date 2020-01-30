@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 09:00:10 by pauljull          #+#    #+#             */
-/*   Updated: 2019/12/04 01:39:17 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/01/30 16:36:34 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct		s_gnl
 	struct 	s_gnl	*next;
 }					t_gnl;
 
+long				ft_atol(const char *str);
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
