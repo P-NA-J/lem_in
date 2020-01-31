@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:51:52 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/31 03:37:54 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/01/31 19:07:37 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_room		*parse_comment(t_preparse *prep, t_map *data);
 int			get_pipes(t_map **data, t_preparse *prep);
 int			end_or_start(t_preparse *prep, t_room *stend, t_map *data);
 int			valid_coords(char *buffer);
+void		replace_sink_tank(t_map *data);
 
 t_map		*which_error(t_map *data, int type);
 void		free_all(t_map *data);
