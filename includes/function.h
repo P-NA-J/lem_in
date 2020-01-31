@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:51:52 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/30 19:02:33 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/01/31 03:12:09 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int			**ft_bfs(t_map *data, int **adj_mat);
 int			**ft_bhandari(t_map *data, int **adj_mat);
 void		ft_distribution(int **tab_path, int nb_path, int nb_ants);
 int			**ft_print(int **tab, t_map *data);
+int			distrib(t_map *data);
 
 /*
 	Fonction de gestion des leaks.
