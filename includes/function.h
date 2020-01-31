@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:51:52 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/31 03:12:09 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/01/31 03:37:54 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void		ft_reset_matrix(t_map *data, int **adj_mat);
 int			ft_check_line(int *line, int len, int nb);
 int			**ft_mat_mirror_change(int **adj_mat, int value, int i_1, int i_2);
 void		ft_clean_matrix(t_map *data, int **adj_mat);
+int			ft_go_to_next(int *line, int nb_rooms);
 
 
 /*
@@ -97,5 +98,5 @@ void		ft_debug_queue(t_queue bfs_queue);
 void		ft_debug_single_path(int *path, int len, t_map *data);
 void		ft_debug_print(int **ants, t_map *data, int **tab);
 void		ft_debug_collission(t_map *data, int **tab_path);
-void		ft_debug_path(t_map *data, t_room *end_point, int **adj_mat);
+void		ft_debug_path(t_map *data, int **adj_mat);
 #endif
