@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 18:40:24 by aboitier          #+#    #+#             */
-/*   Updated: 2020/01/30 17:23:17 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/04 22:15:02 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,92 +16,66 @@
 int				get_nb_rooms(char *buffer)
 {
 	int		nb_rooms;
-	int		i;
+	char	*tmp;
 
+	tmp = buffer;
 	nb_rooms = 0;
-	i = 0;
-	while (buffer[i] && buffer[i] != '-')
+
+	while (*tmp && (count_char_until(tmp, '-', '\n') == 0))
 	{
-		if (buffer[i] == '\n')
+		if (*tmp == '#')
+		{
+			tmp += ft_strclen(tmp, '\n') + 1;
+			continue ; 
+		}
+		if (count_char_until(tmp, ' ', '\n') == 2)
 			nb_rooms++;
-		else if (buffer[i] == '#')
-			while (buffer[i] && buffer[i] != '\n' && buffer[i + 1] != '\0')
-				i++;
-		i++;
+		tmp = tmp + ft_strclen(tmp, '\n') + 1;
 	}
 	return (nb_rooms);
 }
 
-t_room			*get_next_room(t_preparse *prep, t_map *data)
+int				check_room_line(t_preparse *prep, t_map *data)
 {
-	t_room	*new;
+	if (prep->buffer[0] == '\n' || prep->buffer[0] == 'L' || prep->buffer[0] == ' ')
+		return (FALSE);
+	else if (prep->buffer[0] == '#')
+		return (parse_comment(prep, data));
+	return (TRUE);
+}
 
-	new = NULL;
+int				get_next_room(t_preparse *prep, t_map *data)
+{
 	while (*(prep->buffer) && *(prep->buffer) != '\n')
 	{
-		if (prep->buffer[0] == '\n' || prep->buffer[0] == 'L' ||
-						prep->buffer[0] == ' ')
-			return (NULL);
-		else if (prep->buffer[0] == '#')
-			return (parse_comment(prep, data));
-		else if (count_char_until(prep->buffer, ' ', '\n') == 2)
+		check_room_line(prep, data);
+		if (count_char_until(prep->buffer, ' ', '\n') == 2)
 		{
-			if (valid_coords(prep->buffer) == FALSE)
-				return (NULL);
-			if (!(new = (t_room *)ft_memalloc(sizeof(t_room))))
-				return (NULL);
-			if (!(new->name = ft_strcsub(prep->buffer, ' ')))
-				return (NULL);
-			if (prep->s_or_e)
-				if (end_or_start(prep, new, data) == FALSE)
-					return (FALSE);
+			if (valid_coords(prep->buffer) == FALSE) \
+				return (FALSE);
+			if (create_room(data, prep) == FALSE)
+				return (FALSE);
 		}
 		prep->buffer += ft_strclen(prep->buffer, '\n');
 	}
-	return (new);
+	return (TRUE);
 }
 
-uint32_t		get_hashed_name(t_preparse *prep, char *name)
+int				parse_rooms(t_map **data, t_preparse *prep)
 {
-	int			max_rooms;
-	uint32_t	hashed_name;
-
-	max_rooms = 0;
-	hashed_name = jenkins_hash(name);
-	while (prep->hashed_rooms[hashed_name].name && ++max_rooms)
+	while (*(prep->buffer) && prep->curr_room < (*data)->nb_rooms - 1)
 	{
-		if (prep->hashed_rooms[hashed_name].name &&
-					ft_strcmp(prep->hashed_rooms[hashed_name].name, name) == 0)
+		if (get_next_room(prep, *data) == FALSE)
 			return (FALSE);
-		hashed_name = (hashed_name < PRIME - 1) ? hashed_name += 1 : 1;
-		if (max_rooms > PRIME)
-			return (FALSE);
-	}
-	return (hashed_name);
-}
-
-int				parse_rooms(t_map **data, t_preparse *prep, t_room **rooms)
-{
-	int			curr_room;
-	uint32_t	hashed_name;
-
-	curr_room = 0;
-	hashed_name = 0;
-	while (*(prep->buffer) && curr_room < (*data)->nb_rooms)
-	{
-		if (!(rooms[curr_room] = get_next_room(prep, *data)))
-			return (FALSE);
-		if (!(hashed_name = get_hashed_name(prep, rooms[curr_room]->name)))
-			return (FALSE);
-		rooms[curr_room]->hash = hashed_name;
-		rooms[curr_room]->index = curr_room;
-		rooms[curr_room]->features = UNQUEUE;
-		prep->hashed_rooms[hashed_name] = *rooms[curr_room];
-		curr_room++;
 		prep->buffer += ft_strclen(prep->buffer, '\n') + 1;
 	}
 	return (TRUE);
 }
+
+/* 
+**	Count number of rooms 
+** 	Alloc memory for rooms tab
+*/
 
 t_room			**get_rooms(t_map *data, t_preparse *prep)
 {
@@ -111,8 +85,6 @@ t_room			**get_rooms(t_map *data, t_preparse *prep)
 	if ((data->nb_rooms = get_nb_rooms(prep->buffer)) == 0)
 		return (NULL);
 	if (!(rooms = (t_room **)malloc(sizeof(t_room *) * data->nb_rooms)))
-		return (NULL);
-	if ((parse_rooms(&data, prep, rooms)) == FALSE)
 		return (NULL);
 	return (rooms);
 }

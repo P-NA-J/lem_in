@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:35:19 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/31 03:34:58 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/04 22:16:39 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,13 @@ int	main(void)
 
 	if ((data = parser()) == NULL)
 		return (FALSE);
+	printf("in main, start index = %d\n", data->start->index);
+	printf("in main, end index = %d\n", data->end->index);
 	ft_clean(data, data->adj_mat);
 	if (ft_bhandari(data, data->adj_mat) == NULL)
 	{
-		data = which_error(data, 2);
-		return (0);
+		write(1, "ERROR\n", 6);
+		return ((int)which_error(data, 2));
 	}
 	print_info(data);
 	distrib(data);

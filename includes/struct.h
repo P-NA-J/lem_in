@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 11:23:49 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/30 15:08:49 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/04 17:27:55 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct			s_preparse
 	long				size;
 	int					reload;
 	long				curr_index;
+	int					curr_room;
 	struct s_room		hashed_rooms[PRIME];
 	int					s_or_e;
 	char				*r1;

@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 22:02:40 by aboitier          #+#    #+#             */
-/*   Updated: 2020/01/20 19:03:43 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/04 17:40:04 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ t_preparse		*pre_parser(void)
 	if (!(data = (t_preparse *)malloc(sizeof(t_preparse))))
 		return (NULL);
 	ft_bzero(data, sizeof(t_preparse));
+	data->curr_room = 1;
 	data->reload = 1;
 	if (!(data->buffer = (char *)malloc(sizeof(char) * BASE_MALLOC)))
 		return (NULL);
