@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 11:23:49 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/30 15:08:49 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/05 16:03:21 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@ typedef struct			s_room
 {
 	char				*name;
 	struct s_room		*prev;
+	int					*link;
+	int					nb_link;
 	uint32_t			hash;
 	int					index;
 	int					features;
-	int					path_occurence;
+	int					ascend;
 	int					time;
 	int					coord_x;
 	int					coord_y;
@@ -64,7 +66,7 @@ typedef struct			s_map
 	int					nb_ants;
 	int					nb_rooms;
 	int					nb_path;
-	int					is_augmented;
+	int					decision;
 }						t_map;
 
 typedef struct			s_queue
