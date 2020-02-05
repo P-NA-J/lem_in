@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 15:15:19 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/30 18:54:30 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/05 17:02:42 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@ int	ft_go_to_next(int *line, int nb_rooms)
 {
 	int	i;
 
-	i = -1;
-	while (++i < nb_rooms)
+	i = 0;
+	while (i < nb_rooms)
 	{
 		if (line[i] == UNCHANGED)
 			return (i);
+		i++;
 	}
 	return (IGNORE);
 }
@@ -40,7 +41,7 @@ int	ft_path_length(int **adj_mat, int index, int end_index, int nb_rooms)
 	nb = 1;
 	while (index != end_index)
 	{
-		nb += 1;
+		nb++;
 		index = ft_go_to_next(adj_mat[index], nb_rooms);
 	}
 	return (nb);
@@ -62,7 +63,51 @@ int		**ft_mat_mirror_change(int **adj_mat, int value, int i_1, int i_2)
 	avec un lien dans un certain état.
 */
 
-int		ft_check_line(int *line, int len, int nb)
+int		ft_alt_check_line(t_room *current, int *line, int state)
+{
+	int	i;
+	int	len;
+	int index;
+
+	len = current->nb_link;
+	i = 0;
+	while (i < len)
+	{
+		index = current->link[i];
+		if (line[index] == state)
+			return (index);
+		i++;
+	}
+	return (IGNORE);
+}
+
+/*
+	Fonction qui s'assure qu'il n'y a pas de lien augmenté sur une salle donnée.
+*/
+
+int		ft_alt_line_check(t_room *current, int *line)
+{
+	int	i;
+	int	len;
+	int	index;
+
+	len = current->nb_link;
+	i = 0;
+	while (i < len)
+	{
+		index = current->link[i];
+		if (line[index] == AUGMENTED || line[index] == INFINY)
+			return (index);
+	}
+	return (IGNORE);
+}
+
+/*
+	Fonction qui renvoie l'index de la salle qui est relié a une salle donnée
+	avec un lien dans un certain état.
+*/
+
+int			ft_check_line(int *line, int len, int nb)
 {
 	int	i;
 
@@ -71,16 +116,16 @@ int		ft_check_line(int *line, int len, int nb)
 	{
 		if (line[i] == nb)
 			return (i);
-		i += 1;
+		i++;
 	}
-	return (-1);
+	return (IGNORE);
 }
 
 /*
 	Fonction qui s'assure qu'il n'y a pas de lien augmenté sur une salle donnée.
 */
 
-int		ft_line_check(int *line, int len)
+int			ft_line_check(int *line, int len)
 {
 	int	i;
 
@@ -91,7 +136,7 @@ int		ft_line_check(int *line, int len)
 			return (i);
 		i += 1;
 	}
-	return (-1);
+	return (IGNORE);
 }
 
 /*
@@ -104,11 +149,12 @@ void	ft_path_set(int **adj_mat, t_map *data)
 	int	nb_rooms;
 
 	nb_rooms = data->nb_rooms;
-	i = -1;
-	while (++i < nb_rooms)
+	i = 0;
+	while (i < nb_rooms)
 	{
 		if (adj_mat[data->start->index][i] == UNCHANGED)
 			adj_mat[data->start->index][i] = ft_path_length(adj_mat, i, data->end->index, nb_rooms);
+		i++;
 	}
 }
 
@@ -120,13 +166,14 @@ static void	ft_clean_line(int *line, int nb_rooms)
 {
 	int	i;
 
-	i = -1;
-	while (++i < nb_rooms)
+	i = 0;
+	while (i < nb_rooms)
 	{
 		if (line[i] == BLOCKED)
 			line[i] = UNCHANGED;
 		else
 			line[i] = NO_LINK;
+		i++;
 	}
 }
 
@@ -141,9 +188,12 @@ void	ft_clean_matrix(t_map *data, int **adj_mat)
 	int	nb_rooms;
 
 	nb_rooms = data->nb_rooms;
-	i = -1;
-	while (++i < nb_rooms)
+	i = 0;
+	while (i < nb_rooms)
+	{
 		ft_clean_line(adj_mat[i], nb_rooms);
+		i++;
+	}
 	ft_path_set(adj_mat, data);
 }
 

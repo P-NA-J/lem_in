@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bfs.c                                           :+:      :+:    :+:   */
+/*   ft_alt_bfs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/07 10:18:23 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/05 12:41:23 by pauljull         ###   ########.fr       */
+/*   Created: 2020/02/05 12:40:47 by pauljull          #+#    #+#             */
+/*   Updated: 2020/02/05 16:54:54 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,44 +50,75 @@ int	ft_occurence_count(t_map *data, int **adj_mat, int curr_i, int len)
 }
 
 /*
-	Parcours tout les liens d'une salle et appelle la fonction de gestion du tube en fonction de son état.
-	S'assure d'abord que la salle n'est pas connecté à end, sinon on force l'arret du bfs.
+	Gestion d'un lien orienté / appartenant à un chemin augmentant.
 */
 
-void	ft_adj_mat_line_process(t_map *data, int **adj_mat,
-							t_queue *bfs_q_ref, t_room *current)
+int		ft_augmented_link_management(t_map *data)
 {
-	int	i;
-	int	tmp_aug;
-	int	decision;
+	if (data->decision > 1)
+		data->decision -= 1;
+	else if (data->decision == 1)
+		return (TRUE);
+	return (FALSE);
+}
 
-	decision = ft_occurence_count(data, adj_mat, current->index, data->nb_rooms);
-	i = 0;
-	if (adj_mat[current->index][data->end->index] == UNCHANGED)
-		return(ft_add_front_queue(bfs_q_ref, data->end, current));
-	while (i < data->nb_rooms)
+/*
+	Process d'actualisation / ajout d'une salle lorsqu'on entre sur  un chemin augmentant.
+*/
+
+void	ft_unchanged_link_process(t_queue *bfs_q, t_room *i_room, t_room *current, t_room *aug_room)
+{
+	if (i_room->time > current->time || (i_room->features == UNQUEUE && aug_room->features == UNQUEUE))
 	{
-		if (adj_mat[current->index][i] == NO_LINK || adj_mat[current->index][i] == BLOCKED)
-			;
-		else if (adj_mat[current->index][i] == AUGMENTED && decision > 1)
-			decision -= 1;
-		else if (adj_mat[current->index][i] == AUGMENTED && decision == 1)
-			ft_add_queue(bfs_q_ref, data->rooms[i], current, -1);
-		else if (adj_mat[current->index][i] == UNCHANGED && ft_line_check(adj_mat[i], data->nb_rooms) == IGNORE)
-			ft_add_queue(bfs_q_ref, data->rooms[i], current, 1);
-		else if (adj_mat[current->index][i] == UNCHANGED && (tmp_aug = ft_check_line(adj_mat[i], data->nb_rooms, AUGMENTED) != IGNORE) && decision == 1)
-		{
-			if (data->rooms[i]->time > current->time || (data->rooms[i]->features == UNQUEUE && data->rooms[tmp_aug]->features == UNQUEUE))
-			{
-				ft_actualisation(data->rooms[i], current, 1);
-				data->rooms[i]->features = QUEUE;
-				ft_add_queue(bfs_q_ref, data->rooms[tmp_aug], data->rooms[i], -1);
-			}
-		}
-		i += 1;
+		ft_actualisation(i_room, current, 1);
+		i_room->features = QUEUE;
+		ft_add_queue(bfs_q, aug_room, i_room, -1);
 	}
 }
 
+/*
+	Gestion d'un lien non orienté.
+*/
+
+void	ft_unchanged_link_management(int index, t_room *current, t_map *data, t_queue *bfs_q)
+{
+	int	tmp_aug;
+	int	tmp_clean;
+
+	if ((tmp_clean = ft_line_check(current, data->adj_mat[index])) == IGNORE)
+		ft_add_queue(bfs_q, data->rooms[current->link[index]], current, 1);
+	else if ((tmp_aug = ft_check_line(current, data->adj_mat[index], AUGMENTED) != IGNORE) && data->decision == 1)
+		ft_unchanged_link_process(bfs_q, data->rooms[current->link[index]], current, data->rooms[tmp_aug]);
+}
+
+/*
+	Gestion des liens pur une salle donnée.
+*/
+
+void	ft_adj_mat_line_process(t_map *data, int **adj_mat,
+							t_queue *bfs_q, t_room *current)
+{
+	int	i;
+	int	tmp;
+	int *line;
+	int link;
+
+	if (adj_mat[current->index][data->end->index] == UNCHANGED)
+		return(ft_add_front_queue(bfs_q, data->end, current));
+	data->decision = ft_occurence_count(data, adj_mat, current->index, data->nb_rooms);
+	line = adj_mat[current->index];
+	i = 0;
+	while (i < current->nb_link)
+	{
+		link = current->link[i];
+		if (line[link] == AUGMENTED)
+			if (ft_augmented_link_management(data) == TRUE)
+				ft_add_queue(bfs_q, data->rooms[link], current, -1);
+		else if (line[link] == UNCHANGED)
+			ft_unchanged_link_management(link, current, data, bfs_q);
+		i += 1;
+	}
+}
 
 /* 
 	Parcours du graphe a la recherche d'un chemin vers end.

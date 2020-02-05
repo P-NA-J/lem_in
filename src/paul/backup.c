@@ -16,11 +16,11 @@ void	ft_adj_mat_line_process(t_map *data, int **adj_mat,
 	{
 		if (adj_mat[current->index][i] == UNCHANGED)
 		{
-			if ((tmp = ft_check_line(adj_mat[i], data->nb_rooms, 4)) != FALSE)
+			if ((tmp = ft_check_line(adj_mat[i], data->nb_rooms, 4)) != IGNORE)
 			{
 				continue ;
 			}
-			else if ((tmp = ft_check_line(adj_mat[i], data->nb_rooms, 3)) != FALSE && nb_branch == 1)
+			else if ((tmp = ft_check_line(adj_mat[i], data->nb_rooms, 3)) != IGNORE && nb_branch == 1)
 			{
 				if (data->rooms[i]->time > (current->time + 1))
 				{

@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 15:12:38 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/30 16:32:21 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/05 08:59:00 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,24 +104,32 @@ void		ft_reposition(t_queue *bfs_queue)
 }
 
 /*
+	Actualise le temps d'dune salle ainsi quqe son precedent
+	afin de raccrocher un bout de chemin à un autre plus court.
+*/
+
+void	ft_actualisation(t_room *to_add, t_room *current, int time)
+{
+	to_add->time = current->time + time;
+	to_add->prev = current;
+}
+
+/*
 	Ajoute une salle a la queue ou actualise le couple [ prev / time ] d'une salle.
 */
 
 void		ft_add_queue(t_queue *bfs_queue, t_room *to_add, t_room *current, int time)
 {
-	if (current && (to_add->features == UNQUEUE || to_add->features == IS_END || to_add->time > (current->time + time)))
+	if (current && !(to_add->features & QUEUE))
 	{
-		to_add->prev = current;
-		to_add->time = current->time + time;
-	}
-	if (to_add->features == UNQUEUE || to_add->features == IS_END)
-	{
+		ft_actualisation(to_add, current, time);
 		bfs_queue->queue[bfs_queue->index] = to_add;
 		bfs_queue->index += 1;
-		if (to_add->features != IS_END)
-			to_add->features = QUEUE;
+		to_add->features = QUEUE;
 		ft_reposition(bfs_queue);
 	}
+	else if (current && to_add->time > (current->time + time))
+		ft_actualisation(to_add, current, time);
 }
 
 

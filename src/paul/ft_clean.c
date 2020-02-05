@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 09:59:33 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/30 16:47:53 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/05 17:07:54 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,14 @@ void	ft_adj_mat_line_clean_process(t_map *data, int **adj_mat,
 	if (current->features != IS_START && current->features != IS_END
 	&& (i = ft_dead_end_check(adj_mat[current->index], data->nb_rooms)) != FALSE)
 	{
-		adj_mat = ft_mat_mirror_change(adj_mat,  0,  current->index, i);
-		ft_add_queue(c_queue, data->rooms[i], NULL, 0);
+		adj_mat = ft_mat_mirror_change(adj_mat, 0, current->index, i);
+		data->rooms[i]->features = UNQUEUE;
+		ft_add_queue(c_queue, data->rooms[i], data->rooms[i]->prev, 0);
 		return ;
 	}
 	while (i < data->nb_rooms)
 	{
-		if (adj_mat[current->index][i] == 1 && data->rooms[i]->features != QUEUE
+		if (adj_mat[current->index][i] == UNCHANGED && data->rooms[i]->features != QUEUE
 			&& data->rooms[i]->features != VISITED)
 			ft_add_queue(c_queue, data->rooms[i], current, 0);
 		i += 1;
