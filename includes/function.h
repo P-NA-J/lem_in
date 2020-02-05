@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:51:52 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/30 20:45:53 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/04 18:06:40 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,18 @@ typedef int	t_bool;
 
 t_map		*parser(void);
 t_preparse	*pre_parser(void);
-uint32_t	jenkins_hash(char *name);
-t_room		*get_next_room(t_preparse *prep, t_map *data);
 t_room		**get_rooms(t_map *data, t_preparse *prep);
-t_room		*parse_comment(t_preparse *prep, t_map *data);
+uint32_t	jenkins_hash(char *name);
+uint32_t	get_hashed_name(t_preparse *prep, char *name);
+int			get_nb_rooms(char *buffer);
+int			get_next_room(t_preparse *prep, t_map *data);
+int			parse_rooms(t_map **data, t_preparse *prep);
+int			create_room(t_map *data, t_preparse *prep);
+int			parse_comment(t_preparse *prep, t_map *data);
 int			get_pipes(t_map **data, t_preparse *prep);
-int			end_or_start(t_preparse *prep, t_room *stend, t_map *data);
+int			fix_room(t_preparse *prep, t_room *room, t_map *data);
 int			valid_coords(char *buffer);
+void		replace_sink_tank(t_map *data);
 
 t_map		*which_error(t_map *data, int type);
 void		free_all(t_map *data);
@@ -69,6 +74,7 @@ int			**ft_bfs(t_map *data, int **adj_mat);
 int			**ft_bhandari(t_map *data, int **adj_mat);
 void		ft_distribution(int **tab_path, int nb_path, int nb_ants);
 int			**ft_print(int **tab, t_map *data);
+int			distrib(t_map *data);
 
 /*
 	Fonction de gestion des leaks.

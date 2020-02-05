@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 22:26:53 by aboitier          #+#    #+#             */
-/*   Updated: 2020/01/24 16:32:17 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/04 22:21:39 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int		new_mat_print(t_map *data)
 
 	while (y < data->nb_rooms)
 	{
+		printf("%s\t", data->rooms[y]->name);
     	x = 0;
     	while (x < data->nb_rooms)
     	{

@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:33:58 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/30 16:43:22 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/04 22:14:49 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int				parse_nb_ants(t_map *data, t_preparse *prep)
 	return (get_nb_ants(data, prep, i));
 }
 
-t_room			*parse_comment(t_preparse *prep, t_map *data)
+int			parse_comment(t_preparse *prep, t_map *data)
 {
 	int 	size;
 	char	*tmp;
@@ -77,12 +77,12 @@ t_room			*parse_comment(t_preparse *prep, t_map *data)
 	if (prep->buffer[1] && prep->buffer[1] == '#')
 	{
 		if (!(tmp = ft_strcsub(prep->buffer, '\n')))
-			return (NULL);
+			return (FALSE);
 		size = ft_strlen(tmp);
 		prep->buffer += size + 1;	
-		if (ft_strncmp((const char *)tmp, "##start", size) == 0)
+		if (ft_strcmp((const char *)tmp, "##start") == 0)
 			prep->s_or_e = 1;
-		else if (ft_strncmp((const char *)tmp, "##end", size) == 0)
+		else if (ft_strcmp((const char *)tmp, "##end") == 0)
 			prep->s_or_e = 2;
 		free(tmp);
 	}
@@ -100,15 +100,24 @@ t_map			*parser(void)
 	ft_bzero(data, sizeof(t_map));
 	if ((data->preparse = pre_parser()) == NULL)
 		return (which_error(data, 2));
-	data->preparse->hashed_rooms[0].name = "NOPE";
+	data->preparse->hashed_rooms[0].name = "Not Empty";
 	data->preparse->tmp_buff = data->preparse->buffer;
 	if ((data->nb_ants = parse_nb_ants(data, data->preparse)) == FALSE)
 		return (which_error(data, 2));
+
 	if ((data->rooms = get_rooms(data, data->preparse)) == NULL)
 		return (which_error(data, 2));
+	if (parse_rooms(&data, data->preparse) == FALSE)
+		return (which_error(data, 2));
+
+
 	if (data->start == NULL || data->end == NULL)
 		return (which_error(data, 2));
+//	printf("PARSER end->index\t %d\n\n", data->end->index);
+//	new_mat_print(data);
+//	replace_sink_tank(data);
 	if (get_pipes(&data, data->preparse) == FALSE)
 		return (which_error(data, 1));
+	COUCOU;
 	return (data);
 }

@@ -11,7 +11,8 @@ SRC =	main.c 						\
 		alban/preparser_utils.c		\
 		alban/adjacency_matrix.c	\
 		alban/get_rooms.c			\
-		alban/ft_parser_utils.c 	\
+		alban/replace.c				\
+		alban/distrib.c				\
 		alban/print_info.c			\
 		alban/return_error.c		\
 		paul/ft_debug.c				\
