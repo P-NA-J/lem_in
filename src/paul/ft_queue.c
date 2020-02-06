@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 15:12:38 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/05 08:59:00 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/06 19:34:12 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	ft_actualisation(t_room *to_add, t_room *current, int time)
 
 void		ft_add_queue(t_queue *bfs_queue, t_room *to_add, t_room *current, int time)
 {
-	if (current && !(to_add->features & QUEUE))
+	if (current && to_add->features == UNQUEUE)
 	{
 		ft_actualisation(to_add, current, time);
 		bfs_queue->queue[bfs_queue->index] = to_add;

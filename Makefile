@@ -15,7 +15,7 @@ SRC =	main.c 						\
 		alban/print_info.c			\
 		alban/return_error.c		\
 		paul/ft_debug.c				\
-		paul/ft_bfs.c				\
+		paul/ft_alt_bfs.c				\
 		paul/ft_bhandari.c			\
 		paul/ft_matrix.c			\
 		paul/ft_queue.c				\
@@ -74,7 +74,7 @@ visu:
 	 @#pip install --user plotly==4.3.0
 	 @#pip install --user chart-studio
 	 @$(CC) $(LIB) visu/test.c -o grapher
-	 @./grapher < visu/medium_res.txt | python visu/visualizer.py
+#	 @./grapher < visu/medium_res.txt | python visu/visualizer.py
 	 @./grapher < visu/small.anthills | python visu/visualizer.py
 
 GREEN   = '\x1b[32m'

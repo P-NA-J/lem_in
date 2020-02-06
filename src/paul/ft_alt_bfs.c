@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 12:40:47 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/05 16:54:54 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/06 19:36:37 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 int	ft_actionnable(t_map *data, int **adj_mat, int index, int curr)
 {
-	if (ft_check_line(adj_mat[index], data->nb_rooms, INFINY) != IGNORE)
+	if (ft_alt_check_line(data->rooms[curr], adj_mat[index], INFINY) != IGNORE)
 		return (FALSE);
 	else if (data->rooms[index]->features == UNQUEUE)
 		return (TRUE);
@@ -85,10 +85,14 @@ void	ft_unchanged_link_management(int index, t_room *current, t_map *data, t_que
 	int	tmp_aug;
 	int	tmp_clean;
 
-	if ((tmp_clean = ft_line_check(current, data->adj_mat[index])) == IGNORE)
-		ft_add_queue(bfs_q, data->rooms[current->link[index]], current, 1);
-	else if ((tmp_aug = ft_check_line(current, data->adj_mat[index], AUGMENTED) != IGNORE) && data->decision == 1)
-		ft_unchanged_link_process(bfs_q, data->rooms[current->link[index]], current, data->rooms[tmp_aug]);
+	if ((tmp_clean = ft_alt_line_check(current, data->adj_mat[index])) == IGNORE)
+	{
+		ft_add_queue(bfs_q, data->rooms[index], current, 1);
+	}
+	else if ((tmp_aug = ft_alt_check_line(current, data->adj_mat[index], AUGMENTED) != IGNORE) && data->decision == 1)
+	{
+		ft_unchanged_link_process(bfs_q, data->rooms[index], current, data->rooms[tmp_aug]);
+	}
 }
 
 /*
@@ -99,7 +103,6 @@ void	ft_adj_mat_line_process(t_map *data, int **adj_mat,
 							t_queue *bfs_q, t_room *current)
 {
 	int	i;
-	int	tmp;
 	int *line;
 	int link;
 
@@ -112,8 +115,10 @@ void	ft_adj_mat_line_process(t_map *data, int **adj_mat,
 	{
 		link = current->link[i];
 		if (line[link] == AUGMENTED)
+		{
 			if (ft_augmented_link_management(data) == TRUE)
 				ft_add_queue(bfs_q, data->rooms[link], current, -1);
+		}
 		else if (line[link] == UNCHANGED)
 			ft_unchanged_link_management(link, current, data, bfs_q);
 		i += 1;

@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 15:15:19 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/05 17:02:42 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/06 19:16:41 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int		ft_alt_line_check(t_room *current, int *line)
 		index = current->link[i];
 		if (line[index] == AUGMENTED || line[index] == INFINY)
 			return (index);
+		i += 1;
 	}
 	return (IGNORE);
 }

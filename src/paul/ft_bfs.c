@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 10:18:23 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/05 12:41:23 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/06 18:53:47 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int	**ft_bfs(t_map *data, int **adj_mat)
 	{
 		if ((current = ft_remove_queue(&bfs_queue)) == data->end)
 			return (adj_mat);
+		ft_debug_room(current);
 		ft_adj_mat_line_process(data, adj_mat, &bfs_queue, current);
 	}
 	return (NULL);
