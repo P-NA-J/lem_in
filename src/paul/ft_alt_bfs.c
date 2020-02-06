@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 12:40:47 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/06 19:36:37 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/06 20:57:21 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	ft_adj_mat_line_process(t_map *data, int **adj_mat,
 
 	if (adj_mat[current->index][data->end->index] == UNCHANGED)
 		return(ft_add_front_queue(bfs_q, data->end, current));
-	data->decision = ft_occurence_count(data, adj_mat, current->index, data->nb_rooms);
+	data->decision = ft_occurence_count(data, adj_mat, current->index, current->nb_link);
 	line = adj_mat[current->index];
 	i = 0;
 	while (i < current->nb_link)

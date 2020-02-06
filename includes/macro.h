@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:39:42 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/06 18:43:04 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/06 20:01:17 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define PRIME				36131
 # define ERR_BAD_DATA		-2
 # define BASE_MALLOC 		8192
-# define LINK				12
+# define LINK				75
 
 /*
 	MACRO indispensable (Paul)
