@@ -6,15 +6,13 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 11:23:49 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/05 17:40:48 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/06 13:34:49 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 
 # define STRUCT_H
-
-# define BASE_MALLOC 8192
 
 struct s_pipe;
 struct s_room;
@@ -61,6 +59,7 @@ typedef struct			s_map
 	t_room				*start;
 	t_room				*end;
 	t_room				**rooms;
+	int					*links_tab;
 	t_preparse			*preparse;
 	t_buff				buff;
 	int					**adj_mat;

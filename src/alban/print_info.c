@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 22:26:53 by aboitier          #+#    #+#             */
-/*   Updated: 2020/02/04 22:21:39 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/06 13:56:25 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,28 @@
 //		colors[5] = "_CYAN",
 //		colors[6] = "_RESET"
 //};
+
+void	link_tabs(t_map *data)
+{
+	long i = 0;
+
+		while (i < data->nb_rooms * LINK)
+		{
+	    	if (i % LINK == 0)
+			{	
+	        	printf("\n");
+				printf("%s\t",data->rooms[i / LINK]->name);
+			}
+			if (data->links_tab[i] == -1)
+				printf("["_RED"%d"_RESET"]\t ", data->links_tab[i]);
+			else 
+				printf("["_GREEN"%d"_RESET"]\t ", data->links_tab[i]);
+	    	i++;
+		}
+		printf("\n\n");
+}
+
+	
 
 void	rooms_list(t_map *data)
 {

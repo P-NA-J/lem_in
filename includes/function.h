@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:51:52 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/04 18:06:40 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/06 13:48:56 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void		ft_flush_buffer(t_buff *buff);
 */
 
 void		print_info(t_map *data);
+void		link_tabs(t_map *data);
 void		ft_debug_line_adj_mat(int *line, size_t size);
 void		ft_debug_room(t_room *room);
 void		ft_debug_rooms(t_room **rooms, size_t size);

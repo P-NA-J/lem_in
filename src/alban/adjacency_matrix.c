@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 23:34:49 by aboitier          #+#    #+#             */
-/*   Updated: 2020/01/30 16:47:42 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/06 13:55:02 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,17 @@ int				compare_names(char *to_connect,
 	return (TRUE);
 }
 
+int				set_links_tab(int curr_room1, int curr_room2, t_map *data)
+{
+	int i;
+	
+	i = 0;
+	while (data->links_tab[i + curr_room1 * LINK] != -1)
+		i++;
+	data->links_tab[i + curr_room1 * LINK] = curr_room2;
+	return (TRUE);
+}
+
 int				connect_rooms(t_map *data, t_preparse *prep)
 {
 	int curr_room1;
@@ -78,6 +89,8 @@ int				connect_rooms(t_map *data, t_preparse *prep)
 	}
 	curr_room1 = prep->hashed_rooms[prep->h_r1].index;
 	curr_room2 = prep->hashed_rooms[prep->h_r2].index;
+	set_links_tab(curr_room1, curr_room2, data);
+	set_links_tab(curr_room2, curr_room1, data);
 	data->adj_mat[curr_room1][curr_room2] = 1;
 	data->adj_mat[curr_room2][curr_room1] = 1;
 	free(prep->r1);
@@ -105,11 +118,35 @@ int				parse_pipes(t_map **data, t_preparse *prep)
 	return (TRUE);
 }
 
+int				get_links_tab(t_map *data)
+{
+	int		*links_tab;
+	long	i;
+	long	size;
+
+	i = 0;
+	size = data->nb_rooms * LINK;
+	if (!(links_tab = (int *)malloc(sizeof(int) * size)))
+		return (FALSE);
+	while (i < size)
+	{
+		links_tab[i] = - 1;	
+		i += 1;
+	}
+	data->links_tab = links_tab;
+	return (TRUE);
+}	
+
 int				get_pipes(t_map **data, t_preparse *prep)
 {
 	if (get_adjacency_matrix(*data) == FALSE)
 		return (FALSE);
+	if (get_links_tab(*data) == FALSE)
+		return (FALSE);
+
+
 	if (parse_pipes(data, prep) == FALSE)
 		return (FALSE);
+	link_tabs(*data);
 	return (TRUE);
 }
