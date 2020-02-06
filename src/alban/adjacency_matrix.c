@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 23:34:49 by aboitier          #+#    #+#             */
-/*   Updated: 2020/02/06 13:55:02 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/06 16:11:12 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int				set_links_tab(int curr_room1, int curr_room2, t_map *data)
 	while (data->links_tab[i + curr_room1 * LINK] != -1)
 		i++;
 	data->links_tab[i + curr_room1 * LINK] = curr_room2;
+	data->rooms[curr_room1]->nb_link++;
 	return (TRUE);
 }
 
@@ -120,20 +121,20 @@ int				parse_pipes(t_map **data, t_preparse *prep)
 
 int				get_links_tab(t_map *data)
 {
-	int		*links_tab;
 	long	i;
 	long	size;
 
 	i = 0;
 	size = data->nb_rooms * LINK;
-	if (!(links_tab = (int *)malloc(sizeof(int) * size)))
+	if (!(data->links_tab = (int *)malloc(sizeof(int) * size)))
 		return (FALSE);
 	while (i < size)
 	{
-		links_tab[i] = - 1;	
+		if (i % LINK == 0)
+			data->rooms[i / LINK]->link = data->links_tab + i;	
+		data->links_tab[i] = - 1;	
 		i += 1;
 	}
-	data->links_tab = links_tab;
 	return (TRUE);
 }	
 
@@ -143,10 +144,7 @@ int				get_pipes(t_map **data, t_preparse *prep)
 		return (FALSE);
 	if (get_links_tab(*data) == FALSE)
 		return (FALSE);
-
-
 	if (parse_pipes(data, prep) == FALSE)
 		return (FALSE);
-	link_tabs(*data);
 	return (TRUE);
 }
