@@ -6,48 +6,78 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:53:52 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/30 16:55:33 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/05 18:52:16 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
 #include <stdio.h>
 
-void	ft_debug_collission(t_map *data, int **tab_path)
+void	ft_bubble_sort(int *tab, int len)
 {
-	int i,j ,k, l, count;
+	int i;
+	int j;
+	int	i_min;
+	int	min;
 
-	i = data->nb_path - 1;
-	j = 0;
-	k = 0;
-	l = 0;
-	count = 0;
-	while (i > 0)
+	i_min = 0;
+	i = 0;
+	while (i < len)
 	{
-		j = 3;
-		while (j < tab_path[i][0] + 2)
+		min = tab[i];
+		i_min = i;
+		j = i + 1;
+		while (j < len)
 		{
-			k = i - 1;
-			while (k >= 0)
+			if (tab[j] < min)
 			{
-				l = 3;
-				while (l < tab_path[k][0] + 2)
-				{
-					if (tab_path[i][j] == tab_path[k][l] && tab_path[i][j] != data->end->index)
-					{
-						count += 1;
-						printf("/!\\ ERROR COLLISION /!\\\ntab_path[%d][%d] = %d tab_path[%d][%d] = %d\n", i, j, tab_path[i][j], k, l, tab_path[k][l]);
-					}
-					l += 1;
-				}
-				k -= 1;
+				min = tab[j];
+				i_min = j;
 			}
 			j += 1;
 		}
-		i -= 1;
+		tab[i_min] = tab[i];
+		tab[i] = min;
+		i += 1;
+	}
+}
+
+int		ft_check_raw(t_map *data, int **adj_mat, int index)
+{
+	int	i;
+	int	count;
+
+	if (index == data->end->index || index == data->start->index)
+		return (FALSE);
+	i = -1;
+	count = 0;
+	while (++i < data->nb_rooms)
+	{
+		if (adj_mat[i][index] != 0)
+			count += 1;
+	}
+	if (count > 1)
+		return (TRUE);
+	return (FALSE);
+}
+
+void	ft_debug_collission(t_map *data)
+{
+	int	index;
+	int count;
+
+	count = 0;
+	index = -1;
+	while (++index < data->nb_rooms)
+	{
+		if (ft_check_raw(data, data->adj_mat, index) == TRUE)
+		{
+			printf(_RED "/!\\ ERROR COLLISION /!\\\n" _RESET);
+			count += 1;
+		}
 	}
 	if (count == 0)
-		printf("PAS DE COLLISION TOUT VA BIEN\n");
+		printf(_GREEN "/!\\ SUCCESS : NO COLLISION /!\\\n" _RESET);
 }
 
 void	ft_debug_print(int **ants, t_map *data, int **tab)
@@ -108,30 +138,6 @@ void	ft_print_char_line(char c, size_t n)
 	printf("\n");
 }
 
-void	ft_print_features(int features)
-{
-	size_t ret;
-
-	if (features == IS_START)
-		ret = printf("[[ FEATURES ]] ==> [[ " _GREEN " IS_START " _RESET "]]\n");
-	else if (features == VISITED)
-		ret = printf("[[ FEATURES ]] ==> [[ " _GREEN " VISITED " _RESET "]]\n");
-	else if (features == UNQUEUE)
-		ret = printf("[[ FEATURES ]] ==> [[ " _GREEN " UNQUEUE " _RESET "]]\n");
-	else if (features == IS_END)
-		ret = printf("[[ FEATURES ]] ==> [[ " _GREEN " IS_END " _RESET "]]\n");
-	else if (features == INFINY)
-		ret = printf("[[ FEATURES ]] ==> [[ " _GREEN " INFINY " _RESET "]]\n");
-	else if (features == BLOCKED)
-		ret = printf("[[ FEATURES ]] ==> [[ " _GREEN " BLOCKED " _RESET "]]\n");
-	else if (features == QUEUE)
-		printf("[[ FEATURES ]] ==> [[ " _GREEN " QUEUE " _RESET "]]\n");
-	else if (features == EMPTY)
-		printf("[[ FEATURES ]] ==> [[ " _GREEN " EMPTY " _RESET "]]\n");
-	else if (features == OCCUPIED)
-		printf("[[ FEATURES ]] ==> [[ " _GREEN " OCCUPIED " _RESET "]]\n");
-}
-
 void	ft_debug_room(t_room *room)
 {
 	size_t ret;
@@ -139,14 +145,23 @@ void	ft_debug_room(t_room *room)
 	ret = printf("[[ NAME ]]     ==> [[ " _GREEN " %s " _RESET "]]\n", room->name);
 	ret = printf("[[ TIME ]]     ==> [[ " _GREEN " %d " _RESET "]]\n", room->time);
 	ret = printf("[[ INDEX ]]    ==> [[ " _GREEN " %d " _RESET "]]\n", room->index);
-	ft_print_features(room->features);
+	if (room->features == UNQUEUE)
+		printf("[[ FEATURES ]]   ==> [[ " _GREEN " UNQUEUE " _RESET "]]\n");
+	else if (room->features == QUEUE)
+		printf("[[ FEATURES ]]   ==> [[ " _GREEN " QUEUE " _RESET "]]\n");
+	else if (room->features == IS_START)
+		printf("[[ FEATURES ]]   ==> [[ " _GREEN " IS_START " _RESET "]]\n");
+	else if (room->features == IS_END)
+		printf("[[ FEATURES ]]   ==> [[ " _GREEN " IS_END " _RESET "]]\n");
+	else if (room->features == PATHED)
+		printf("[[ FEATURES ]]   ==> [[ " _GREEN " PATHED " _RESET "]]\n");
 	ret = printf("[[ ADDR ]]     ==> [[ " _GREEN " %p " _RESET "]]\n", room);
 	if (room->prev != NULL)
 	{
 		ret = printf("\t[[ NAME ]]     ==> [[ " _YELLOW " %s " _RESET "]]\n", room->prev->name);
 		ret = printf("\t[[ INDEX ]]    ==> [[ " _YELLOW " %d " _RESET "]]\n", room->prev->index);
+		ret = printf("\t[[ TIME ]]     ==> [[ " _GREEN " %d " _RESET "]]\n", room->prev->time);
 		ret = printf("\t");
-		ft_print_features(room->prev->features);
 		ret = printf("\t[[ ADDR ]]     ==> [[ " _YELLOW " %p " _RESET "]]\n", room->prev);
 	}
 	else
@@ -214,16 +229,6 @@ void	ft_debug_adj_mat(int **adj_mat, size_t size)
 		ft_debug_line_adj_mat(adj_mat[i++], size);
 }
 
-void	ft_debug_data(t_map *data)
-{
-	printf("[[ START ]]    ==> %s\n", data->start->name);
-	printf("[[ END ]]      ==> %s\n", data->end->name);
-	printf("[[ NB_ANTS ]]  ==> %d\n", data->nb_ants);
-	printf("[[ NB_ROOMS ]] ==> %d\n", data->nb_rooms);
-	ft_debug_rooms(data->rooms, data->nb_rooms);
-	ft_debug_adj_mat(data->adj_mat, data->nb_rooms);
-}
-
 void	ft_debug_single_path(int path[500], int len, t_map *data)
 {
 	int	i;
@@ -241,21 +246,52 @@ void	ft_debug_single_path(int path[500], int len, t_map *data)
 	printf("\n");
 }
 
-void	ft_debug_tab_path(t_room **rooms, int **tab_path, int n)
+void	ft_print_path(t_map *data, int **adj_mat, int index, int nb_rooms)
+{
+	printf("[%d] [%s]\n", adj_mat[data->start->index][index], data->start->name);
+	fflush(stdout);
+	(void)nb_rooms;
+/*	while (index != data->end->index)
+	{
+		printf("[%s]", data->rooms[index]->name);
+		fflush(stdout);
+		index = ft_go_to_next(adj_mat[index], nb_rooms);
+	}
+	printf("[%s]", data->rooms[index]->name);
+		fflush(stdout);
+	printf("\n");
+*/}
+
+void	ft_debug_path(t_map *data, int **adj_mat)
 {
 	int	i;
-	int j;
+	int	nb_rooms;
+	int	nb_path;
+	int	sum_path;
+	int res_tmp;
+	int res;
 
-	i = 0;
-	while (i < n)
+	res = -1;
+	ft_bubble_sort(adj_mat[data->start->index], data->nb_rooms);
+	nb_rooms = data->nb_rooms;
+	i = -1;
+	nb_path = 0;
+	sum_path = 0;
+	printf("nb_ants = %d\n", data->nb_ants);
+	while (++i < nb_rooms)
 	{
-		j = 1;
-		while (j <= tab_path[i][0])
+		if (adj_mat[data->start->index][i] != NO_LINK)
 		{
-			printf("[%s]", rooms[tab_path[i][j++]]->name);
-			fflush(stdout);
+			nb_path += 1;
+			sum_path += adj_mat[data->start->index][i];
+			res_tmp = (data->nb_ants + sum_path - nb_path) / nb_path;
+			printf("[%d]\n", res_tmp);
+			if (res == -1)
+				res = res_tmp;
+			if (res_tmp < res)
+				res = res_tmp;
+//			ft_print_path(data, adj_mat, i, nb_rooms);
 		}
-		i += 1;
-		printf("\n");
 	}
+	printf("\nNombre de tour [%d]\n", res);
 }
