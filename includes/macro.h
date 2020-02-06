@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:39:42 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/06 13:35:15 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/06 18:43:04 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,29 @@
 	MACRO indispensable (Paul)
 */
 
+/*
+	Etat des salles.
+*/
+
+# define UNQUEUE			00000000
+# define QUEUE				00000001
+# define PATHED				00000010
+# define VISITED			00000100
+# define IS_START			00001000
+# define IS_END				00010000
+
+
 # define BUFF_SIZE			4096
-# define IGNORE				-1
+# define IGNORE				10000001
 # define EMPTY				3
 # define OCCUPIED			4
 # define NO_LINK			0
 # define UNCHANGED			1
-# define UNQUEUE			2
 # define AUGMENTED			3
 # define INFINY				4
 # define BLOCKED			5
 # define TO_CUT				6
-# define QUEUE				9
-# define IS_START			10
-# define IS_END				11
-# define VISITED			12
-# define RESTRICT			13
+
 /*
 	Couleurs
 */

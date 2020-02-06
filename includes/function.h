@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:51:52 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/06 13:48:56 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/06 18:44:27 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int			ft_go_to_next(int *line, int nb_rooms);
 t_room		*ft_remove_queue(t_queue *bfs_queue);
 void		ft_add_queue(t_queue *bfs_queue, t_room *to_add, t_room *current, int time);
 void		ft_add_front_queue(t_queue *bfs_queue, t_room *to_add, t_room *current);
+void		ft_actualisation(t_room *to_add, t_room *current, int time);
 
 /*
 	Fonction pour la modification du graphe, la creation de chemin et la distribution.
@@ -103,6 +104,6 @@ void		ft_debug_rooms(t_room **rooms, size_t size);
 void		ft_debug_queue(t_queue bfs_queue);
 void		ft_debug_single_path(int *path, int len, t_map *data);
 void		ft_debug_print(int **ants, t_map *data, int **tab);
-void		ft_debug_collission(t_map *data, int **tab_path);
+void		ft_debug_collission(t_map *data);
 void		ft_debug_path(t_map *data, int **adj_mat);
 #endif
