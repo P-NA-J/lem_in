@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:35:19 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/05 17:59:37 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/07 16:23:15 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(void)
 		write(1, "ERROR\n", 6);
 		return ((int)which_error(data, 2));
 	}
+
 //	distrib(data);
 	ft_debug_path(data, data->adj_mat);
 	ft_debug_collission(data);

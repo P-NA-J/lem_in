@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:51:52 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/07 15:56:26 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/07 19:13:50 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,15 @@ int			count_char_until(char *str, char c, char u);
 */
 
 int			ft_line_check(int *line, int len);
-int		ft_alt_line_check(t_room *current, int *line);
+int			ft_alt_line_check(t_room *current, int *line);
 int			ft_path_length_matrix(int **adj_mat, t_map *data, int c_index);
-int		ft_alt_check_line(t_room *current, int *line, int state);
+int			ft_alt_check_line(t_room *current, int *line, int state);
 void		ft_reset_matrix(t_map *data, int **adj_mat);
 int			ft_check_line(int *line, int len, int nb);
 int			**ft_mat_mirror_change(int **adj_mat, int value, int i_1, int i_2);
 void		ft_clean_matrix(t_map *data, int **adj_mat);
 int			ft_go_to_next(int *line, int nb_rooms);
-
+void		ft_bubble_sort(int *tab, int len);
 
 /*
 	Fonctions de gestion de la queue.

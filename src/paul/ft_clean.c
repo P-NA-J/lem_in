@@ -6,37 +6,38 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 09:59:33 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/05 17:07:54 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/07 16:22:59 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
 
 /*
-	Fonction qui s'assure que la salle est un cul de sac en comptant le nombre de lien de la salle.
+	Reposisionne les liens après la suppression d'un lien.
 */
 
-int	ft_dead_end_check(int *tab, int len)
+void	ft_slide_link(int *link, int index)
 {
-	int	i;
-	int	tmp_i;
-	int	flag;
-
-	i = 0;
-	flag = 0;
-	while (i < len)
+	while (link[index] >= 0)
 	{
-		if (tab[i] != 0)
-		{
-			flag += 1;
-			if (flag == 1)
-				tmp_i = i;
-		}
-		i += 1;
+		link[index] = link[index + 1];
+		index += 1;
 	}
-	if (flag == 1)
-		return (tmp_i);
-	return (FALSE);
+}
+
+/*
+	Supprime un lien et repositionne correctement les autres liens de la salle en cours.
+*/
+
+void	ft_remove_link(int curr_i, t_room *current)
+{
+	int	index;
+
+	index = 0;
+	while (current->link[index] != curr_i)
+		index += 1;
+	ft_slide_link(current->link, index);
+	current->nb_link -= 1;
 }
 
 /*
@@ -47,21 +48,24 @@ void	ft_adj_mat_line_clean_process(t_map *data, int **adj_mat,
 										t_queue *c_queue, t_room *current)
 {
 	int	i;
+	t_room *room;
 
-	i = 0;
-	if (current->features != IS_START && current->features != IS_END
-	&& (i = ft_dead_end_check(adj_mat[current->index], data->nb_rooms)) != FALSE)
+	if (current->features != IS_START && current->features != IS_END && current->nb_link == 1)
 	{
-		adj_mat = ft_mat_mirror_change(adj_mat, 0, current->index, i);
-		data->rooms[i]->features = UNQUEUE;
-		ft_add_queue(c_queue, data->rooms[i], data->rooms[i]->prev, 0);
+		room = data->rooms[current->link[0]];
+		room->features = UNQUEUE;
+		ft_add_queue(c_queue, room, room->prev, 0);
+		adj_mat = ft_mat_mirror_change(adj_mat, 0, current->index, room->index);
+		ft_remove_link(current->index, room);
 		return ;
 	}
-	while (i < data->nb_rooms)
+	i = 0;
+	while (i < current->nb_link)
 	{
-		if (adj_mat[current->index][i] == UNCHANGED && data->rooms[i]->features != QUEUE
-			&& data->rooms[i]->features != VISITED)
-			ft_add_queue(c_queue, data->rooms[i], current, 0);
+		room = data->rooms[current->link[i]];
+		if (room->features != QUEUE
+			&& room->features != VISITED)
+			ft_add_queue(c_queue, room, current, 0);
 		i += 1;
 	}
 }
