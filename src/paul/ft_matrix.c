@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 15:15:19 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/06 19:16:41 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/07 14:47:08 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,21 @@ int		**ft_mat_mirror_change(int **adj_mat, int value, int i_1, int i_2)
 	avec un lien dans un certain état.
 */
 
-int		ft_alt_check_line(t_room *current, int *line, int state)
+int		ft_alt_check_line(t_room *to_add, int *line, int state)
 {
 	int	i;
 	int	len;
 	int index;
 
-	len = current->nb_link;
+	len = to_add->nb_link;
 	i = 0;
 	while (i < len)
 	{
-		index = current->link[i];
+		index = to_add->link[i];
 		if (line[index] == state)
+		{
 			return (index);
+		}
 		i++;
 	}
 	return (IGNORE);
@@ -85,17 +87,17 @@ int		ft_alt_check_line(t_room *current, int *line, int state)
 	Fonction qui s'assure qu'il n'y a pas de lien augmenté sur une salle donnée.
 */
 
-int		ft_alt_line_check(t_room *current, int *line)
+int		ft_alt_line_check(t_room *to_add, int *line)
 {
 	int	i;
 	int	len;
 	int	index;
 
-	len = current->nb_link;
+	len = to_add->nb_link;
 	i = 0;
 	while (i < len)
 	{
-		index = current->link[i];
+		index = to_add->link[i];
 		if (line[index] == AUGMENTED || line[index] == INFINY)
 			return (index);
 		i += 1;

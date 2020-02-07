@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 09:13:18 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/06 18:53:04 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/07 18:44:31 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,20 @@ int **ft_s_to_e(t_map *data, int **adj_mat)
 }
 
 /*
+	Minimise le nombre de tours en diminuant le set de chemins.
+*/
+
+void	ft_minimize_path(t_map *data, int **adj_mat)
+{
+	int	*tmp;
+
+	tmp = ft_memalloc(sizeof(int) * data->nb_rooms);
+	ft_memcpy(tmp, adj_mat[0], sizeof(int) * data->nb_rooms);
+	ft_bubble_sort(tmp, data->nb_rooms);
+	
+}
+
+/*
 	Cette fonction va appeler en boucle le BFS afin de modeler le graphe.
 	Entre chaque appel, on ré-initialise l'état des salle et on actualise le graphe.
 */
@@ -44,8 +58,8 @@ int		**ft_bhandari(t_map *data, int **adj_mat)
 	while (ft_bfs(data, adj_mat) != NULL)
 	{
 		ft_reset_matrix(data, adj_mat);
-		printf("*****************************************************\n");
 	}
 	ft_clean_matrix(data, adj_mat);
+	ft_minimize_path(data, adj_mat);
 	return (adj_mat);
 }
