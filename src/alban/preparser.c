@@ -6,25 +6,25 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 22:02:40 by aboitier          #+#    #+#             */
-/*   Updated: 2020/02/04 17:40:04 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/07 15:54:35 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
 
-char		*increase_buffer(t_preparse *data, int reload)
+char			*increase_buffer(t_preparse *data, int reload)
 {
 	char	*new_buffer;
 
 	new_buffer = NULL;
-	if (!(new_buffer = (char *)malloc(sizeof(char) * BASE_MALLOC * reload)))
+	if (!(new_buffer = (char *)malloc(sizeof(char) * (BASE_MALLOC * reload))))
 		return (NULL);
 	new_buffer = ft_strcpy(new_buffer, data->buffer);
 	free(data->buffer);
 	return (new_buffer);
 }
 
-int			check_first_lines(char *buffer)
+int				check_first_lines(char *buffer)
 {
 	int i;
 	int	spaces;
@@ -49,12 +49,12 @@ int			check_first_lines(char *buffer)
 		i++;
 	}
 	return (TRUE);
-}		
+}
 
-long		copy_fr_index(t_preparse *data, char *src, long index)
+long			copy_fr_index(t_preparse *data, char *src, long index)
 {
 	int	i;
-	
+
 	i = 0;
 	while (src[i] != '\0')
 	{
@@ -66,11 +66,9 @@ long		copy_fr_index(t_preparse *data, char *src, long index)
 	return (index);
 }
 
-t_preparse		*pre_parser(void)
+t_preparse		*get_data(void)
 {
-	t_preparse	*data;
-	char		buff[BUFF_SIZE + 1];
-	int			ret;
+	t_preparse *data;
 
 	if (!(data = (t_preparse *)malloc(sizeof(t_preparse))))
 		return (NULL);
@@ -79,18 +77,29 @@ t_preparse		*pre_parser(void)
 	data->reload = 1;
 	if (!(data->buffer = (char *)malloc(sizeof(char) * BASE_MALLOC)))
 		return (NULL);
+	return (data);
+}
+
+t_preparse		*pre_parser(void)
+{
+	t_preparse	*data;
+	char		buff[BUFF_SIZE + 1];
+	int			ret;
+
+	if (!(data = get_data()))
+		return (NULL);
 	while ((ret = read(0, buff, BUFF_SIZE)) > 0)
 	{
 		if (buff[0] == '\0')
-			return (FALSE);
+			return (NULL);
 		buff[ret] = '\0';
 		data->size += ret;
 		if (data->size >= (long)BASE_MALLOC * data->reload)
 			if (!(data->buffer = increase_buffer(data, ++data->reload)))
-				return (FALSE);
+				return (NULL);
 		data->curr_index = copy_fr_index(data, buff, data->curr_index);
 		if (data->reload == 10)
-			if (check_first_lines(data->buffer) == FALSE)	
+			if (check_first_lines(data->buffer) == FALSE)
 				return (NULL);
 	}
 	return (data);
