@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:51:52 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/06 18:58:21 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/07 15:56:26 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,11 @@ int			get_next_room(t_preparse *prep, t_map *data);
 int			parse_rooms(t_map **data, t_preparse *prep);
 int			create_room(t_map *data, t_preparse *prep);
 int			parse_comment(t_preparse *prep, t_map *data);
+int			set_links_tab(int curr_room1, int curr_room2, t_map *data);
+int			get_links_tab(t_map *data);
 int			get_pipes(t_map **data, t_preparse *prep);
+int			get_hashes_rs(t_preparse *prep);
+int			compare_names(char *to_connect, uint32_t *h_rx, t_preparse *prep);
 int			fix_room(t_preparse *prep, t_room *room, t_map *data);
 int			valid_coords(char *buffer);
 void		replace_sink_tank(t_map *data);
