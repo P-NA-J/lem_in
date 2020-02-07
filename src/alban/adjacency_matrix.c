@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 23:34:49 by aboitier          #+#    #+#             */
-/*   Updated: 2020/02/06 16:11:12 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/07 16:35:45 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,49 +32,7 @@ int				get_adjacency_matrix(t_map *data)
 	return (TRUE);
 }
 
-int				get_hashes_rs(t_preparse *prep)
-{
-	if (!(prep->r1 = ft_strcsub(prep->buffer, '-')))
-		return (FALSE);
-	prep->buffer += ft_strlen(prep->r1) + 1;
-	if (!(prep->r2 = ft_strcsub(prep->buffer, '\n')))
-	{
-		free(prep->r1);
-		return (FALSE);
-	}
-	prep->buffer += ft_strlen(prep->r2) + 1;
-	prep->h_r1 = jenkins_hash(prep->r1);
-	prep->h_r2 = jenkins_hash(prep->r2);
-	return (TRUE);
-}
 
-int				compare_names(char *to_connect,
-				uint32_t *h_rx, t_preparse *prep)
-{
-	int diff;
-
-	diff = 0;
-	while (ft_strcmp(prep->hashed_rooms[*h_rx].name,
-					to_connect) != 0 && diff++ < 10)
-	{
-		*h_rx = (*h_rx < PRIME - 1) ? *h_rx += 1 : 1;
-		if (diff == 9)
-			return (FALSE);
-	}
-	return (TRUE);
-}
-
-int				set_links_tab(int curr_room1, int curr_room2, t_map *data)
-{
-	int i;
-	
-	i = 0;
-	while (data->links_tab[i + curr_room1 * LINK] != -1)
-		i++;
-	data->links_tab[i + curr_room1 * LINK] = curr_room2;
-	data->rooms[curr_room1]->nb_link++;
-	return (TRUE);
-}
 
 int				connect_rooms(t_map *data, t_preparse *prep)
 {
@@ -118,25 +76,6 @@ int				parse_pipes(t_map **data, t_preparse *prep)
 	}
 	return (TRUE);
 }
-
-int				get_links_tab(t_map *data)
-{
-	long	i;
-	long	size;
-
-	i = 0;
-	size = data->nb_rooms * LINK;
-	if (!(data->links_tab = (int *)malloc(sizeof(int) * size)))
-		return (FALSE);
-	while (i < size)
-	{
-		if (i % LINK == 0)
-			data->rooms[i / LINK]->link = data->links_tab + i;	
-		data->links_tab[i] = - 1;	
-		i += 1;
-	}
-	return (TRUE);
-}	
 
 int				get_pipes(t_map **data, t_preparse *prep)
 {
