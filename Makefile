@@ -1,6 +1,6 @@
 EXE = lem-in
 CC = gcc 
-CFLAG = -Wall -Werror -Wextra -g3 -fsanitize=address,undefined -flto -o3
+CFLAG = -Wall -Werror -Wextra #-g3 -fsanitize=address,undefined
 LIB = libft/libft.a
 
 SRC =	main.c 						\
@@ -9,6 +9,7 @@ SRC =	main.c 						\
 		alban/jenkins_hash.c		\
 		alban/preparser.c			\
 		alban/preparser_utils.c		\
+		alban/links_tab.c			\
 		alban/adjacency_matrix.c	\
 		alban/get_rooms.c			\
 		alban/distrib.c				\
