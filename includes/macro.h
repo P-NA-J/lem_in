@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:39:42 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/06 20:01:17 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/07 21:31:07 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define ERR_BAD_DATA		-2
 # define BASE_MALLOC 		8192
 # define LINK				75
-
+# define START				0
 /*
 	MACRO indispensable (Paul)
 */

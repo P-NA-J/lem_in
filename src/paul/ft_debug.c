@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 10:53:52 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/05 18:52:16 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/07 21:37:34 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,16 @@ void	ft_debug_room(t_room *room)
 	else if (room->features == PATHED)
 		printf("[[ FEATURES ]]   ==> [[ " _GREEN " PATHED " _RESET "]]\n");
 	ret = printf("[[ ADDR ]]     ==> [[ " _GREEN " %p " _RESET "]]\n", room);
+	int i = 0;
+	printf("[[ LINK ]]  ==> ");
+	fflush(stdout);
+	while (i < room->nb_link)
+	{
+		printf(_GREEN " [%d]" _RESET, room->link[i]);
+		fflush(stdout);
+		i += 1;
+	}
+	printf("\n");
 	if (room->prev != NULL)
 	{
 		ret = printf("\t[[ NAME ]]     ==> [[ " _YELLOW " %s " _RESET "]]\n", room->prev->name);
@@ -212,8 +222,16 @@ void	ft_debug_line_adj_mat(int *line, size_t size)
 	i = 0;
 	while (i < size)
 	{
-		printf("[ %d ]", line[i++]);
-		fflush(stdout);
+		if (line[i] == 0)
+		{
+			printf("[ %d ]", line[i++]);
+			fflush(stdout);
+		}
+		else
+		{
+			printf("["_GREEN" %d "_RESET"]", line[i++]);
+			fflush(stdout);
+		}
 	}
 	printf("\n");
 }
@@ -246,21 +264,15 @@ void	ft_debug_single_path(int path[500], int len, t_map *data)
 	printf("\n");
 }
 
-void	ft_print_path(t_map *data, int **adj_mat, int index, int nb_rooms)
+void	ft_print_path(t_map *data, int **adj_mat, int index)
 {
-	printf("[%d] [%s]\n", adj_mat[data->start->index][index], data->start->name);
-	fflush(stdout);
-	(void)nb_rooms;
-/*	while (index != data->end->index)
-	{
-		printf("[%s]", data->rooms[index]->name);
-		fflush(stdout);
-		index = ft_go_to_next(adj_mat[index], nb_rooms);
-	}
 	printf("[%s]", data->rooms[index]->name);
-		fflush(stdout);
-	printf("\n");
-*/}
+	fflush(stdout);
+	if (index == data->end->index)
+		return ;
+	index = ft_go_to_next(adj_mat[index], data->nb_rooms);
+	ft_print_path(data, adj_mat, index);
+}
 
 void	ft_debug_path(t_map *data, int **adj_mat)
 {
@@ -272,7 +284,7 @@ void	ft_debug_path(t_map *data, int **adj_mat)
 	int res;
 
 	res = -1;
-	ft_bubble_sort(adj_mat[data->start->index], data->nb_rooms);
+//	ft_bubble_sort(adj_mat[data->start->index], data->nb_rooms);
 	nb_rooms = data->nb_rooms;
 	i = -1;
 	nb_path = 0;
@@ -285,13 +297,16 @@ void	ft_debug_path(t_map *data, int **adj_mat)
 			nb_path += 1;
 			sum_path += adj_mat[data->start->index][i];
 			res_tmp = (data->nb_ants + sum_path - nb_path) / nb_path;
-			printf("[%d]\n", res_tmp);
 			if (res == -1)
 				res = res_tmp;
 			if (res_tmp < res)
 				res = res_tmp;
-//			ft_print_path(data, adj_mat, i, nb_rooms);
-		}
+			printf("[%d]\n", res_tmp);
+/*			printf("[%d] [%s]", adj_mat[data->start->index][i], data->start->name);
+			fflush(stdout);
+			ft_print_path(data, adj_mat, i);
+			printf("\n");
+*/		}
 	}
-	printf("\nNombre de tour [%d]\n", res);
+//	printf("\nNombre de tour [%d]\n", res);
 }
