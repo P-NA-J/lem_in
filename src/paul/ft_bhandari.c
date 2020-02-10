@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 09:13:18 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/07 21:35:32 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/10 12:31:20 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	ft_init_opti(t_opti *op, int **adj_mat, t_map *data)
 {
 	op->tab = ft_tab_cpy(data, adj_mat);
 	op->nb_path = 0;
+	op->sum = 0;
 	op->max_len = 0;
 	op->res = 0;
 }
@@ -124,6 +125,19 @@ int		ft_have_to_keep(int len, t_opti *op)
 }
 
 /*
+	Fonction qui supprime un lien d'un tableau de lien et réorganise tout les autres.
+*/
+
+void	ft_opti_erase_link(int *t_link, int i_link, int nb_link)
+{
+	while (i_link < nb_link)
+	{
+		t_link[i_link] = t_link[i_link + 1];
+		i_link += 1;
+	}
+}
+
+/*
 	Fonction qui ne garde que les chemins formant le bon set de chemin.
 */
 
@@ -135,7 +149,29 @@ void	ft_opti_clean_matrix(t_map *data, int **adj_mat, t_opti *op)
 	while (i < data->start->nb_link)
 	{
 		if (ft_have_to_keep(adj_mat[START][data->start->link[i]], op) == IGNORE)
+		{
 			adj_mat[START][data->start->link[i]] = 0;
+			ft_opti_erase_link(data->start->link, i, data->start->nb_link);
+			data->start->nb_link -= 1;
+		}
+		i += 1;
+	}
+}
+
+/*
+	Fonction qui supprime les chemins en trop
+*/
+
+void	ft_opti_erase_path(t_opti *op)
+{
+	int	i;
+
+	i = 0;
+	while (op->tab[i] > 0)
+	{
+		while (i < op->nb_path)
+			i += 1;
+		op->tab[i] = 0;
 		i += 1;
 	}
 }
@@ -148,14 +184,14 @@ void	ft_optimize_matrix(t_map *data, t_opti *op)
 {
 	int	i;
 	int	tmp_res;
-	
+
 	i = 0;
 	while (op->tab[i] > 0)
 	{
 		op->nb_path += 1;
 		op->sum += op->tab[i];
 		tmp_res = (data->nb_ants + op->sum - op->nb_path) / op->nb_path;
-		if (tmp_res < op->res)
+		if (op->res == 0 || tmp_res < op->res)
 		{
 			op->res = tmp_res;
 			op->max_len = op->tab[i];
@@ -163,6 +199,7 @@ void	ft_optimize_matrix(t_map *data, t_opti *op)
 		else
 		{
 			op->nb_path -= 1;
+			ft_opti_erase_path(op);
 			return (ft_opti_clean_matrix(data, data->adj_mat, op));
 		}
 		i += 1;
@@ -194,12 +231,8 @@ int		**ft_bhandari(t_map *data, int **adj_mat)
 	if (adj_mat[data->start->index][data->end->index] == UNCHANGED)
 		return (ft_s_to_e(data, adj_mat));
 	while (ft_bfs(data, adj_mat) != NULL)
-	{
 		ft_reset_matrix(data, adj_mat);
-	}
 	ft_clean_matrix(data, adj_mat);
-	ft_debug_line_adj_mat(adj_mat[0], data->nb_rooms);
 	ft_minimize_path(data, adj_mat);
-	ft_debug_line_adj_mat(adj_mat[0], data->nb_rooms);
 	return (adj_mat);
 }
