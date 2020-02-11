@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 09:13:18 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/10 12:31:20 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/11 12:48:44 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int **ft_s_to_e(t_map *data, int **adj_mat)
 		i++;
 	}
 	adj_mat[data->start->index][data->end->index] = 1;
+	ft_debug_line_adj_mat(adj_mat[data->start->index], nb_rooms);
+	data->start->nb_link = 1;
 	return (adj_mat);
 }
 

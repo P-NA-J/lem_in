@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 15:15:19 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/07 14:47:08 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/11 13:51:22 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,49 @@ static void	ft_clean_line(int *line, int nb_rooms)
 }
 
 /*
+	Fonction qui gere la suppression des liens sur la preniere ligne de la matrice
+*/
+
+void	ft_clean_start_matrix(t_map *data, int *line, int nb_rooms)
+{
+	int	i;
+
+	i = 0;
+	while (i < nb_rooms)
+	{
+		if (line[i] != BLOCKED && line[i] != NO_LINK)
+			data->start->nb_link -= 1;
+		i++;
+	}
+}
+
+/*
+	Fonction qui supprime de la matrice et du tableau de lien les chemins non sauvegardé.
+*/
+
+void	ft_clean_start_line(t_map *data, int *line)
+{
+	int	i;
+	int	nb_link;
+
+	nb_link = data->start->nb_link;
+	i = 0;
+	while (i < data->start->nb_link)
+	{
+		if (line[data->start->link[i]] != BLOCKED)
+		{
+			line[data->start->link[i]] = NO_LINK;
+			ft_opti_erase_link(data->start->link, i, nb_link);
+			data->start->nb_link -= 1;
+			i -= 1;
+		}
+		else
+			line[data->start->link[i]] = UNCHANGED;
+		i++;
+	}
+}
+
+/*
 	Fonction qui supprime les liens inutile afin de simplifier au maximum la matrice
 	et faire apparaitre les chemins empruntable.
 */
@@ -191,12 +234,13 @@ void	ft_clean_matrix(t_map *data, int **adj_mat)
 	int	nb_rooms;
 
 	nb_rooms = data->nb_rooms;
-	i = 0;
+	i = 1;
 	while (i < nb_rooms)
 	{
 		ft_clean_line(adj_mat[i], nb_rooms);
 		i++;
 	}
+	ft_clean_start_line(data, adj_mat[0]);
 	ft_path_set(adj_mat, data);
 }
 
