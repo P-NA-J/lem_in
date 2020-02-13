@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 11:23:49 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/07 20:39:39 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/12 17:38:34 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,30 @@ typedef struct			s_buff
 	char				buff[BUFF_SIZE + 1];
 }						t_buff;
 
+typedef struct			s_queue
+{
+	t_room				*queue[PRIME];
+	size_t				index;
+}						t_queue;
+
+typedef struct			s_opti
+{
+	int					index_p[MAX_LEN_PATH];
+	int					len_p[MAX_LEN_PATH];
+	int					tmp_p[MAX_LEN_PATH];
+	int					distrib_p[MAX_LEN_PATH];
+	int					tmp;
+	int					res;
+}						t_opti;
+
+typedef struct			s_path
+{
+	int					path[MAX_LEN_PATH];
+	int					ants[MAX_LEN_PATH];
+	int					len;
+	struct s_path		*next;
+}						t_path;
+
 typedef struct			s_map
 {
 	t_room				*start;
@@ -63,25 +87,11 @@ typedef struct			s_map
 	t_preparse			*preparse;
 	t_buff				buff;
 	int					**adj_mat;
+	t_opti				opti;
 	int					nb_ants;
 	int					nb_rooms;
 	int					nb_path;
 	int					decision;
 }						t_map;
-
-typedef struct			s_queue
-{
-	t_room				*queue[PRIME];
-	size_t				index;
-}						t_queue;
-
-typedef struct			s_opti
-{
-	int					*tab;
-	int					nb_path;
-	int					max_len;
-	int					sum;
-	int					res;
-}						t_opti;
 
 #endif

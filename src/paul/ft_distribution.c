@@ -5,38 +5,61 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/20 08:59:33 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/11 14:39:33 by pauljull         ###   ########.fr       */
+/*   Created: 2020/02/12 17:32:59 by pauljull          #+#    #+#             */
+/*   Updated: 2020/02/12 18:03:35 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
 
 /*
-	Fonction qui calcule le nombre de fourmi à envoyer sur un chemin donné dans le cas général (sum % nb_path == 0)
+	Fonction qui sauvegarde le set actuel.
 */
 
-int		ft_process_distrib(t_path *path, t_map *data)
+int	ft_save_new_set(t_map *data, int **adj_mat, t_opti *opti)
 {
-	return (((data->nb_ants + data->sum_len_path - data->nb_path) / data->nb_path) + 1 - path->len);
+
 }
 
 /*
-	Fonction qui va redistribuer les fourmis de maniere équitable.
-	entre les différents chemin en prenant en compte la taille des chemin.
+	Fonction qui rétablit l'ancien meilleur set.
 */
 
-void	ft_distribution(t_path *path, t_map *data)
+int	ft_recover_set(t_map *data, int **adj_mat, t_opti *opti)
 {
-	t_path	*head;
-	int		verif_sum;
 
-	head = path;
-	verif_sum = 0;
-	while (path != NULL)
+}
+
+/*
+	Fonction qui va repartir les fourmis sur les differents chemins du path.
+*/
+
+void	ft_process_set(t_opti *opti, int nb_path)
+{
+	
+}
+
+/*
+	Fonction qui inscrit le set à examiner dans tmp_p et qui détermine si on le garde ou pas.
+*/
+
+int	ft_distribution(t_map *data, int **adj_mat, t_opti *opti)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	i = 0;
+	while (i < data->nb_rooms)
 	{
-		printf("len = %d -----------\n", path->len);
-		path = path->next;
+		if (adj_mat[START][i] == BLOCKED)
+			opti->tmp_p[j++] = ft_path_length(adj_mat, i);
+		i += 1;
 	}
-	printf("nb_ants = %d\nverif_sum = %d\nComplexite totale = %d\n", data->nb_ants, data->sum_len_path, (data->nb_ants + data->sum_len_path - data->nb_path) / data->nb_path);
+	ft_bubble_sort(opti->tmp_p, j);
+	ft_process_set(opti, j);
+	if (opti->tmp >= opti->res && opti->res != 0)
+		return (ft_recover_set(data, adj_mat, opti));
+	else if (opti->tmp < opti->res || opti->res == 0)
+		return (ft_save_new_set(data, adj_mat, opti));
 }

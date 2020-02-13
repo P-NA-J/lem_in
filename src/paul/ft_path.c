@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 10:31:56 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/11 14:28:30 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/12 13:25:30 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,6 @@ t_path	*ft_create_node(int index, int **adj_mat, int nb_rooms)
 	return (node);
 }
 
-void	ft_set_path_info(t_path *path_list, t_map *data)
-{
-	data->nb_path = 0;
-	data->sum_len_path = 0;
-	while (path_list != NULL)
-	{
-		data->nb_path += 1;
-		data->sum_len_path += path_list->len;
-		path_list = path_list->next;
-	}
-}
-
 t_path	*ft_path(t_map *data, int **adj_mat)
 {
 	int	i;
@@ -83,6 +71,5 @@ t_path	*ft_path(t_map *data, int **adj_mat)
 		ft_list_push_back(&path_list, node);
 		i += 1;
 	}
-	ft_set_path_info(path_list, data);
 	return (path_list);
 }

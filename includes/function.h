@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:51:52 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/07 19:13:50 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/12 17:10:07 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,10 @@ int			count_char_until(char *str, char c, char u);
 	Fonctions pour la matrice d'adjacence.
 */
 
-int			ft_line_check(int *line, int len);
-int			ft_alt_line_check(t_room *current, int *line);
+int			ft_line_check(t_room *current, int *line);
 int			ft_path_length_matrix(int **adj_mat, t_map *data, int c_index);
-int			ft_alt_check_line(t_room *current, int *line, int state);
+int			ft_check_line(t_room *current, int *line, int state);
 void		ft_reset_matrix(t_map *data, int **adj_mat);
-int			ft_check_line(int *line, int len, int nb);
 int			**ft_mat_mirror_change(int **adj_mat, int value, int i_1, int i_2);
 void		ft_clean_matrix(t_map *data, int **adj_mat);
 int			ft_go_to_next(int *line, int nb_rooms);
@@ -79,9 +77,11 @@ void		ft_init_bfs(t_queue *bfs_queue, t_map *data);
 void		ft_set_bfs(t_map *data);
 int			**ft_bfs(t_map *data, int **adj_mat);
 int			**ft_bhandari(t_map *data, int **adj_mat);
-void		ft_distribution(int **tab_path, int nb_path, int nb_ants);
-int			**ft_print(int **tab, t_map *data);
+void		ft_distribution(t_path *path, t_map *data);
+void		ft_print(t_map *data, int ***path_tab, int nb_path);
 int			distrib(t_map *data);
+t_path		*ft_path(t_map *data, int **adj_mat);
+void		ft_opti_erase_link(int *t_link, int i_link, int nb_link);
 
 /*
 	Fonction de gestion des leaks.
@@ -111,5 +111,5 @@ void		ft_debug_queue(t_queue bfs_queue);
 void		ft_debug_single_path(int *path, int len, t_map *data);
 void		ft_debug_print(int **ants, t_map *data, int **tab);
 void		ft_debug_collission(t_map *data);
-void		ft_debug_path(t_map *data, int **adj_mat);
+void		ft_debug_path(t_map *data, t_path *path);
 #endif

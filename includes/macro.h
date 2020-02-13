@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:39:42 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/07 21:31:07 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/10 13:50:03 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define BASE_MALLOC 		8192
 # define LINK				75
 # define START				0
+# define MAX_LEN_PATH		500
 /*
 	MACRO indispensable (Paul)
 */

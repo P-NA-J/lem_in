@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:35:19 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/11 15:10:24 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/12 15:27:51 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 int	main(void)
 {
 	t_map	*data;
-	t_path	*path;
+//	t_path	*path;
 
 	if ((data = parser()) == NULL)
 		return (FALSE);
@@ -33,8 +33,6 @@ int	main(void)
 		write(1, "ERROR\n", 6);
 		return ((int)which_error(data, 2));
 	}
-	path = ft_path(data, data->adj_mat);
-//	ft_distribution(path, data);
-//	ft_debug_collission(data);
+//	path = ft_path(data, data->adj_mat);
 	return (0);
 }

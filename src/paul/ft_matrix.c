@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 15:15:19 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/11 13:51:22 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/12 17:22:07 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int		**ft_mat_mirror_change(int **adj_mat, int value, int i_1, int i_2)
 	avec un lien dans un certain état.
 */
 
-int		ft_alt_check_line(t_room *to_add, int *line, int state)
+int		ft_check_line(t_room *to_add, int *line, int state)
 {
 	int	i;
 	int	len;
@@ -87,7 +87,7 @@ int		ft_alt_check_line(t_room *to_add, int *line, int state)
 	Fonction qui s'assure qu'il n'y a pas de lien augmenté sur une salle donnée.
 */
 
-int		ft_alt_line_check(t_room *to_add, int *line)
+int		ft_line_check(t_room *to_add, int *line)
 {
 	int	i;
 	int	len;
@@ -100,43 +100,6 @@ int		ft_alt_line_check(t_room *to_add, int *line)
 		index = to_add->link[i];
 		if (line[index] == AUGMENTED || line[index] == INFINY)
 			return (index);
-		i += 1;
-	}
-	return (IGNORE);
-}
-
-/*
-	Fonction qui renvoie l'index de la salle qui est relié a une salle donnée
-	avec un lien dans un certain état.
-*/
-
-int			ft_check_line(int *line, int len, int nb)
-{
-	int	i;
-
-	i = 0;
-	while (i < len)
-	{
-		if (line[i] == nb)
-			return (i);
-		i++;
-	}
-	return (IGNORE);
-}
-
-/*
-	Fonction qui s'assure qu'il n'y a pas de lien augmenté sur une salle donnée.
-*/
-
-int			ft_line_check(int *line, int len)
-{
-	int	i;
-
-	i = 0;
-	while (i < len)
-	{
-		if (line[i] == AUGMENTED || line[i] == INFINY)
-			return (i);
 		i += 1;
 	}
 	return (IGNORE);
@@ -181,49 +144,6 @@ static void	ft_clean_line(int *line, int nb_rooms)
 }
 
 /*
-	Fonction qui gere la suppression des liens sur la preniere ligne de la matrice
-*/
-
-void	ft_clean_start_matrix(t_map *data, int *line, int nb_rooms)
-{
-	int	i;
-
-	i = 0;
-	while (i < nb_rooms)
-	{
-		if (line[i] != BLOCKED && line[i] != NO_LINK)
-			data->start->nb_link -= 1;
-		i++;
-	}
-}
-
-/*
-	Fonction qui supprime de la matrice et du tableau de lien les chemins non sauvegardé.
-*/
-
-void	ft_clean_start_line(t_map *data, int *line)
-{
-	int	i;
-	int	nb_link;
-
-	nb_link = data->start->nb_link;
-	i = 0;
-	while (i < data->start->nb_link)
-	{
-		if (line[data->start->link[i]] != BLOCKED)
-		{
-			line[data->start->link[i]] = NO_LINK;
-			ft_opti_erase_link(data->start->link, i, nb_link);
-			data->start->nb_link -= 1;
-			i -= 1;
-		}
-		else
-			line[data->start->link[i]] = UNCHANGED;
-		i++;
-	}
-}
-
-/*
 	Fonction qui supprime les liens inutile afin de simplifier au maximum la matrice
 	et faire apparaitre les chemins empruntable.
 */
@@ -234,13 +154,12 @@ void	ft_clean_matrix(t_map *data, int **adj_mat)
 	int	nb_rooms;
 
 	nb_rooms = data->nb_rooms;
-	i = 1;
+	i = 0;
 	while (i < nb_rooms)
 	{
 		ft_clean_line(adj_mat[i], nb_rooms);
 		i++;
 	}
-	ft_clean_start_line(data, adj_mat[0]);
 	ft_path_set(adj_mat, data);
 }
 
@@ -252,11 +171,13 @@ void	ft_reset_matrix(t_map *data, int **adj_mat)
 {
 	t_room *current;
 	t_room	*start;
+	int		i_tmp;
 
 	start = data->start;
 	current = data->end;
 	while (current != start)
 	{
+		i_tmp = current->index;
 		if (adj_mat[current->index][current->prev->index] == UNCHANGED)
 		{
 			if (current->prev == start)
@@ -275,3 +196,4 @@ void	ft_reset_matrix(t_map *data, int **adj_mat)
 		current = current->prev;
 	}
 }
+
