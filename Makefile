@@ -1,6 +1,6 @@
 EXE = lem-in
 CC = gcc 
-CFLAG = -Wall -Werror -Wextra #-g3 -fsanitize=address,undefined
+CFLAG = -Wall -Werror -Wextra -g3 -fsanitize=address,undefined
 LIB = libft/libft.a
 
 SRC =	main.c 						\
@@ -16,14 +16,15 @@ SRC =	main.c 						\
 		alban/print_info.c			\
 		alban/return_error.c		\
 		paul/ft_debug.c				\
-		paul/ft_alt_bfs.c				\
+		paul/ft_bfs.c				\
+		paul/ft_path.c				\
 		paul/ft_bhandari.c			\
 		paul/ft_matrix.c			\
 		paul/ft_queue.c				\
 		paul/ft_initialisation.c	\
-		paul/ft_free.c				\
 		paul/ft_buffer.c			\
 		paul/ft_clean.c				\
+		paul/ft_print.c				\
 
 OBJ = $(SRC:.c=.o)
 PATH_SRC = $(addprefix src/, $(SRC))
