@@ -106,16 +106,16 @@ PATH_OBJ = $(addprefix obj/, $(OBJ))
 all: $(NAME)
 
 $(NAME): $(PATH_OBJ)
-	ar rc $@ $(PATH_OBJ)
-	ranlib $@
+	@ar rc $@ $(PATH_OBJ)
+	@ranlib $@
 
 $(addprefix obj/, %.o): $(addprefix src/, %.c)
-	gcc -Wall -Wextra -Werror -c $< -o $@
+	@gcc -Wall -Wextra -Werror -c $< -o $@
 
 clean:
-	rm -f $(PATH_OBJ)
+	@rm -f $(PATH_OBJ)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all

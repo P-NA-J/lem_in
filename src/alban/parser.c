@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:33:58 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/07 15:07:12 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/14 12:27:39 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ t_map		*parser(void)
 		return (which_error(data, 2));
 	if (parse_rooms(&data, data->preparse) == FALSE)
 		return (which_error(data, 2));
+//	printf("%d\n", data->start->index);
+	//printf("%d\n", data->end->index);
 	if (data->start == NULL || data->end == NULL)
 		return (which_error(data, 2));
 	if (get_pipes(&data, data->preparse) == FALSE)

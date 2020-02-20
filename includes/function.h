@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:51:52 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/12 17:10:07 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/13 17:10:43 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,5 @@ void		ft_debug_queue(t_queue bfs_queue);
 void		ft_debug_single_path(int *path, int len, t_map *data);
 void		ft_debug_print(int **ants, t_map *data, int **tab);
 void		ft_debug_collission(t_map *data);
-void		ft_debug_path(t_map *data, t_path *path);
+void		ft_debug_path(t_map *data, int **adj_mat);
 #endif

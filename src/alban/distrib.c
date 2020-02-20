@@ -6,58 +6,88 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 21:02:13 by aboitier          #+#    #+#             */
-/*   Updated: 2020/01/31 03:35:19 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/07 21:45:02 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
 
-void	swp_rooms_tab(t_map *data, int ind_end, int ind_nb_rooms)
-{		
-	t_room 	*swap;
-	
-	swap = NULL;
-	swap = data->rooms[ind_nb_rooms];
-	data->rooms[ind_nb_rooms] = data->rooms[ind_end];
-	data->rooms[ind_end] = swap;
-	data->end = data->rooms[ind_nb_rooms];
-}
+# define START 0
 
-void	swp_adj_mat(t_map *data, int ind_end, int ind_nb_rooms)
+int		count_nb_ways(int **adj_mat, int nb_rooms)
 {
+	int count;
 	int i;
-	int	tmp;
 
+	count = 0;
 	i = 0;
-	tmp = 0;
-	while (i < data->nb_rooms)
+	while (i < nb_rooms)
 	{
-		tmp = data->adj_mat[i][ind_end];
-		data->adj_mat[i][ind_end] = data->adj_mat[i][ind_nb_rooms];
-		data->adj_mat[i][ind_nb_rooms] = tmp;
-
-		tmp = data->adj_mat[ind_end][i];
-		data->adj_mat[ind_end][i] = data->adj_mat[ind_nb_rooms][i];
-		data->adj_mat[ind_nb_rooms][i] = tmp;
+		if (adj_mat[START][i] > 0)
+			count++;
 		i++;
 	}
+	return (count);
 }
 
-void	replace_end(t_map *data)
+int		get_total_size(int **adj_mat, int nb_rooms)
 {
-	int 	ind_end;
-	int		ind_nb_rooms;
+	int	i;
+	int l;
 
-	ind_end = data->end->index;
-	ind_nb_rooms = data->nb_rooms - 1;
-	swp_adj_mat(data, ind_end, ind_nb_rooms);
-	swp_rooms_tab(data, ind_end, ind_nb_rooms);
+	i = 0;
+	l = 0;
+	while (i < nb_rooms)
+	{
+		if (adj_mat[START][i] > 0)
+			l+= adj_mat[START][i];
+		i++;
+	}
+
+	return (TRUE);
 }
 
-int		distrib(t_map *data)
+int		print_result(t_map *data, int **adj_mat, int max_turn, int max_ants_per_way)
 {
-	if (data->end->index != data->nb_rooms)
-		replace_end(data);
+	int first = 0;
+	int last = 0;
+
+	int entered;
+	int left;
+
+	int	nb_turns;
+	int	nb_ways;
+
+	int remaining = 0;
+	int turn_pass = 0;
+
+	nb_ways = count_nb_ways(adj_mat, data->nb_rooms);
+	nb_turns = 0;
+
+	get_ways();
+	while (last < data->nb_ants && nb_turns < max)
+	{
+		entered = 0;
+		left = 0;
+		turn_pass = 0;
+
+		while (last + turn_pass < data->nb_ants && turn_pass < nb_ways)
+		{
+			if (last + nb_ways < ant_getting_in)
+				entered += turn_pass;
+			if (ant_reaching_end)
+				left++;
+			print_first_to_last(first, last, data);
+			turn_pass++;
+		}
+
+		first += left;
+		last += entered;
+		remaining = data->nb_ants - last;
+		nb_turns++;
+	}	
+	printf("%d\n", nb_turns);
+
 //	send one ant per path;
 		
 //	earliest ant to get in
