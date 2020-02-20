@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:39:42 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/10 13:50:03 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/14 14:49:10 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,11 @@
 
 # define ANTS				100000
 # define PRIME				36131
-# define ERR_BAD_DATA		-2
 # define BASE_MALLOC 		8192
-# define LINK				75
+# define LINK				120
 # define START				0
 # define MAX_LEN_PATH		500
-/*
-	MACRO indispensable (Paul)
-*/
-
+# define MAX_PATH			100
 /*
 	Etat des salles.
 */

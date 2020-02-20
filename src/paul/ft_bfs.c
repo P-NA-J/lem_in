@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 10:46:23 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/12 10:46:39 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/17 19:02:29 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,9 @@ void	ft_unchanged_link_process(t_queue *bfs_q, t_room *i_room, t_room *current, 
 void	ft_unchanged_link_management(int index, t_room *current, t_map *data, t_queue *bfs_q)
 {
 	int	tmp_aug;
-	int	tmp_clean;
 
 	tmp_aug = 0;
-	tmp_clean = 0;
-	if ((tmp_clean = ft_line_check(data->rooms[index], data->adj_mat[index])) == IGNORE)
+	if (ft_line_check(data->rooms[index], data->adj_mat[index]) == IGNORE)
 		ft_add_queue(bfs_q, data->rooms[index], current, 1);
 	else if (((tmp_aug = ft_check_line(data->rooms[index], data->adj_mat[index], AUGMENTED)) != IGNORE) 
 			&& data->decision == 1)
@@ -138,7 +136,10 @@ int	**ft_bfs(t_map *data, int **adj_mat)
 	while (bfs_queue.index != 0)
 	{
 		if ((current = ft_remove_queue(&bfs_queue)) == data->end)
+		{
+			data->opti.index = current->prev->index;
 			return (adj_mat);
+		}
 		ft_adj_mat_line_process(data, adj_mat, &bfs_queue, current);
 	}
 	return (NULL);

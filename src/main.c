@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:35:19 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/12 15:27:51 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/20 16:37:14 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,12 @@
 int	main(void)
 {
 	t_map	*data;
-//	t_path	*path;
 
 	if ((data = parser()) == NULL)
 		return (FALSE);
 	ft_clean(data, data->adj_mat);
-	if (ft_bhandari(data, data->adj_mat) == NULL)
-	{
-		write(1, "ERROR\n", 6);
-		return ((int)which_error(data, 2));
-	}
-//	path = ft_path(data, data->adj_mat);
+	if(ft_bhandari(data, data->adj_mat) == FALSE)
+		return (0);
+	ft_print(data, data->path_tab, data->nb_path);
 	return (0);
 }

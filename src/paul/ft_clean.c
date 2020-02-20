@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 09:59:33 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/07 16:22:59 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/17 19:01:41 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ void	ft_remove_link(int curr_i, t_room *current)
 
 	index = 0;
 	while (current->link[index] != curr_i)
+	{
 		index += 1;
+	}
 	ft_slide_link(current->link, index);
 	current->nb_link -= 1;
 }
@@ -54,8 +56,8 @@ void	ft_adj_mat_line_clean_process(t_map *data, int **adj_mat,
 	{
 		room = data->rooms[current->link[0]];
 		room->features = UNQUEUE;
-		ft_add_queue(c_queue, room, room->prev, 0);
-		adj_mat = ft_mat_mirror_change(adj_mat, 0, current->index, room->index);
+		ft_add_front_queue(c_queue, room, room->prev);
+		adj_mat = ft_mat_mirror_change(adj_mat, NO_LINK, current->index, room->index);
 		ft_remove_link(current->index, room);
 		return ;
 	}
@@ -63,8 +65,8 @@ void	ft_adj_mat_line_clean_process(t_map *data, int **adj_mat,
 	while (i < current->nb_link)
 	{
 		room = data->rooms[current->link[i]];
-		if (room->features != QUEUE
-			&& room->features != VISITED)
+		if (room->features == UNQUEUE
+			&& room->features != IS_END)
 			ft_add_queue(c_queue, room, current, 0);
 		i += 1;
 	}
@@ -79,7 +81,11 @@ void	ft_clean(t_map *data, int **adj_mat)
 	t_queue	c_queue;
 	t_room	*current;
 
-	ft_init_bfs(&c_queue, data);
+//	ft_init_bfs(&c_queue, data);
+	data->start->features = IS_START;
+	data->end->features = IS_END;
+	c_queue.queue[0] = data->start;
+	c_queue.index = 1;
 	while (c_queue.index != 0)
 	{
 		current = ft_remove_queue(&c_queue);

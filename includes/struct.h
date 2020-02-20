@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 11:23:49 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/12 17:38:34 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/19 15:02:03 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef struct			s_room
 	uint32_t			hash;
 	int					index;
 	int					features;
-	int					ascend;
 	int					time;
 	int					coord_x;
 	int					coord_y;
@@ -62,11 +61,10 @@ typedef struct			s_queue
 
 typedef struct			s_opti
 {
-	int					index_p[MAX_LEN_PATH];
-	int					len_p[MAX_LEN_PATH];
-	int					tmp_p[MAX_LEN_PATH];
-	int					distrib_p[MAX_LEN_PATH];
-	int					tmp;
+	int					index_p[2][MAX_LEN_PATH];
+	int					len_p[2][MAX_LEN_PATH];
+	int					distrib_p[2][MAX_LEN_PATH];
+	int					index;
 	int					res;
 }						t_opti;
 
@@ -84,6 +82,7 @@ typedef struct			s_map
 	t_room				*end;
 	t_room				**rooms;
 	int					*links_tab;
+	int					path_tab[MAX_PATH][2][PRIME];
 	t_preparse			*preparse;
 	t_buff				buff;
 	int					**adj_mat;

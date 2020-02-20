@@ -6,32 +6,33 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 09:13:18 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/12 17:13:55 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/20 16:10:34 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
 
 /*
-	Cette fonction va mettre a 0 tout les liens excepté celui qui relie start à end.
+	Cette fonction va ecrire sur une ligne de le deplacement de toutes les fourmis de start a end.
 */
 
-int **ft_s_to_e(t_map *data, int **adj_mat)
+static int	ft_s_to_e(t_map *data)
 {
 	int	i;
-	int	nb_rooms;
+	int	nb_ants;
+	int	end_i;
 
-	nb_rooms = data->nb_rooms;
-	i = 0;
-	while (i < nb_rooms)
+	end_i = data->end->index;
+	nb_ants = data->nb_ants;
+	i = 1;
+	while (i <= nb_ants)
 	{
-		ft_bzero(adj_mat[i], sizeof(int) * nb_rooms);
-		i++;
+		ft_print_move(data, i, end_i);
+		i += 1;
 	}
-	adj_mat[data->start->index][data->end->index] = 1;
-	ft_debug_line_adj_mat(adj_mat[data->start->index], nb_rooms);
-	data->start->nb_link = 1;
-	return (adj_mat);
+	ft_putstr_buffer(&(data->buff), "\n", 1);
+	ft_flush_buffer(&(data->buff));
+	return (FALSE);
 }
 
 /*
@@ -39,13 +40,17 @@ int **ft_s_to_e(t_map *data, int **adj_mat)
 	Entre chaque appel, on ré-initialise l'état des salle et on actualise le graphe.
 */
 
-int		**ft_bhandari(t_map *data, int **adj_mat)
+int	ft_bhandari(t_map *data, int **adj_mat)
 {
 	if (adj_mat[data->start->index][data->end->index] == UNCHANGED)
-		return (ft_s_to_e(data, adj_mat));
+		return (ft_s_to_e(data));
+	data->opti.res = INT_MAX;
 	while (ft_bfs(data, adj_mat) != NULL)
-		ft_add_path(data, adj_mat);
-//		ft_reset_matrix(data, adj_mat);
-//	ft_clean_matrix(data, adj_mat);
-	return (adj_mat);
+	{
+		ft_reset_matrix(data, adj_mat);
+		ft_snapshot(data, &(data->opti), data->start);
+		if (ft_evaluate_snapshot(data, adj_mat, &(data->opti), data->nb_path) == FALSE)
+			return (TRUE);
+	}
+	return (TRUE);
 }

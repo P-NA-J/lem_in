@@ -6,70 +6,71 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 10:31:56 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/12 13:25:30 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/20 16:10:27 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
 
-void	ft_list_push_back(t_path **head, t_path *node)
-{
-	t_path *head_ref;
-	t_path	*head_tmp;
+/*
+	Fonction qui assigne l'index des fourmis à un chemin.
+*/
 
-	head_tmp = *head;
-	head_ref = *head;
-	if (!head || !node)
-		return ;
-	if (head_ref == NULL)
-	{
-		*head = node;
-		return ;
-	}
-	else
-	{
-		while (head_ref->next != NULL)
-			head_ref = head_ref->next;
-		head_ref->next = node;
-	}
-	*head = head_tmp;
-}
-
-t_path	*ft_create_node(int index, int **adj_mat, int nb_rooms)
-{
-	t_path	*node;
-	int		len;
-	int		i;
-
-	if (!(node = (t_path *)malloc(sizeof(t_path))))
-		return (NULL);
-	node->len = adj_mat[0][index] + 1;
-	len = node->len;
-	node->path[0] = START;
-	i = 1;
-	while (i < len)
-	{
-		node->path[i] = index;
-		index = ft_go_to_next(adj_mat[index], nb_rooms);
-		i += 1;
-	}
-	node->next = NULL;
-	return (node);
-}
-
-t_path	*ft_path(t_map *data, int **adj_mat)
+void	ft_set_distrib_path(t_map *data, int path[2][PRIME], int count, int distrib)
 {
 	int	i;
-	t_path	*path_list;
-	t_path	*node;
+	int	nb_room;
 
-	path_list = NULL;
+	nb_room = data->nb_rooms;
 	i = 0;
-	while (i < data->start->nb_link)
+	while (i < nb_room)
+		path[1][i++] = 0;
+	path[1][0] = count;
+	path[1][1] = distrib;
+}
+
+/*
+	Fonction qui va inscrire la longueur et l'index des salles composant le path.
+*/
+
+void	ft_create_path(t_map *data, int path[2][PRIME], int no_path, int index)
+{
+	t_opti	tmp_o;
+	int		end_i;
+	int		i;
+
+	end_i = data->end->index;
+	tmp_o = data->opti;
+	path[0][0] = tmp_o.len_p[1][no_path];
+	path[0][1] = START;
+	i = 2;
+	while (index != end_i)
 	{
-		node = ft_create_node(data->start->link[i], adj_mat, data->nb_rooms);
-		ft_list_push_back(&path_list, node);
+		path[0][i] = index;
+		index = ft_go_to_next(data->adj_mat, data->rooms[index], BLOCKED, BLOCKED);
 		i += 1;
 	}
-	return (path_list);
+	path[0][i] = index;
+}
+
+/*
+	Fonction qui crée le tableau de path.
+*/
+
+void	ft_path(t_map *data)
+{
+	int	i;
+	int	count;
+
+	i = 1;
+	data->path_tab[0][1][1] = data->opti.distrib_p[1][0];
+	data->path_tab[0][1][0] = 1;
+	ft_create_path(data, data->path_tab[0], 0, data->opti.index_p[1][0]);
+	while (i < data->nb_path)
+	{
+		ft_create_path(data, data->path_tab[i], i, data->opti.index_p[1][i]);
+		count = data->opti.distrib_p[1][i - 1] + data->path_tab[i - 1][1][0];
+		ft_set_distrib_path(data, data->path_tab[i], count, data->opti.distrib_p[1][i]);
+		i += 1;
+	}
 }
