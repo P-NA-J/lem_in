@@ -15,27 +15,38 @@ SRC =	main.c 						\
 		alban/distrib.c				\
 		alban/print_info.c			\
 		alban/return_error.c		\
-		paul/ft_debug.c				\
 		paul/ft_bfs.c				\
 		paul/ft_path.c				\
 		paul/ft_bhandari.c			\
-		paul/ft_matrix.c			\
+		paul/ft_matrix_modif.c		\
+		paul/ft_matrix_check.c		\
 		paul/ft_queue.c				\
 		paul/ft_initialisation.c	\
 		paul/ft_buffer.c			\
 		paul/ft_clean.c				\
 		paul/ft_print.c				\
+		paul/ft_bubble_sort.c		\
+		paul/ft_snapshot.c			\
+		paul/ft_debug.c				\
+		paul/ft_evaluate_snapshot.c	\
+		paul/ft_static_tab_utils.c	\
+
+HEADERS = 	struct.h					\
+			macro.h						\
+			function.h					\
+			lem_in.h					\
 
 OBJ = $(SRC:.c=.o)
 PATH_SRC = $(addprefix src/, $(SRC))
 PATH_OBJ = $(addprefix obj/, $(OBJ))
+PATH_HEADERS = $(addprefix includes/, $(HEADERS))
 
 all: libft_comp $(EXE)
 
 libft_comp:
 	make -C libft
 
-$(EXE) : $(PATH_OBJ)
+$(EXE) : $(PATH_OBJ) $(PATH_HEADERS)
 	$(CC) $(CFLAG)  -o $(EXE) $(PATH_OBJ) $(LIB)
 
 $(addprefix obj/, %.o): $(addprefix src/, %.c)
