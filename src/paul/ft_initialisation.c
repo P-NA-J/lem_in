@@ -6,14 +6,15 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 15:16:30 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/04 18:46:47 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/20 19:27:45 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
 
 /*
-	Fonction qui initialise la valeur de features et de time pour chacune des salles avant le début du bfs.
+**	Fonction qui initialise la valeur de features et de time pour chacune
+**	des salles avant le début du bfs.
 */
 
 void	ft_set_bfs(t_map *data)

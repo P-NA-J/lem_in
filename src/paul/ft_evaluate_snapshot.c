@@ -6,17 +6,17 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 15:49:24 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/20 16:36:43 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/20 19:27:22 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
 
 /*
-	Remet a zero path_tab.
+**	Remet a zero path_tab.
 */
 
-void	ft_clean_path_tab(t_map *data)
+void		ft_clean_path_tab(t_map *data)
 {
 	int	i;
 
@@ -30,10 +30,11 @@ void	ft_clean_path_tab(t_map *data)
 }
 
 /*
-	Fonction qui va confirmer la modification de la matrice et couper les liens qui doivent être coupés.
+**	Fonction qui va confirmer la modification de la matrice
+**	et couper les liens qui doivent être coupés.
 */
 
-int	ft_confirm_matrix(t_map *data, int **adj_mat, int index)
+int			ft_confirm_matrix(t_map *data, int **adj_mat, int index)
 {
 	int	prev;
 
@@ -42,7 +43,8 @@ int	ft_confirm_matrix(t_map *data, int **adj_mat, int index)
 	{
 		if (adj_mat[index][prev] == TO_CUT)
 			ft_mat_mirror_change(adj_mat, NO_LINK, prev, index);
-		prev = ft_go_to_next(adj_mat, data->rooms[prev], AUGMENTED, INFINY);
+		prev = ft_go_to_next(adj_mat, data->rooms[prev],
+							AUGMENTED, INFINY);
 		index = prev;
 	}
 	ft_clean_path_tab(data);
@@ -51,10 +53,10 @@ int	ft_confirm_matrix(t_map *data, int **adj_mat, int index)
 }
 
 /*
-	Fonction qui va restaurer l'ancien état de la matrice.
+**	Fonction qui va restaurer l'ancien état de la matrice.
 */
 
-int		ft_unset_matrix(t_map *data, int **adj_mat, int index)
+int			ft_unset_matrix(t_map *data, int **adj_mat, int index)
 {
 	int	prev;
 	int	tmp_prev;
@@ -71,17 +73,30 @@ int		ft_unset_matrix(t_map *data, int **adj_mat, int index)
 		else
 			ft_mat_mirror_change(adj_mat, UNCHANGED, prev, index);
 		tmp_prev = prev;
-		prev = ft_go_to_next(adj_mat, data->rooms[prev], AUGMENTED, INFINY);
+		prev = ft_go_to_next(adj_mat, data->rooms[prev],
+							AUGMENTED, INFINY);
 		index = tmp_prev;
 	}
 	return (FALSE);
 }
 
+static void	ft_save_snapshot(t_opti *opti, int i)
+{
+	ft_cpy_tab(opti->distrib_p[1], opti->distrib_p[0], i);
+	ft_clean_tab(opti->distrib_p[0], i);
+	ft_cpy_tab(opti->len_p[1], opti->len_p[0], i);
+	ft_clean_tab(opti->len_p[0], i);
+	ft_cpy_tab(opti->index_p[1], opti->index_p[0], i);
+	ft_clean_tab(opti->index_p[0], i);
+}
+
 /*
-	Fonction qui va évaluer si le snapshot en cours est plus performant que le meilleur déjà enregistrer.
+**	Fonction qui va évaluer si le snapshot en cours
+**	est plus performant que le meilleur déjà enregistrer.
 */
 
-int	ft_evaluate_snapshot(t_map *data, int **adj_mat, t_opti *opti, int nb_path)
+int			ft_evaluate_snapshot(t_map *data, int **adj_mat,
+						t_opti *opti, int nb_path)
 {
 	int	complexity_p;
 	int	tmp;
@@ -92,34 +107,20 @@ int	ft_evaluate_snapshot(t_map *data, int **adj_mat, t_opti *opti, int nb_path)
 	while (i < nb_path && opti->distrib_p[0][i] > 0)
 	{
 		tmp = opti->len_p[0][i] + opti->distrib_p[0][i] - 1;
-//		printf("opti->len_p[0][i] = %d\nopti->distrib_p[0][i] = %d\n",opti->len_p[0][i],opti->distrib_p[0][i]);
 		if (tmp < complexity_p)
 			complexity_p = tmp;
 		i += 1;
 	}
-//	printf("complexity_p = %d | opti->res = %d\n", complexity_p, opti->res);
 	if (complexity_p >= opti->res)
 	{
-//		printf(_RED "ACH Das Snapshot ist nicht gut !" _RESET);
-//		ft_debug_opti(opti);
 		data->nb_path -= 1;
-		ft_clean_tab(opti->distrib_p[0], i + 1);
-		ft_clean_tab(opti->len_p[0], i + 1);
-		ft_clean_tab(opti->index_p[0], i + 1);
 		return (ft_unset_matrix(data, adj_mat, opti->index));
 	}
 	else
 	{
-//		printf(_GREEN "ACH Das Snapshot ist sehr gut !" _RESET);
-//		ft_debug_opti(opti);
 		data->nb_path = i;
 		opti->res = complexity_p;
-		ft_cpy_tab(opti->distrib_p[1], opti->distrib_p[0], i);
-		ft_clean_tab(opti->distrib_p[0], i);
-		ft_cpy_tab(opti->len_p[1], opti->len_p[0], i);
-		ft_clean_tab(opti->len_p[0], i);
-		ft_cpy_tab(opti->index_p[1], opti->index_p[0], i);
-		ft_clean_tab(opti->index_p[0], i);
+		ft_save_snapshot(opti, i);
 		return (ft_confirm_matrix(data, adj_mat, opti->index));
 	}
 }

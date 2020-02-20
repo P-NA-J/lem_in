@@ -6,42 +6,45 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 10:46:23 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/17 19:02:29 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/20 19:17:39 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
 
 /*
-	Cette fonction verifie que l'on peut interagir vec la salle :
-	soit l'ajouter, soit l'actualiser.
+**	Cette fonction verifie que l'on peut interagir vec la salle :
+**	soit l'ajouter, soit l'actualiser.
 */
 
-int	ft_actionnable(t_map *data, int **adj_mat, int index, int curr)
+int		ft_actionnable(t_map *data, int **adj_mat, int index, int curr)
 {
 	if (ft_check_line(data->rooms[curr], adj_mat[index], INFINY) != IGNORE)
 		return (FALSE);
 	else if (data->rooms[index]->features == UNQUEUE)
 		return (TRUE);
-	else if (data->rooms[index]->time > data->rooms[curr]->time && index != data->rooms[curr]->prev->index)
+	else if (data->rooms[index]->time > data->rooms[curr]->time
+			&& index != data->rooms[curr]->prev->index)
 		return (TRUE);
 	return (FALSE);
 }
 
 /*
-	Calcul le nombre de salle qui peuvent être ajoutée ou actualisée.
+**	Calcul le nombre de salle qui peuvent être ajoutée ou actualisée.
 */
 
-int	ft_occurence_count(t_map *data, int **adj_mat, t_room *current, int len)
+int		ft_occurence_count(t_map *data, int **adj_mat,
+							t_room *current, int len)
 {
-	int i;
-	int	count;
+	int			i;
+	int			count;
 
 	count = 0;
 	i = 0;
 	while (i < len)
 	{
-		if (ft_actionnable(data, adj_mat, current->link[i], current->index) == TRUE)
+		if (ft_actionnable(data, adj_mat, current->link[i],
+							current->index) == TRUE)
 			count += 1;
 		i += 1;
 	}
@@ -49,62 +52,20 @@ int	ft_occurence_count(t_map *data, int **adj_mat, t_room *current, int len)
 }
 
 /*
-	Gestion d'un lien orienté / appartenant à un chemin augmentant.
-*/
-
-int		ft_augmented_link_management(t_map *data)
-{
-	if (data->decision > 1)
-		data->decision -= 1;
-	else if (data->decision == 1)
-		return (TRUE);
-	return (FALSE);
-}
-
-/*
-	Process d'actualisation / ajout d'une salle lorsqu'on entre sur  un chemin augmentant.
-*/
-
-void	ft_unchanged_link_process(t_queue *bfs_q, t_room *i_room, t_room *current, t_room *aug_room)
-{
-	if (i_room->time > current->time || (i_room->features == UNQUEUE && aug_room->features == UNQUEUE))
-	{
-		ft_actualisation(i_room, current, 1);
-		i_room->features = QUEUE;
-		ft_add_queue(bfs_q, aug_room, i_room, -1);
-	}
-}
-
-/*
-	Gestion d'un lien non orienté.
-*/
-
-void	ft_unchanged_link_management(int index, t_room *current, t_map *data, t_queue *bfs_q)
-{
-	int	tmp_aug;
-
-	tmp_aug = 0;
-	if (ft_line_check(data->rooms[index], data->adj_mat[index]) == IGNORE)
-		ft_add_queue(bfs_q, data->rooms[index], current, 1);
-	else if (((tmp_aug = ft_check_line(data->rooms[index], data->adj_mat[index], AUGMENTED)) != IGNORE) 
-			&& data->decision == 1)
-		ft_unchanged_link_process(bfs_q, data->rooms[index], current, data->rooms[tmp_aug]);
-}
-
-/*
-	Gestion des liens pour une salle donnée.
+**	Gestion des liens pour une salle donnée.
 */
 
 void	ft_adj_mat_line_process(t_map *data, int **adj_mat,
 							t_queue *bfs_q, t_room *current)
 {
-	int	i;
-	int *line;
-	int link;
+	int			i;
+	int			*line;
+	int			link;
 
 	if (adj_mat[current->index][data->end->index] == UNCHANGED)
-		return(ft_add_front_queue(bfs_q, data->end, current));
-	data->decision = ft_occurence_count(data, adj_mat, current, current->nb_link);
+		return (ft_add_front_queue(bfs_q, data->end, current));
+	data->decision = ft_occurence_count(data, adj_mat, current,
+										current->nb_link);
 	line = adj_mat[current->index];
 	i = 0;
 	while (i < current->nb_link)
@@ -121,13 +82,13 @@ void	ft_adj_mat_line_process(t_map *data, int **adj_mat,
 	}
 }
 
-/* 
-	Parcours du graphe a la recherche d'un chemin vers end.
-	Boucle tant qu'il reste des salles non explorées dans la queue.
-	Ne fais que depop la salle du dessus de la queue.
+/*
+**	Parcours du graphe a la recherche d'un chemin vers end.
+**	Boucle tant qu'il reste des salles non explorées dans la queue.
+**	Ne fais que depop la salle du dessus de la queue.
 */
 
-int	**ft_bfs(t_map *data, int **adj_mat)
+int		**ft_bfs(t_map *data, int **adj_mat)
 {
 	t_queue	bfs_queue;
 	t_room	*current;

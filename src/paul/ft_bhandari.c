@@ -6,14 +6,15 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 09:13:18 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/20 16:10:34 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/20 19:18:28 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
 
 /*
-	Cette fonction va ecrire sur une ligne de le deplacement de toutes les fourmis de start a end.
+**	Cette fonction va ecrire sur une ligne de le deplacement
+**	de toutes les fourmis de start a end.
 */
 
 static int	ft_s_to_e(t_map *data)
@@ -36,11 +37,12 @@ static int	ft_s_to_e(t_map *data)
 }
 
 /*
-	Cette fonction va appeler en boucle le BFS afin de modeler le graphe.
-	Entre chaque appel, on ré-initialise l'état des salle et on actualise le graphe.
+**	Cette fonction va appeler en boucle le BFS afin de modeler le graphe.
+**	Entre chaque appel, on ré-initialise l'état des salle
+**	et on actualise le graphe.
 */
 
-int	ft_bhandari(t_map *data, int **adj_mat)
+int			ft_bhandari(t_map *data, int **adj_mat)
 {
 	if (adj_mat[data->start->index][data->end->index] == UNCHANGED)
 		return (ft_s_to_e(data));
@@ -49,7 +51,8 @@ int	ft_bhandari(t_map *data, int **adj_mat)
 	{
 		ft_reset_matrix(data, adj_mat);
 		ft_snapshot(data, &(data->opti), data->start);
-		if (ft_evaluate_snapshot(data, adj_mat, &(data->opti), data->nb_path) == FALSE)
+		if (ft_evaluate_snapshot(data, adj_mat, &(data->opti),
+									data->nb_path) == FALSE)
 			return (TRUE);
 	}
 	return (TRUE);

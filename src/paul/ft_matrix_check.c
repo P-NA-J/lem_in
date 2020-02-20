@@ -6,14 +6,15 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 15:57:44 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/18 15:59:25 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/20 19:29:44 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
 
 /*
-	Fonction qui renvoie l'adresse du premier lien d'une salle qui match avec un état passé en paramètre.
+**	Fonction qui renvoie l'adresse du premier lien d'une salle
+**	qui match avec un état passé en paramètre.
 */
 
 int		ft_go_to_next(int **adj_mat, t_room *current, int state, int ntm)
@@ -37,8 +38,8 @@ int		ft_go_to_next(int **adj_mat, t_room *current, int state, int ntm)
 }
 
 /*
-	Fonction qui renvoie l'index de la salle qui est relié a une salle donnée
-	avec un lien dans un certain état.
+**	Fonction qui renvoie l'index de la salle qui est relié
+**	a une salle donnée avec un lien dans un certain état.
 */
 
 int		ft_check_line(t_room *to_add, int *line, int state)
@@ -62,7 +63,8 @@ int		ft_check_line(t_room *to_add, int *line, int state)
 }
 
 /*
-	Fonction qui s'assure qu'il n'y a pas de lien augmenté sur une salle donnée.
+**	Fonction qui s'assure qu'il n'y a pas de lien augmenté
+**	sur une salle donnée.
 */
 
 int		ft_line_check(t_room *to_add, int *line)
