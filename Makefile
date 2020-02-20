@@ -26,9 +26,11 @@ SRC =	main.c 						\
 		paul/ft_print.c				\
 		paul/ft_bubble_sort.c		\
 		paul/ft_snapshot.c			\
-		paul/ft_debug.c				\
 		paul/ft_evaluate_snapshot.c	\
 		paul/ft_static_tab_utils.c	\
+		paul/ft_queue_utils.c		\
+		paul/ft_link_management.c	\
+		ft_debug.c				\
 
 OBJ = $(SRC:.c=.o)
 PATH_SRC = $(addprefix src/, $(SRC))
