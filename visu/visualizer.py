@@ -1,7 +1,6 @@
 import networkx as nx
 import plotly.graph_objects as go
 from chart_studio.plotly import plot, iplot
-import random
 import sys
 
 G = nx.Graph()
@@ -17,6 +16,8 @@ node_names = {}
 i = 0
 err = 0
 flag = 0
+label = []
+name = []
 for elem in anthills:
     s = ""
     s = s.join(elem)
@@ -31,24 +32,45 @@ for elem in anthills:
         break
     if flag == 1:
         start_node = str(s.split(' ')[0])
-        G.add_node(i, name=start_node, kind="START", pos=[0, 2])
+        G.add_node(i, name=start_node, pos=[0, 2])
         node_names[start_node] = i
+        label.append('START')
     elif flag == 2:
         end_node = str(s.split(' ')[0])
-        G.add_node(i, name=end_node, kind="END", pos=[1, 0])
+        G.add_node(i, name=end_node, pos=[1, 0])
         node_names[end_node] = i
+        label.append('END')
     else:
         n_name = s.split(' ')[0]
-        G.add_node(i, name=n_name, kind="")
+        G.add_node(i, name=n_name)
         node_names[n_name] = i
+        label.append('')
     flag = 0
     i += 1
-
-init_pos = nx.get_node_attributes(G, 'pos')
 
 i += err
 del anthills[:i]
 
+"""
+Function to add annotations
+"""
+def make_annotations(pos, anno_text, font_size=14, font_color='rgb(10,10,10)'):
+    L= len(pos)
+    if len(anno_text) != L:
+        raise ValueError('The lists pos and text must have the same len')
+    annotations = []
+    for k in range(L):
+        annotations.append(dict(text=anno_text[k], 
+                                x=pos[k][0], 
+                                y=pos[k][1]+0.075,#this additional value is chosen by trial and error
+                                xref='x1', yref='y1',
+                                font=dict(color= font_color, size=font_size),
+                                showarrow=False))
+    return annotations  
+
+"""
+Adding edges to the Graph object
+"""
 edges = []
 for elem in anthills[:i]:
     if (elem.find('-') == -1):
@@ -58,26 +80,11 @@ for elem in anthills[:i]:
     n2_name = edges[1].replace('\n','')
     G.add_edge(node_names[n1_name], node_names[n2_name])
 
-#isolates = list(nx.isolates(G))
-#G.remove_nodes_from(isolates)
-#print(isolates)
-
-is_planar = nx.check_planarity(G)
-print(is_planar)
-pos=nx.spring_layout(G, seed = 100)
-#for edge in G.edges():
+"""
+Setting up nodes positions
+"""
+pos=nx.fruchterman_reingold_layout(G)
 nx.set_node_attributes(G, pos, 'pos') 
-
-#dmin=1
-#ncenter=0
-#for n in pos:
-#    x,y=pos[n]
-#    d=(x-0.5)**2+(y-0.5)**2
-#    if d<dmin:
-#        ncenter=n
-#        dmin=d
-#
-#p=nx.single_source_shortest_path_length(G,ncenter)
 
 edge_trace = go.Scatter(
     x=[],
@@ -92,7 +99,6 @@ for edge in G.edges():
     edge_trace['x'] += tuple([x0, x1, None])
     edge_trace['y'] += tuple([y0, y1, None])
 
-## right sided color gradient bar
 node_trace = go.Scatter(
     x=[],
     y=[],
@@ -101,14 +107,10 @@ node_trace = go.Scatter(
     hoverinfo='text',
     marker=dict(
         showscale=True,
-        # colorscale options
-        #'Greys' | 'YlGnBu' | 'Greens' | 'YlOrRd' | 'Bluered' | 'RdBu' |
-        #'Reds' | 'Blues' | 'Picnic' | 'Rainbow' | 'Portland' | 'Jet' |
-        #'Hot' | 'Blackbody' | 'Earth' | 'Electric' | 'Viridis' |
         colorscale='YlGnBu',
         reversescale=True,
         color=[],
-        size=10,
+        size=30,
         colorbar=dict(
             thickness=15,
             title='Node Connections',
@@ -122,42 +124,33 @@ for node in G.nodes():
     node_trace['x'] += tuple([x])
     node_trace['y'] += tuple([y])
 
-#print(G.nodes)
 n_name_attributes = nx.get_node_attributes(G, 'name') 
 n_kind_attributes = nx.get_node_attributes(G, 'kind')
 
 for node, adjacencies in enumerate(G.adjacency()):
     node_trace['marker']['color']+=tuple([len(adjacencies[1])])
-    node_info = 'Node kind: ' + n_kind_attributes[node] + '\n# of connections: '+str(len(adjacencies[1]))
+    node_info = '\n# of connections: '+str(len(adjacencies[1]))
     node_trace['text']+=tuple([node_info])
 
+"""
+Setting up Plotly go.Figure object from Networkx Graph
+"""
 fig = go.Figure(data=[edge_trace, node_trace],
              layout=go.Layout(
-                title='<br>Network graph made with Python',
+                title='<br>Lem_in graph made with Python',
                 titlefont=dict(size=16),
                 showlegend=False,
                 hovermode='closest',
                 margin=dict(b=20,l=5,r=5,t=40),
-                annotations=[ dict(
-                    text="Python code: <a href='https://plot.ly/ipython-notebooks/network-graphs/'> https://plot.ly/ipython-notebooks/network-graphs/</a>",
+                annotations=[dict(
+                    text="LEM_IN BY PAULO AND ALBANO",
                     showarrow=False,
                     xref="paper", yref="paper",
-                    x=0.5, y="auto"),
-                    dict(text="putting a point", x=0.5, y=0.5),
-                    dict(text="putting a sec point", x=0.2, y=0.55)],
+                    x=0.5, y="auto")],
                 xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
                 yaxis=dict(showgrid=False, zeroline=False, showticklabels=False)))
 
-
+fig['layout'].update(annotations=make_annotations(pos, label))
 fig.show()
 
-
 ## parse ants paths
-
-
-print (G.node)
-print (G.number_of_nodes())
-
-print (list(G.edges))
-print (G.number_of_edges())
-print (nb_ants)
