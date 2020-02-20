@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 18:40:24 by aboitier          #+#    #+#             */
-/*   Updated: 2020/02/04 22:15:02 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/14 12:27:26 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int				check_room_line(t_preparse *prep, t_map *data)
 
 int				get_next_room(t_preparse *prep, t_map *data)
 {
+//	char *tmp = ft_strcsub(prep->buffer, '\n');
+//	printf("%s\n", tmp);
 	while (*(prep->buffer) && *(prep->buffer) != '\n')
 	{
 		check_room_line(prep, data);
@@ -63,7 +65,9 @@ int				get_next_room(t_preparse *prep, t_map *data)
 
 int				parse_rooms(t_map **data, t_preparse *prep)
 {
-	while (*(prep->buffer) && prep->curr_room < (*data)->nb_rooms - 1)
+//	printf("nb_rooms = %d\n", (*data)->nb_rooms);
+	while (*(prep->buffer) && prep->curr_room < (*data)->nb_rooms 
+				&& (count_char_until(prep->buffer, ' ', '\n') == 2 || *(prep->buffer) == '#'))
 	{
 		if (get_next_room(prep, *data) == FALSE)
 			return (FALSE);

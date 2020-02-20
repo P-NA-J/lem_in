@@ -12,7 +12,6 @@ SRC =	main.c 						\
 		alban/links_tab.c			\
 		alban/adjacency_matrix.c	\
 		alban/get_rooms.c			\
-		alban/distrib.c				\
 		alban/print_info.c			\
 		alban/return_error.c		\
 		paul/ft_bfs.c				\
@@ -31,11 +30,6 @@ SRC =	main.c 						\
 		paul/ft_evaluate_snapshot.c	\
 		paul/ft_static_tab_utils.c	\
 
-HEADERS = 	struct.h					\
-			macro.h						\
-			function.h					\
-			lem_in.h					\
-
 OBJ = $(SRC:.c=.o)
 PATH_SRC = $(addprefix src/, $(SRC))
 PATH_OBJ = $(addprefix obj/, $(OBJ))
@@ -44,43 +38,36 @@ PATH_HEADERS = $(addprefix includes/, $(HEADERS))
 all: libft_comp $(EXE)
 
 libft_comp:
-	make -C libft
+	@make -C libft
 
-$(EXE) : $(PATH_OBJ) $(PATH_HEADERS)
-	$(CC) $(CFLAG)  -o $(EXE) $(PATH_OBJ) $(LIB)
+$(EXE) : $(PATH_OBJ)
+	@$(CC) $(CFLAG)  -o $(EXE) $(PATH_OBJ) $(LIB)
 
 $(addprefix obj/, %.o): $(addprefix src/, %.c)
-	$(CC) $(CFLAG) -c $< -o $@
+	@$(CC) $(CFLAG) -c $< -o $@
 
 lib_clean:
-	make clean -C libft/
+	@make clean -C libft/
 
 lib_fclean:
-	make fclean -C libft/
+	@make fclean -C libft/
 
 clean: lib_clean
-	rm -f $(PATH_OBJ)
+	@rm -f $(PATH_OBJ)
 
 fclean: lib_fclean clean
-	rm -f $(EXE)
+	@#brew install mpg123
+	@mpg123 -q misc/chest_sound.mp3 misc/kanmem2.mp3 &
+	@python misc/closed_chest.py
+	@rm -f $(EXE)
+	@sleep 6.66
+	@clear
+	@python misc/open_chest.py
 
 re: fclean all
 
 test: $(EXE)
 	bash launch_test.sh
-
-#testinc:
-	#reorganiser le repo
-	#reorganiser le dossier maps
-	#script:
-	#	performance = wc -l
-	#	si les fourmis avancent sur une route valide
-
-	#recompiler normal
-	#lancer tous les tests
-	#erreurs parsers, voir tous les customs, 
-	
-	#recompiler valgrind
 
 visu:
 	 @#pip install --user networkx

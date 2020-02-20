@@ -6,7 +6,7 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 17:19:11 by aboitier          #+#    #+#             */
-/*   Updated: 2020/02/04 19:03:15 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/13 22:55:33 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int			fix_room(t_preparse *prep, t_room *new, t_map *data)
 	if (prep->s_or_e)
 		index = (prep->s_or_e == 1) ? 0 : data->nb_rooms - 1; 
 	else 
-		index = prep->curr_room++;
+		index = prep->curr_room++ + 1;
 	set_room(new, index, hash);
 	if (!(get_start_or_end(prep, new, data)))
 		return (FALSE);
