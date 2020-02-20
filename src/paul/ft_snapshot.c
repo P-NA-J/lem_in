@@ -6,14 +6,15 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 18:05:51 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/19 17:39:23 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/20 21:29:02 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
 
 /*
-	Fonction qui répartir équitablement un certain nombre de fourmis entre un certain nombre de chemins.
+**	Fonction qui répartir équitablement un certain nombre de fourmis
+**	entre un certain nombre de chemins.
 */
 
 void	ft_dispatch_ants(t_opti *opti, int to_add, int nb_path, int *nb_ants)
@@ -33,7 +34,8 @@ void	ft_dispatch_ants(t_opti *opti, int to_add, int nb_path, int *nb_ants)
 }
 
 /*
-	Fonction qui va répartir les fourmis entre les différents chemins du set que évalue.
+**	Fonction qui va répartir les fourmis entre les différents
+**	chemins du set que évalue.
 */
 
 void	ft_distribution(t_opti *opti, int nb_ants, int nb_path)
@@ -63,10 +65,11 @@ void	ft_distribution(t_opti *opti, int nb_ants, int nb_path)
 }
 
 /*
-	Fonction qui va calculer la longueur d'un chemin et inscrire cette longueur dans opti->len_p
+**	Fonction qui va calculer la longueur d'un chemin
+**	et inscrire cette longueur dans opti->len_p
 */
 
-int	ft_calcul_length(t_map *data, int **adj_mat, int index)
+int		ft_calcul_length(t_map *data, int **adj_mat, int index)
 {
 	int	len;
 	int	end_i;
@@ -82,10 +85,10 @@ int	ft_calcul_length(t_map *data, int **adj_mat, int index)
 }
 
 /*
-	Fonction qui calcule le nombre de path.
+**	Fonction qui calcule le nombre de path.
 */
 
-int	ft_calcul_nb_path(int **adj_mat, t_room *start)
+int		ft_calcul_nb_path(int **adj_mat, t_room *start)
 {
 	int	nb_link;
 	int	i;
@@ -104,7 +107,8 @@ int	ft_calcul_nb_path(int **adj_mat, t_room *start)
 }
 
 /*
-	Fonction qui va générer un snapshot et comparer par rapport au meilleur snapshot.
+**	Fonction qui va générer un snapshot et comparer par rapport
+**	au meilleur snapshot.
 */
 
 void	ft_snapshot(t_map *data, t_opti *opti, t_room *start)
@@ -122,11 +126,12 @@ void	ft_snapshot(t_map *data, t_opti *opti, t_room *start)
 		if (data->adj_mat[START][start->link[i]] == BLOCKED)
 		{
 			opti->index_p[0][j] = start->link[i];
-			opti->len_p[0][j] = ft_calcul_length(data, data->adj_mat, start->link[i]);
+			opti->len_p[0][j] = ft_calcul_length(data, data->adj_mat,
+												start->link[i]);
 			j += 1;
 		}
 		i += 1;
 	}
-	ft_bubble_sort(opti->len_p[0], opti->index_p[0], data->nb_path);
+	ft_bubble_sort(opti, data->nb_path);
 	ft_distribution(opti, data->nb_ants, data->nb_path);
 }
