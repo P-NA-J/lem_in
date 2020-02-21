@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 23:34:49 by aboitier          #+#    #+#             */
-/*   Updated: 2020/02/07 16:35:45 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/21 13:29:50 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ int				get_adjacency_matrix(t_map *data)
 	data->adj_mat = adj_mat;
 	return (TRUE);
 }
-
-
 
 int				connect_rooms(t_map *data, t_preparse *prep)
 {

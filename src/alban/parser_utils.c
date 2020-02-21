@@ -6,7 +6,7 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 17:19:11 by aboitier          #+#    #+#             */
-/*   Updated: 2020/02/13 22:55:33 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/21 13:35:25 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int			set_room(t_room *new, int index, uint32_t hash)
 }
 
 int			get_start_or_end(t_preparse *prep, t_room *new, t_map *data)
-{	
+{
 	if (prep->s_or_e == 1)
 	{
 		if (data->start)
@@ -46,8 +46,8 @@ int			fix_room(t_preparse *prep, t_room *new, t_map *data)
 	if (!(hash = get_hashed_name(prep, new->name)))
 		return (FALSE);
 	if (prep->s_or_e)
-		index = (prep->s_or_e == 1) ? 0 : data->nb_rooms - 1; 
-	else 
+		index = (prep->s_or_e == 1) ? 0 : data->nb_rooms - 1;
+	else
 		index = prep->curr_room++ + 1;
 	set_room(new, index, hash);
 	if (!(get_start_or_end(prep, new, data)))
@@ -69,25 +69,7 @@ int			create_room(t_map *data, t_preparse *prep)
 	return (TRUE);
 }
 
-int			valid_coords(char *buffer)
-{
-	int		i;
-
-	i = 0;
-	while (buffer[i] != ' ')
-		i++;
-	while (buffer[i] != '\n')
-	{
-		if (buffer[i] == '-' && buffer[i - 1] != ' ')
-			return (FALSE);
-		if (ft_isdigit(buffer[i]) == 0 && buffer[i] != ' ')
-			return (FALSE);
-		i++;
-	}
-	return (TRUE);
-}
-
-uint32_t		get_hashed_name(t_preparse *prep, char *name)
+uint32_t	get_hashed_name(t_preparse *prep, char *name)
 {
 	int			max_rooms;
 	uint32_t	hashed_name;
