@@ -73,7 +73,7 @@ generate_new_map()
 {
 	while true
 	do
-		./map/generator "--$TYPE" > $MAP
+		./test_procedure/generator "--$TYPE" > $MAP
 		diff_map=`diff $MAP ${MAP_BFR} | head -n 1`
 		[ "${diff_map}" ] && break;
 	done
