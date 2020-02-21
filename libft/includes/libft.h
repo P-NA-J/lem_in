@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 09:00:10 by pauljull          #+#    #+#             */
-/*   Updated: 2020/01/30 16:36:34 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/21 13:52:15 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,12 @@
 # include <string.h>
 # include <limits.h>
 
-# define ERROR_PARSE_LONG (long)-9223372036854775806
-# define VALID_PARSE_LONG (long)9223372036854775806
+# define ERROR_PARSE_LONG -9223372036854775806L
+# define VALID_PARSE_LONG 9223372036854775806L
 # define TRUE 1
 # define FALSE 0
 # define NULL_VALUE -2147483649
 # define BS_GNL 4096
-
 
 typedef long	(*t_func_tab)(long, long);
 
@@ -46,7 +45,7 @@ typedef struct		s_gnl
 {
 	char			*str;
 	int				fd;
-	struct 	s_gnl	*next;
+	struct s_gnl	*next;
 }					t_gnl;
 
 long				ft_atol(const char *str);
