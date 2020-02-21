@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:33:58 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/14 12:27:39 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/21 13:36:10 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,12 @@ t_map		*parser(void)
 	data->preparse->tmp_buff = data->preparse->buffer;
 	if ((data->nb_ants = parse_nb_ants(data, data->preparse)) == FALSE)
 		return (which_error(data, 2));
+	COUCOU;
 	if ((data->rooms = get_rooms(data, data->preparse)) == NULL)
 		return (which_error(data, 2));
+	COUCOU;
 	if (parse_rooms(&data, data->preparse) == FALSE)
 		return (which_error(data, 2));
-//	printf("%d\n", data->start->index);
-	//printf("%d\n", data->end->index);
 	if (data->start == NULL || data->end == NULL)
 		return (which_error(data, 2));
 	if (get_pipes(&data, data->preparse) == FALSE)
