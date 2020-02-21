@@ -6,7 +6,7 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 16:31:42 by aboitier          #+#    #+#             */
-/*   Updated: 2020/01/30 16:36:31 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/21 13:49:49 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 long	ft_atol(const char *str)
 {
-	int i;
-	long integer;
-	int	sign;
+	int		i;
+	long	integer;
+	int		sign;
 
 	i = 0;
 	integer = 0;
