@@ -10,7 +10,7 @@ UNDERLINE='\033[4m'
 NC='\033[0m'
 RESET='\033[0m'
 
-OUTPUT_LENGTH=19
+OUTPUT_LENGTH=19 
 
 print_usage()
 {
