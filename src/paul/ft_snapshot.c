@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 18:05:51 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/20 21:29:02 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/25 15:26:35 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int		ft_calcul_nb_path(int **adj_mat, t_room *start)
 **	au meilleur snapshot.
 */
 
-void	ft_snapshot(t_map *data, t_opti *opti, t_room *start)
+int		ft_snapshot(t_map *data, t_opti *opti, t_room *start)
 {
 	int	i;
 	int	j;
@@ -128,10 +128,13 @@ void	ft_snapshot(t_map *data, t_opti *opti, t_room *start)
 			opti->index_p[0][j] = start->link[i];
 			opti->len_p[0][j] = ft_calcul_length(data, data->adj_mat,
 												start->link[i]);
+			if (opti->len_p[0][j] > MAX_LEN_PATH)
+				return (FALSE);
 			j += 1;
 		}
 		i += 1;
 	}
 	ft_bubble_sort(opti, data->nb_path);
 	ft_distribution(opti, data->nb_ants, data->nb_path);
+	return (TRUE);
 }

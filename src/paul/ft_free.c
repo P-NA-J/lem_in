@@ -6,14 +6,14 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 09:03:20 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/21 09:56:21 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/25 15:29:04 by pauljull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
 
 /*
-	Fonction qui free une room.
+**	Fonction qui free une room.
 */
 
 void	ft_free_room(t_room *room)
@@ -23,7 +23,7 @@ void	ft_free_room(t_room *room)
 }
 
 /*
-	Fonction qui free le tableau de room.
+**	Fonction qui free le tableau de room.
 */
 
 void	ft_free_room_tab(t_room **rooms, int nb_room)
@@ -37,7 +37,7 @@ void	ft_free_room_tab(t_room **rooms, int nb_room)
 }
 
 /*
-	Fonction qui free la matrice d'adjacence.
+**	Fonction qui free la matrice d'adjacence.
 */
 
 void	ft_free_adj_mat(int **adj_mat, int nb_path)
@@ -51,7 +51,7 @@ void	ft_free_adj_mat(int **adj_mat, int nb_path)
 }
 
 /*
-	Fonction qui free la matrice d'adjacence et les différentes room.
+**	Fonction qui free la matrice d'adjacence et les différentes room.
 */
 
 void	ft_free_all(t_map *data)

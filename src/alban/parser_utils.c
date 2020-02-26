@@ -6,7 +6,7 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 17:19:11 by aboitier          #+#    #+#             */
-/*   Updated: 2020/02/21 13:35:25 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/25 15:19:48 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int			fix_room(t_preparse *prep, t_room *new, t_map *data)
 	set_room(new, index, hash);
 	if (!(get_start_or_end(prep, new, data)))
 		return (FALSE);
+	if (index == data->nb_rooms)
+		return (FALSE);
 	data->rooms[index] = new;
 	prep->hashed_rooms[hash] = *new;
 	return (TRUE);
@@ -63,9 +65,14 @@ int			create_room(t_map *data, t_preparse *prep)
 
 	new = NULL;
 	if (!(new = (t_room *)ft_memalloc(sizeof(t_room))) \
-			|| !(new->name = ft_strcsub(prep->buffer, ' '))
-			|| !(fix_room(prep, new, data)))
+			|| !(new->name = ft_strcsub(prep->buffer, ' ')))
 		return (FALSE);
+	if ((fix_room(prep, new, data) == FALSE))
+	{
+		free(new->name);
+		free(new);
+		return (FALSE);
+	}
 	return (TRUE);
 }
 

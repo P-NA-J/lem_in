@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 16:35:32 by aboitier          #+#    #+#             */
-/*   Updated: 2020/02/21 13:35:46 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/25 15:22:58 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,25 @@ char			*ft_strcsub(char *s, char c)
 int				valid_coords(char *buffer)
 {
 	int		i;
+	int		count;
 
 	i = 0;
-	while (buffer[i] != ' ')
+	count = 0;
+	while (buffer[i] && buffer[i] != ' ')
 		i++;
-	while (buffer[i] != '\n')
+	while (buffer[i] && buffer[i] != '\n')
 	{
 		if (buffer[i] == '-' && buffer[i - 1] != ' ')
 			return (FALSE);
 		if (ft_isdigit(buffer[i]) == 0 && buffer[i] != ' ')
 			return (FALSE);
+		if ((ft_isdigit(buffer[i]) == 1)
+						&& (buffer[i - 1] == ' ' || buffer[i - 1] == '-'))
+			count++;
 		i++;
 	}
+	if (count != 2)
+		return (FALSE);
 	return (TRUE);
 }
 

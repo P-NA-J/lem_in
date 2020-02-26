@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 11:23:49 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/19 15:02:03 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/25 16:41:38 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct			s_map
 	int					nb_rooms;
 	int					nb_path;
 	int					decision;
+	int					err;
 }						t_map;
 
 #endif

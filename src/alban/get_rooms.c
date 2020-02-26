@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 18:40:24 by aboitier          #+#    #+#             */
-/*   Updated: 2020/02/21 13:33:40 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/25 15:19:18 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ int				check_room_line(t_preparse *prep, t_map *data)
 
 int				get_next_room(t_preparse *prep, t_map *data)
 {
-	while (*(prep->buffer) && *(prep->buffer) != '\n')
+	while (*(prep->buffer) && count_char_until(prep->buffer, '-', '\n') != 1)
 	{
-		check_room_line(prep, data);
+		if (check_room_line(prep, data) == FALSE)
+			return (FALSE);
 		if (count_char_until(prep->buffer, ' ', '\n') == 2)
 		{
 			if (valid_coords(prep->buffer) == FALSE)
@@ -56,7 +57,12 @@ int				get_next_room(t_preparse *prep, t_map *data)
 			if (create_room(data, prep) == FALSE)
 				return (FALSE);
 		}
-		prep->buffer += ft_strclen(prep->buffer, '\n');
+		else if (count_char_until(prep->buffer, ' ', '\n') != 2
+						&& count_char_until(prep->buffer, '-', '\n') != 1
+						&& prep->buffer[0] != '\n')
+			return (FALSE);
+		if (count_char_until(prep->buffer, '-', '\n') != 1)
+			prep->buffer += ft_strclen(prep->buffer, '\n') + 1;
 	}
 	return (TRUE);
 }
@@ -65,11 +71,13 @@ int				parse_rooms(t_map **data, t_preparse *prep)
 {
 	while (*(prep->buffer) && prep->curr_room < (*data)->nb_rooms
 				&& (count_char_until(prep->buffer, ' ', '\n') == 2
-				|| *(prep->buffer) == '#'))
+				|| *(prep->buffer) == '#')
+				&& count_char_until(prep->buffer, '-', '\n') != 1)
 	{
 		if (get_next_room(prep, *data) == FALSE)
 			return (FALSE);
-		prep->buffer += ft_strclen(prep->buffer, '\n') + 1;
+		if (count_char_until(prep->buffer, '-', '\n') != 1)
+			prep->buffer += ft_strclen(prep->buffer, '\n') + 1;
 	}
 	return (TRUE);
 }

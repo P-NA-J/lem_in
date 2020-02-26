@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 23:34:49 by aboitier          #+#    #+#             */
-/*   Updated: 2020/02/21 13:29:50 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/25 16:43:43 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,26 @@ int				connect_rooms(t_map *data, t_preparse *prep)
 	return (TRUE);
 }
 
+int				check_start_or_end(t_preparse *prep)
+{
+	char	*tmp;
+	int		retour;
+
+	retour = TRUE;
+	tmp = NULL;
+	if (prep->buffer[1] && prep->buffer[1] == '#')
+	{
+		if (!(tmp = ft_strcsub(prep->buffer, '\n')))
+			return (FALSE);
+		if (ft_strcmp((const char *)tmp, "##start") == 0)
+			retour = FALSE;
+		if (ft_strcmp((const char *)tmp, "##end") == 0)
+			retour = FALSE;
+		free(tmp);
+	}
+	return (retour);
+}
+
 int				parse_pipes(t_map **data, t_preparse *prep)
 {
 	int i;
@@ -63,9 +83,18 @@ int				parse_pipes(t_map **data, t_preparse *prep)
 	while (*prep->buffer)
 	{
 		while (*prep->buffer == '#')
+		{
+			if (check_start_or_end(prep) == FALSE)
+				return (FALSE);
 			prep->buffer += ft_strclen(prep->buffer, '\n') + 1;
+			if (!(prep->buffer[0]))
+				return (TRUE);
+		}
 		if (count_char_until(prep->buffer, '-', '\n') != 1)
+		{
+			(*data)->err = 1;
 			return (FALSE);
+		}
 		if ((get_hashes_rs(prep)) == FALSE)
 			return (FALSE);
 		if (connect_rooms(*data, prep) == FALSE)

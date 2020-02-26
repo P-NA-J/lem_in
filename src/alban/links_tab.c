@@ -6,11 +6,24 @@
 /*   By: aboitier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 15:44:12 by aboitier          #+#    #+#             */
-/*   Updated: 2020/02/21 13:31:02 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/25 15:21:35 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
+
+int				escape_comments(t_preparse *prep)
+{
+	int size;
+
+	size = ft_strclen(prep->buffer, '\n');
+	if (ft_strncmp((const char *)prep->buffer, "##start", size) == 0)
+		return (FALSE);
+	else if (ft_strncmp((const char *)prep->buffer, "##end", size) == 0)
+		return (FALSE);
+	prep->buffer += size + 1;
+	return (TRUE);
+}
 
 int				set_links_tab(int curr_room1, int curr_room2, t_map *data)
 {

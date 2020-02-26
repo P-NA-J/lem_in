@@ -6,25 +6,12 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:33:58 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/21 13:39:40 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/25 15:22:12 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lem_in.h"
 #include <stdlib.h>
-
-int			escape_comments(t_preparse *prep)
-{
-	int size;
-
-	size = ft_strclen(prep->buffer, '\n');
-	if (ft_strncmp((const char *)prep->buffer, "##start", size) == 0)
-		return (FALSE);
-	else if (ft_strncmp((const char *)prep->buffer, "##end", size) == 0)
-		return (FALSE);
-	prep->buffer += size + 1;
-	return (TRUE);
-}
 
 int			get_nb_ants(t_map *data, t_preparse *prep, int i)
 {
@@ -66,6 +53,27 @@ int			parse_nb_ants(t_map *data, t_preparse *prep)
 	return (get_nb_ants(data, prep, i));
 }
 
+int			check_if_start_or_end(t_preparse *prep, t_map *data, char *tmp)
+{
+	int retour;
+
+	retour = TRUE;
+	if (ft_strcmp((const char *)tmp, "##start") == 0)
+	{
+		if (data->start)
+			retour = FALSE;
+		prep->s_or_e = 1;
+	}
+	else if (ft_strcmp((const char *)tmp, "##end") == 0)
+	{
+		if (data->end)
+			retour = FALSE;
+		prep->s_or_e = 2;
+	}
+	free(tmp);
+	return (retour);
+}
+
 int			parse_comment(t_preparse *prep, t_map *data)
 {
 	int		size;
@@ -74,15 +82,14 @@ int			parse_comment(t_preparse *prep, t_map *data)
 	tmp = NULL;
 	if (prep->buffer[1] && prep->buffer[1] == '#')
 	{
+		if (prep->s_or_e)
+			return (FALSE);
 		if (!(tmp = ft_strcsub(prep->buffer, '\n')))
 			return (FALSE);
 		size = ft_strlen(tmp);
 		prep->buffer += size + 1;
-		if (ft_strcmp((const char *)tmp, "##start") == 0)
-			prep->s_or_e = 1;
-		else if (ft_strcmp((const char *)tmp, "##end") == 0)
-			prep->s_or_e = 2;
-		free(tmp);
+		if (check_if_start_or_end(prep, data, tmp) == FALSE)
+			return (FALSE);
 	}
 	else
 		prep->buffer += ft_strclen(prep->buffer, '\n') + 1;

@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:51:52 by pauljull          #+#    #+#             */
-/*   Updated: 2020/02/20 21:00:27 by pauljull         ###   ########.fr       */
+/*   Updated: 2020/02/25 16:23:46 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_preparse	*pre_parser(void);
 t_room		**get_rooms(t_map *data, t_preparse *prep);
 uint32_t	jenkins_hash(char *name);
 uint32_t	get_hashed_name(t_preparse *prep, char *name);
+int			escape_comments(t_preparse *prep);
 int			get_nb_rooms(char *buffer);
 int			get_next_room(t_preparse *prep, t_map *data);
 int			parse_rooms(t_map **data, t_preparse *prep);
@@ -46,7 +47,6 @@ int			**ft_mat_mirror_change(int **adj_mat, int value, int i_1, int i_2);
 void		ft_clean_matrix(t_map *data, int **adj_mat);
 int			ft_go_to_next(int **adj_mat, t_room *current, int state, int ntm);
 void		ft_bubble_sort(t_opti *opti, int len);
-//void	ft_bubble_sort(int *tab_l, int *tab_i, int len);
 int			ft_path_length(int **adj_mat, int index, t_map *data);
 t_room		*ft_remove_queue(t_queue *bfs_queue);
 void		ft_add_queue(t_queue *bfs_queue, t_room *to_add,
@@ -60,12 +60,12 @@ void		ft_set_bfs(t_map *data);
 int			**ft_bfs(t_map *data, int **adj_mat);
 int			ft_bhandari(t_map *data, int **adj_mat);
 void		ft_distribution(t_opti *opti, int nb_ants, int nb_path);
-void		ft_print(t_map *data, int path_tab[MAX_PATH][2][PRIME],
+int			ft_print(t_map *data, int path_tab[MAX_PATH][2][PRIME],
 					int nb_path);
 int			distrib(t_map *data);
 void		ft_path(t_map *data);
 void		ft_opti_erase_link(int *t_link, int i_link, int nb_link);
-void		ft_snapshot(t_map *data, t_opti *opti, t_room *start);
+int			ft_snapshot(t_map *data, t_opti *opti, t_room *start);
 int			ft_evaluate_snapshot(t_map *data, int **adj_mat,
 								t_opti *opti, int nb_path);
 void		ft_free_queue(t_queue queue, int len);
@@ -73,7 +73,7 @@ void		ft_free(t_map *data, int **tab_path);
 void		ft_write_in_buffer(t_buff *buff, char c, int len);
 void		ft_putstr_buffer(t_buff *buff, char *str, int len);
 void		ft_flush_buffer(t_buff *buff);
-void		ft_print_move(t_map *data, int no_ants, int no_room);
+int			ft_print_move(t_map *data, int no_ants, int no_room);
 void		ft_clean_tab(int tab[MAX_LEN_PATH], int n);
 void		ft_cpy_tab(int dest[MAX_LEN_PATH], int src[MAX_LEN_PATH], int len);
 int			ft_int_is_present(int *index_p, int value);
@@ -97,4 +97,7 @@ int			ft_augmented_link_management(t_map *data);
 void		ft_swap(t_queue *bfs_queue, int i_1, int i_2);
 void		ft_slide(t_queue *bfs_queue);
 void		ft_slide_down(t_queue *bfs_queue);
+int			ft_s_to_e(t_map *data);
+void		ft_free_all(t_map *data);
+void		ft_print_file(t_map *data);
 #endif

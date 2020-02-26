@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 20:19:49 by aboitier          #+#    #+#             */
-/*   Updated: 2020/02/07 17:22:10 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/24 20:56:37 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,24 @@ uint32_t	jenkins_hash(char *name)
 	return (hash);
 }
 
+int			isinchar(char *str, char c)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (TRUE);
+		i++;
+	}
+	return (FALSE);
+}
+
 int			get_hashes_rs(t_preparse *prep)
 {
+	if (isinchar(prep->buffer, '\n') == FALSE)
+		return (FALSE);
 	if (!(prep->r1 = ft_strcsub(prep->buffer, '-')))
 		return (FALSE);
 	prep->buffer += ft_strlen(prep->r1) + 1;
@@ -56,10 +72,10 @@ int			compare_names(char *to_connect,
 
 	diff = 0;
 	while (ft_strcmp(prep->hashed_rooms[*h_rx].name,
-					to_connect) != 0 && diff++ < 10)
+					to_connect) != 0 && diff++ < 31)
 	{
 		*h_rx = (*h_rx < PRIME - 1) ? *h_rx += 1 : 1;
-		if (diff == 9)
+		if (diff == 30)
 			return (FALSE);
 	}
 	return (TRUE);

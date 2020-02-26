@@ -6,7 +6,7 @@
 /*   By: pauljull <pauljull@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 17:16:41 by aboitier          #+#    #+#             */
-/*   Updated: 2020/02/04 19:27:00 by aboitier         ###   ########.fr       */
+/*   Updated: 2020/02/25 16:44:09 by aboitier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,15 @@ void	free_all(t_map *data)
 t_map	*which_error(t_map *data, int type)
 {
 	t_map	*error;
-	int		err;
 
 	error = data;
-	err = 0;
+	if (data->err != 1)
+		data->err = 0;
 	if (type == 1)
 	{
-		while (err != 2)
+		while (data->err != 2)
 			if (*data->preparse->buffer-- == '\n')
-				err++;
+				data->err++;
 		data->preparse->buffer++;
 		*data->preparse->buffer++ = '\0';
 		return (error);
